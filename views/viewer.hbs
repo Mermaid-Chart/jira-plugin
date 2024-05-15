@@ -1,0 +1,30 @@
+{{!< layout}}
+<div class="ac-content" id="content">
+    <div id="image"></div>
+    <div id="caption"></div>
+</div>
+<style>
+    #content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    #content #image img {
+        width: 100%;
+    }
+</style>
+<script type="module">
+    import {IMAGE_SIZES} from '/js/constatnts.js';
+    const imageContainer = document.getElementById('image');
+    AP.confluence.getMacroBody((macroBody) => {
+        const img = document.createElement("img")
+        img.src = 'data:image/x-png;base64, ' + macroBody;
+        imageContainer.appendChild(img);
+    });
+    AP.confluence.getMacroData(async (data) => {
+        if (data.caption) {
+            document.getElementById('caption').innerText = data.caption;
+        }
+        imageContainer.style.width = `${IMAGE_SIZES[data.size || "small"].width}px`;
+    });
+</script>
