@@ -1,8 +1,8 @@
 {
-  "key": "mermaid-chart-app-for-confluence",
-  "name": "Mermaid Chart for Confluence",
-  "description": "Official Mermaid Chart App for Confluence",
-  "baseUrl": "https://confluence.mermaidchart.com",
+  "key": "mermaid-chart-app-for-jira",
+  "name": "Mermaid Chart for Jira",
+  "description": "Official Mermaid Chart App for Jira",
+  "baseUrl": "https://jira.mermaidchart.com",
   "vendor": {
     "name": "Mermaid Chart Inc",
     "url": "http://www.mermaidchart.com",
@@ -11,8 +11,8 @@
     }
   },
   "links": {
-    "self": "https://confluence.mermaidchart.com",
-    "artifact": "https://confluence.mermaidchart.com"
+    "self": "https://jira.mermaidchart.com",
+    "artifact": "https://jira.mermaidchart.com"
   },
   "authentication": {
     "type": "jwt"
