@@ -7,7 +7,7 @@
     "node" : ">=19.0.0"
   },
   "scripts": {
-    "start": "node scripts/server.js",
+    "start": "NODE_ENV=development MC_CLIENT_ID=6643413f-36fe-41f5-83b6-18674ec599f0 MC_BASE_URL=https://test.mermaidchart.com node scripts/server.js",
     "watch-server": "nodemon -e js,hbs scripts/server.js",
     "lint": "eslint app.js routes"
   },

@@ -1,9 +1,19 @@
 {
-  "key": "mermaid-chart-app",
-  "name": "Mermaid chart application",
-  "description": "Mermaid chart application",
-  "//baseUrl": "{{localBaseUrl}}",
-  "baseUrl": "https://confluencetest.mermaidchart.com",
+  "key": "mermaid-chart-app-for-jira",
+  "name": "Mermaid Chart for Jira",
+  "description": "Official Mermaid Chart App for Jira",
+  "baseUrl": "https://jiratest.mermaidchart.com",
+  "vendor": {
+    "name": "Mermaid Chart Inc",
+    "url": "http://www.mermaidchart.com",
+    "_links": {
+      "learnMore": "https://www.mermaidchart.com/plugins"
+    }
+  },
+  "links": {
+    "self": "https://jira.mermaidchart.com",
+    "artifact": "https://jira.mermaidchart.com"
+  },
   "authentication": {
     "type": "jwt"
   },
@@ -15,35 +25,25 @@
     "signed-install": true
   },
   "modules": {
-    "dynamicContentMacros": [
+    "jiraIssueContents": [
       {
-        "key": "mermaid",
-        "name": {
-          "value": "Mermaid chart"
-        },
         "icon": {
           "width": 80,
           "height": 80,
           "url": "/icon_80x80.png"
         },
-        "url": "/viewer",
-        "description": {
-          "value": "Insert Mermaid chart"
+        "target": {
+          "type": "web_panel",
+          "url": "/issue-content?issueKey={issue.key}"
         },
-        "outputType": "block",
-        "bodyType": "plain-text",
-        "editor": {
-          "url": "/editor",
-          "width": "95%",
-          "height": "95%",
-          "cacheable": false,
-          "editTitle": {
-            "value": "Edit diagram"
-          },
-          "insertTitle": {
-            "value": "Insert diagram"
-          }
-        }
+        "tooltip": {
+          "value": "This is a tooltip"
+        },
+        "jiraNativeAppsEnabled": false,
+        "name": {
+          "value": "MermaidCharts"
+        },
+        "key": "jira-issue-content"
       }
     ]
   }
