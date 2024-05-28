@@ -1,19 +1,9 @@
 {
-  "key": "mermaid-chart-app-for-jira",
-  "name": "Mermaid Chart for Jira",
-  "description": "Official Mermaid Chart App for Jira",
-  "baseUrl": "https://jira.mermaidchart.com",
-  "vendor": {
-    "name": "Mermaid Chart Inc",
-    "url": "http://www.mermaidchart.com",
-    "_links": {
-      "learnMore": "https://www.mermaidchart.com/plugins"
-    }
-  },
-  "links": {
-    "self": "https://jira.mermaidchart.com",
-    "artifact": "https://jira.mermaidchart.com"
-  },
+  "key": "mermaid-chart-app",
+  "name": "Mermaid chart application",
+  "description": "Mermaid chart application",
+  "//baseUrl": "{{localBaseUrl}}",
+  "baseUrl": "https://confluencetest.mermaidchart.com",
   "authentication": {
     "type": "jwt"
   },
@@ -38,7 +28,7 @@
         },
         "url": "/viewer",
         "description": {
-          "value": "Insert Mermaid chart diagram"
+          "value": "Insert Mermaid chart"
         },
         "outputType": "block",
         "bodyType": "plain-text",
