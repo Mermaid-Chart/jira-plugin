@@ -124,6 +124,11 @@ app.use(addon.middleware());
 const staticDir = path.join(process.cwd(), "public");
 app.use(express.static(staticDir));
 
+// Add an hbs helper to fingerprint static resource urls
+hbs.registerHelper("furl", function (url) {
+  return app.locals.furl(url);
+});
+
 // Atlassian security policy requirements
 // http://go.atlassian.com/security-requirements-for-cloud-apps
 app.use(nocache());

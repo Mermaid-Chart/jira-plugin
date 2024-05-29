@@ -6,7 +6,7 @@
 
 ```
 NODE_ENV=production
-MC_CLIENT_ID=839d35ba-cfee-4c98-8cee-88f2d2caa0c4
+MC_CLIENT_ID=6643413f-36fe-41f5-83b6-18674ec599f0
 MC_BASE_URL=https://test.mermaidchart.com
 ```
 
@@ -50,8 +50,8 @@ window.CP.saveData({
 3. Set up environment variables:
 
 ```
-MC_CLIENT_ID=839d35ba-cfee-4c98-8cee-88f2d2caa0c4
-MC_BASE_URL=https://test.mermaidchart.com
+MC_CLIENT_ID=6643413f-36fe-41f5-83b6-18674ec599f0
+MC_BASE_URL=https://jiratest.mermaidchart.com
 ```
 
 4. Start application `npm run start`
