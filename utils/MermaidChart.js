@@ -2,8 +2,6 @@ import { v4 as uuid } from "uuid";
 import fetch from "node-fetch";
 import { getEncodedSHA256Hash } from "./index.js";
 
-// const defaultBaseURL = 'https://test.mermaidchart.com';
-
 const CLIENT_KEY = "all";
 
 class MermaidChart {
@@ -91,7 +89,7 @@ class MermaidChart {
       redirect_uri: this.redirectURI,
       response_type: "code",
       code_challenge_method: "S256",
-      //code_challenge: await getEncodedSHA256Hash(codeVerifier),
+      code_challenge: await getEncodedSHA256Hash(codeVerifier),
       state: stateID,
       scope: scope ?? "email",
     };
