@@ -1,20 +1,20 @@
 {{!< layout}}
 <div class="aui-group">
     <div class="aui-item">
-          <div id="images" style="display: flex; overflow-x: scroll;">
+        <div id="images" style="display: flex; overflow-x: scroll;">
             {{#each images}}
-              <div style="position: relative; margin: 5px;">
-                <img src="{{this.url}}" alt="{{this.name}}" style="width: 150px; height: 150px;">
-                <button onclick="viewDiagram('{{this.url}}')" style="position: absolute; top: 5px; left: 5px;">View</button>
-                <form action="/delete-diagram" method="POST" style="position: absolute; top: 5px; right: 5px;">
-                  <input type="hidden" name="issueKey" value="{{../issueKey}}">
-                  <input type="hidden" name="diagramId" value="{{this.id}}">
-                  <button type="submit">X</button>
-                </form>
-              </div>
+                <div style="position: relative; margin: 5px;">
+                    <img src="{{this.url}}" alt="{{this.name}}" style="width: 150px; height: 150px;">
+                    <button onclick="viewDiagram('{{this.url}}')" style="position: absolute; top: 5px; left: 5px;">View</button>
+                    <form action="/delete-diagram" method="POST" style="position: absolute; top: 5px; right: 5px;">
+                        <input type="hidden" name="issueKey" value="{{../issueKey}}">
+                        <input type="hidden" name="diagramId" value="{{this.id}}">
+                        <button type="submit">X</button>
+                    </form>
+                </div>
             {{/each}}
-          </div>
-        
+        </div>
+
         <button onclick="openChartSelect()">Add Chart</button>
         <button onclick="viewDiagram(true)">View</button>
         {{!-- <button id="button-add" onclick="openChartSelect()" class="aui-button aui-button-primary">
@@ -83,20 +83,23 @@
     }
 
     function viewDiagram(url) {
-      //window.open(url, '_blank');
+        //window.open(url, '_blank');
 
-      AP.dialog.create({
-        key: 'dialog-module-editor',
-        width: '700px',
-        height: '400px',
-        chrome: true,
-        buttons: [
-          /*{
-            text: 'Close',
-            identifier: 'mc-close-button'
-          }*/
-        ]
-      }).on("close", closeCallback);
+        AP.dialog.create({
+            key: 'dialog-module-select',
+            width: '700px',
+            height: '400px',
+            chrome: true,
+            customData: {
+                data: "data1"
+            },
+            buttons: [
+                /*{
+                  text: 'Close',
+                  identifier: 'mc-close-button'
+                }*/
+            ]
+        }).on("close", closeCallback);
     }
 
     function closeCallback() {
@@ -104,19 +107,19 @@
     }
 
     function deleteDiagram(issueKey, diagramId) {
-      fetch('/delete-chart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ issueKey, diagramId })
-      }).then(() => {
-        location.reload();
-      });
+        fetch('/delete-chart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ issueKey, diagramId })
+        }).then(() => {
+            location.reload();
+        });
     }
 
-  /// Event and dialog emmiting
-  AP.events.on('loginEvent', function(){
-    console.log("Log in");
-  });
+    /// Event and dialog emmiting
+    AP.events.on('loginEvent', function(){
+        console.log("Log in");
+    });
 
 </script>
 <script type="module">
@@ -124,6 +127,6 @@
 
     console.log(images);
 
-    
+
 
 </script>

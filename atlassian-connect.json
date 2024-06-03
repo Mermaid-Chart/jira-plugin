@@ -57,6 +57,17 @@
           }
         },
         "key": "dialog-module-editor"
+      },
+      {
+        "url": "/select",
+        "options": {
+          "height": "200px",
+          "width": "300px",
+          "header": {
+            "value": "MermaidChart"
+          }
+        },
+        "key": "dialog-module-select"
       }
     ]
   }
