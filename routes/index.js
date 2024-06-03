@@ -66,24 +66,24 @@ export default function routes(app, addon) {
   ////
   app.get("/issue-content", addon.authenticate(), async (req, res) => {
     const issueKey = req.query.issueKey;
-    const images = [
-      {
-        id: 1,
-        name: "name",
-        url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
-      },
-      // {
-      //   id: 2,
-      //   name: "name",
-      //   url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
-      // },
-    ];
+    // const images = [
+    //   {
+    //     id: 1,
+    //     name: "name",
+    //     url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
+    //   },
+    //   {
+    //     id: 2,
+    //     name: "name",
+    //     url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
+    //   },
+    // ];
 
-    // const images = await getJiraIssueProperty(
-    //   req,
-    //   req.query.issueKey,
-    //   "diagrams"
-    // );
+    const images = await getJiraIssueProperty(
+      req,
+      req.query.issueKey,
+      "diagrams"
+    );
 
     // const auth = user ? {} : await mermaidAPI.getAuthorizationData();
     //const auth = await mermaidAPI.getAuthorizationData();
