@@ -86,9 +86,9 @@ export default function routes(app, addon) {
     );
 
     // const auth = user ? {} : await mermaidAPI.getAuthorizationData();
-    //const auth = await mermaidAPI.getAuthorizationData();
-    // console.log("auth");
-    // console.log(auth);
+    const auth = await mermaidAPI.getAuthorizationData();
+    console.log("auth");
+    console.log(auth);
 
     //await getJiraIssueProperty(issueKey, "diagrams");
     res.render("issue-content.hbs", {
