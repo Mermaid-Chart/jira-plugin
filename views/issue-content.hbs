@@ -16,6 +16,7 @@
           </div>
         
         <button onclick="openChartSelect()">Add Chart</button>
+        <button onclick="viewDiagram(true)">View</button>
         {{!-- <button id="button-add" onclick="openChartSelect()" class="aui-button aui-button-primary">
             <span class="picker-inline-button__text">Add diagram</span>
         </button> --}}
@@ -82,7 +83,24 @@
     }
 
     function viewDiagram(url) {
-      window.open(url, '_blank');
+      //window.open(url, '_blank');
+
+      AP.dialog.create({
+        key: 'dialog-module-editor',
+        width: '700px',
+        height: '400px',
+        chrome: true,
+        buttons: [
+          /*{
+            text: 'Close',
+            identifier: 'mc-close-button'
+          }*/
+        ]
+      }).on("close", closeCallback);
+    }
+
+    function closeCallback() {
+
     }
 
     function deleteDiagram(issueKey, diagramId) {
@@ -94,6 +112,12 @@
         location.reload();
       });
     }
+
+  /// Event and dialog emmiting
+  AP.events.on('loginEvent', function(){
+    console.log("Log in");
+  });
+
 </script>
 <script type="module">
     const button = document.getElementById('button-add')[0];

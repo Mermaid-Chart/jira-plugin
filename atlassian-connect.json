@@ -41,9 +41,22 @@
         },
         "jiraNativeAppsEnabled": false,
         "name": {
-          "value": "MermaidCharts"
+          "value": "MermaidChart"
         },
         "key": "jira-issue-content"
+      }
+    ],
+    "dialogs": [
+      {
+        "url": "/editor",
+        "options": {
+          "height": "200px",
+          "width": "300px",
+          "header": {
+            "value": "MermaidChart"
+          }
+        },
+        "key": "dialog-module-editor"
       }
     ]
   }
