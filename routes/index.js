@@ -96,9 +96,8 @@ export default function routes(app, addon) {
       images,
       text: "text",
       MC_BASE_URL: MC_BASE_URL,
-      // ,
-      // loginURL: auth.url,
-      // loginState: auth.state,
+      loginURL: auth.url,
+      loginState: auth.state,
     });
   });
 
