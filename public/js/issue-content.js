@@ -142,7 +142,7 @@ function App() {
       <div>
         <p>Visualize your task with diagrams</p>
       </div>
-      <button onclick="${connectToMermaidClick}">Connect</button>
+      <button onclick="${(e) => connectToMermaidClick()}">Connect</button>
       <button onclick="${(e) => viewDiagramClick("")}">View</button>
     `;
   }
