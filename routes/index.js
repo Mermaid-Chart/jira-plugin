@@ -135,6 +135,7 @@ export default function routes(app, addon) {
     res.render("select.hbs", {
       MC_BASE_URL: MC_BASE_URL,
       mcAccessToken: user ? access_token : "",
+      user: user ? JSON.stringify(user) : "null",
     });
   });
 

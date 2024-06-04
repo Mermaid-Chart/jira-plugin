@@ -17,8 +17,11 @@ function App() {
   //   return html` <${Login} onLogin="${onLogin}" /> `;
   // }
 
+  console.log("accessToken");
+  console.log(accessToken);
+
   const buildUrl = (pathname) => {
-    return `${MC_BASE_URL}/oauth/frame/?token=${mcAccessToken}&redirect=${pathname}`;
+    return `${MC_BASE_URL}/oauth/frame/?token=${accessToken}&redirect=${pathname}`;
   };
 
   // buildUrl(
@@ -42,4 +45,4 @@ function App() {
   // `;
 }
 
-render(html` <${App} />`, document.getElementById("editor-content"));
+render(html` <${App} />`, document.getElementById("selector-content"));
