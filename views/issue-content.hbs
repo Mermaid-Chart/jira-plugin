@@ -27,6 +27,7 @@
 </div>
 </div>
 <script>
+    import { useState } from "https://esm.sh/preact/hooks";
     /*function openChartSelect() {
         window.AP.dialog.create({
             key: 'editor',
@@ -104,7 +105,7 @@
             height: '400px',
             chrome: true,
             customData: {
-                baseUrl            
+                baseUrl: MC_BASE_URL          
             },
             buttons: [
                 /*{
@@ -136,6 +137,6 @@
 
 </script>
 <script type="module">
-    import { useState } from "https://esm.sh/preact/hooks";
+    
     console.log(images);
 </script>
