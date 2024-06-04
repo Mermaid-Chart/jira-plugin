@@ -63,7 +63,6 @@ export default function routes(app, addon) {
     });
   };
 
-  ////
   app.get("/issue-content", addon.authenticate(), async (req, res) => {
     const issueKey = req.query.issueKey;
     const charts = [
@@ -84,18 +83,25 @@ export default function routes(app, addon) {
     //   "diagrams"
     // );
 
-    // const auth = user ? {} : await mermaidAPI.getAuthorizationData();
-    await mermaidAPI.getAuthorizationData();
-    console.log("auth");
-    console.log(auth);
+    let access_token, user;
+    try {
+      access_token = await fetchToken(
+        req.context.http,
+        req.context.userAccountId
+      );
+      user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
+    } catch (e) {}
 
-    //await getJiraIssueProperty(issueKey, "diagrams");
+    const auth = user ? {} : await mermaidAPI.getAuthorizationData();
+
     res.render("issue-content.hbs", {
       issueKey,
       charts,
       MC_BASE_URL: MC_BASE_URL,
       loginURL: auth.url,
       loginState: auth.state,
+      mcAccessToken: user ? access_token : "",
+      user: user ? JSON.stringify(user) : "null",
     });
   });
 
