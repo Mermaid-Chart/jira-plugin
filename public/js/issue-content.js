@@ -64,7 +64,7 @@ function App() {
     return false;
   };
 
-  const viewDiagraClick = (url) => {
+  const viewDiagramClick = (url) => {
     //window.open(url, '_blank');
 
     AP.dialog
@@ -117,7 +117,7 @@ function App() {
               style="width: 150px; height: 150px;"
             />
             <button
-              onclick="${viewDiagram(image.url)}"
+              onclick="${(e) => viewDiagramClick(image.url)}"
               style="position: absolute; top: 5px; left: 5px;"
             >
               View
@@ -135,15 +135,15 @@ function App() {
         )}
       </div>
 
-      <button onclick="${addChartClick()}">Add Chart</button>
+      <button onclick="${addChartClick}">Add Chart</button>
     `;
   } else {
     return html`
       <div>
         <p>Visualize your task with diagrams</p>
       </div>
-      <button onclick="${connectToMermaidClick()}">Connect</button>
-      <button onclick="${viewDiagraClick(true)}">View</button>
+      <button onclick="${connectToMermaidClick}">Connect</button>
+      <button onclick="${(e) => viewDiagramClick("")}">View</button>
     `;
   }
 }
