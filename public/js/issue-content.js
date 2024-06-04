@@ -15,7 +15,7 @@ function App() {
 
   console.log("loginURL", loginURL);
 
-  function openChartSelect() {
+  const connectToMermaidClick = () => {
     const width = 500;
     const height = 650;
     const left = screen.width / 2 - width / 2;
@@ -62,9 +62,9 @@ function App() {
     timeout = setTimeout(callback, 500);
 
     return false;
-  }
+  };
 
-  function viewDiagram(url) {
+  const viewDiagraClick = (url) => {
     //window.open(url, '_blank');
 
     AP.dialog
@@ -84,9 +84,11 @@ function App() {
         ],
       })
       .on("close", closeCallback);
-  }
+  };
 
   function closeCallback() {}
+
+  const addChartClick = () => {};
 
   function deleteDiagram(issueKey, diagramId) {
     fetch("/delete-chart", {
@@ -114,7 +116,7 @@ function App() {
               style="width: 150px; height: 150px;"
             />
             <button
-              onclick="viewDiagram('${image.url}')"
+              onclick="${viewDiagram(image.url)}"
               style="position: absolute; top: 5px; left: 5px;"
             >
               View
@@ -131,14 +133,16 @@ function App() {
           </div>`
         )}
       </div>
+
+      <button onclick="${addChartClick()}">Add Chart</button>
     `;
   } else {
     return html`
       <div>
         <p>Visualize your task with diagrams</p>
       </div>
-      <button onclick="${openChartSelect()}">Connect</button>
-      <button onclick="${viewDiagram(true)}">View</button>
+      <button onclick="${connectToMermaidClick()}">Connect</button>
+      <button onclick="${viewDiagraClick(true)}">View</button>
     `;
   }
 }
