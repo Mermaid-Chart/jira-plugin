@@ -101,7 +101,7 @@ function App() {
   }
 
   /// Event and dialog emmiting
-  AP.events.on("loginEvent", function () {
+  window.AP.events.on("loginEvent", function () {
     console.log("Log in");
   });
 
