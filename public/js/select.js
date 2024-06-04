@@ -17,6 +17,9 @@ function App() {
   //   return html` <${Login} onLogin="${onLogin}" /> `;
   // }
 
+  console.log("accessToken");
+  console.log(accessToken);
+
   const buildUrl = (pathname) => {
     return `${MC_BASE_URL}/oauth/frame/?token=${accessToken}&redirect=${pathname}`;
   };
