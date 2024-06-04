@@ -101,23 +101,23 @@ function App() {
   window.AP.events.on("loginEvent", function () {
     console.log("Log in");
   });
-
+let imgs=[{url:'https://img.freepik.com/free-photo/view-of-3d-adorable-cat-with-fluffy-clouds_23-2151113419.jpg', name:'img'}, {url:'https://img.freepik.com/free-photo/view-of-3d-adorable-cat-with-fluffy-clouds_23-2151113419.jpg', name:'img'}]
   //if (accessToken) {
-  if (false) {
+  if (true) {
     return html`
       <div id="images" style="display: flex; overflow-x: scroll;">
-        ${images.map(
+        ${imgs.map(
           (image) => html` <div style="position: relative; margin: 5px;">
             <img
               src="${image.url}"
               alt="${image.name}"
-              style="width: 150px; height: 150px;"
+              style="width: 150px; height: 150px;  border: 1px solid grey;"
             />
             <button
               onclick="${(e) => viewDiagramClick(image.url)}"
-              style="position: absolute; top: 5px; left: 5px;"
+              style="position: absolute; bottom: 10px; left: 5px; background: none; border: none;"
             >
-              View
+              <img style="width: 20px; height: 20px;" src="../eye-icon.svg" alt="view"/>
             </button>
             <form
               action="/delete-diagram"
@@ -126,10 +126,16 @@ function App() {
             >
               <input type="hidden" name="issueKey" value="${issueKey}" />
               <input type="hidden" name="diagramId" value="${image.id}" />
-              <button type="submit">X</button>
+              <button type="submit" style="background: none; border: none;">
+                <img style="width: 15px; height: 15px;" src="../close-line-icon.svg" alt="view"/>
+              </button>
             </form>
+            <button type="submit" style="position: absolute; bottom: 10px; right: 5px; background: none; border: none;">
+              <img style="width: 15px; height: 15px;" src="../pencil-icon.svg" alt="view"/>
+            </button>
           </div>`
         )}
+        <div></div>
       </div>
 
       <button onclick="${addChartClick}">Add Chart</button>
