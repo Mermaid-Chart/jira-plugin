@@ -85,7 +85,7 @@ export default function routes(app, addon) {
     // );
 
     // const auth = user ? {} : await mermaidAPI.getAuthorizationData();
-    const auth = { url: "1", state: "1" }; // await mermaidAPI.getAuthorizationData();
+    await mermaidAPI.getAuthorizationData();
     console.log("auth");
     console.log(auth);
 
