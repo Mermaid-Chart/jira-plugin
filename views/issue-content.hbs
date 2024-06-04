@@ -46,7 +46,6 @@
 
     console.log("loginURL", loginURL);
 
-
     function openChartSelect() {
         const width = 500;
         const height = 650;
@@ -62,6 +61,7 @@
         const windowObjectReference = window.open(loginURL, 'loginWindow', options);
         windowObjectReference.focus();
 
+        let timeout;
         const [accessToken, setAccessToken] = useState(mcAccessToken);
         const [user, setUser] = useState(loggedUser);
 
@@ -136,10 +136,6 @@
 
 </script>
 <script type="module">
-    const button = document.getElementById('button-add')[0];
-
+    import { useState } from "https://esm.sh/preact/hooks";
     console.log(images);
-
-
-
 </script>
