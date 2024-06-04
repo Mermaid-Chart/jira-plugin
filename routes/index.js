@@ -3,7 +3,7 @@ import { MermaidChart } from "../utils/MermaidChart.js";
 
 const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
 const MC_CLIENT_ID =
-    process.env.MC_CLIENT_ID || "6643413f-36fe-41f5-83b6-18674ec599f0";
+  process.env.MC_CLIENT_ID || "6643413f-36fe-41f5-83b6-18674ec599f0";
 
 export default function routes(app, addon) {
   const mermaidAPI = new MermaidChart({
@@ -28,16 +28,16 @@ export default function routes(app, addon) {
 
     return new Promise((resolve, reject) => {
       httpClient.get(
-          {
-            url,
-            json: true,
-          },
-          (err, res, body) => {
-            if (err) {
-              return reject(err);
-            }
-            resolve(body.value || []);
+        {
+          url,
+          json: true,
+        },
+        (err, res, body) => {
+          if (err) {
+            return reject(err);
           }
+          resolve(body.value || []);
+        }
       );
     });
   };
@@ -48,17 +48,17 @@ export default function routes(app, addon) {
 
     return new Promise((resolve, reject) => {
       httpClient.put(
-          {
-            url,
-            json: true,
-            body: value,
-          },
-          (err, res, body) => {
-            if (err) {
-              return reject(err);
-            }
-            resolve(body);
+        {
+          url,
+          json: true,
+          body: value,
+        },
+        (err, res, body) => {
+          if (err) {
+            return reject(err);
           }
+          resolve(body);
+        }
       );
     });
   };
@@ -66,35 +66,33 @@ export default function routes(app, addon) {
   ////
   app.get("/issue-content", addon.authenticate(), async (req, res) => {
     const issueKey = req.query.issueKey;
-    // const images = [
-    //   {
-    //     id: 1,
-    //     name: "name",
-    //     url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "name",
-    //     url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
-    //   },
-    // ];
+    const charts = [
+      {
+        id: 1,
+        title: "name",
+        projectID: 1,
+        documentID: 1,
+        major: 1,
+        minor: 1,
+        url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
+      },
+    ];
 
-    const images = await getJiraIssueProperty(
-      req,
-      req.query.issueKey,
-      "diagrams"
-    );
+    // const images = await getJiraIssueProperty(
+    //   req,
+    //   req.query.issueKey,
+    //   "diagrams"
+    // );
 
     // const auth = user ? {} : await mermaidAPI.getAuthorizationData();
-    const auth = await mermaidAPI.getAuthorizationData();
+    const auth = { url: "1", state: "1" }; // await mermaidAPI.getAuthorizationData();
     console.log("auth");
     console.log(auth);
 
     //await getJiraIssueProperty(issueKey, "diagrams");
     res.render("issue-content.hbs", {
       issueKey,
-      images,
-      text: "text",
+      charts,
       MC_BASE_URL: MC_BASE_URL,
       loginURL: auth.url,
       loginState: auth.state,
@@ -105,8 +103,8 @@ export default function routes(app, addon) {
     let access_token, user;
     try {
       access_token = await fetchToken(
-          req.context.http,
-          req.context.userAccountId
+        req.context.http,
+        req.context.userAccountId
       );
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {}
@@ -126,8 +124,8 @@ export default function routes(app, addon) {
     let access_token, user;
     try {
       access_token = await fetchToken(
-          req.context.http,
-          req.context.userAccountId
+        req.context.http,
+        req.context.userAccountId
       );
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {}

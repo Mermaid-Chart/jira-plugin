@@ -24,25 +24,17 @@ function App() {
     return `${MC_BASE_URL}/oauth/frame/?token=${accessToken}&redirect=${pathname}`;
   };
 
-  // buildUrl(
+  // const iframeUrl = buildUrl(
   //   `/app/projects/${document.projectID}/diagrams/${document.documentID}/version/v.${document.major}.${document.minor}/edit`
-  // )
+  // );
 
   const iframeURL = buildUrl(`/app/plugins/confluence/select`);
-  console.log("buildUrl:", buildUrl);
+  console.log("buildUrl:", iframeURL);
 
   if (iframeURL) {
     //<iframe src="${iframeURL}" name="${JSON.stringify(iframeData)}" />
     return html` <iframe src="${iframeURL}" name="" /> `;
   }
-
-  // return html`
-  //   <${Form}
-  //     user="${user}"
-  //     onLogout="${onLogout}"
-  //     mcAccessToken="${accessToken}"
-  //   />
-  // `;
 }
 
 render(html` <${App} />`, document.getElementById("selector-content"));

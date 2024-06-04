@@ -8,6 +8,7 @@ let timeout;
 function App() {
   const [accessToken, setAccessToken] = useState(mcAccessToken);
   const [user, setUser] = useState(loggedUser);
+  const [charts, setCharts] = useState(savedCharts);
 
   const onLogin = (token, user) => {
     setAccessToken(token);
@@ -15,6 +16,9 @@ function App() {
   };
 
   console.log("loginURL", loginURL);
+  console.log(charts);
+  console.log(accessToken);
+  console.log(user);
 
   const connectToMermaidClick = () => {
     const width = 500;
@@ -72,6 +76,7 @@ function App() {
         chrome: true,
         customData: {
           baseUrl: MC_BASE_URL,
+          accessToken: accessToken,
         },
         buttons: [
           /*{
@@ -97,27 +102,31 @@ function App() {
     });
   }
 
-  /// Event and dialog emmiting
-  window.AP.events.on("loginEvent", function () {
-    console.log("Log in");
-  });
-let imgs=[{url:'https://img.freepik.com/free-photo/view-of-3d-adorable-cat-with-fluffy-clouds_23-2151113419.jpg', name:'img'}, {url:'https://img.freepik.com/free-photo/view-of-3d-adorable-cat-with-fluffy-clouds_23-2151113419.jpg', name:'img'}]
+  //   <img
+  //         src="data:image/x-png;base64, ${image.diagramImage}"
+  //         alt="${image.title}"
+  //     />
   //if (accessToken) {
   if (true) {
     return html`
       <div id="images" style="display: flex; overflow-x: scroll;">
-        ${imgs.map(
+        ${charts.map(
           (image) => html` <div style="position: relative; margin: 5px;">
             <img
               src="${image.url}"
-              alt="${image.name}"
+              alt="${image.title}"
               style="width: 150px; height: 150px;  border: 1px solid grey;"
             />
+
             <button
               onclick="${(e) => viewDiagramClick(image.url)}"
               style="position: absolute; bottom: 10px; left: 5px; background: none; border: none;"
             >
-              <img style="width: 20px; height: 20px;" src="../eye-icon.svg" alt="view"/>
+              <img
+                style="width: 20px; height: 20px;"
+                src="../eye-icon.svg"
+                alt="view"
+              />
             </button>
             <form
               action="/delete-diagram"
@@ -127,11 +136,22 @@ let imgs=[{url:'https://img.freepik.com/free-photo/view-of-3d-adorable-cat-with-
               <input type="hidden" name="issueKey" value="${issueKey}" />
               <input type="hidden" name="diagramId" value="${image.id}" />
               <button type="submit" style="background: none; border: none;">
-                <img style="width: 15px; height: 15px;" src="../close-line-icon.svg" alt="view"/>
+                <img
+                  style="width: 15px; height: 15px;"
+                  src="../close-line-icon.svg"
+                  alt="view"
+                />
               </button>
             </form>
-            <button type="submit" style="position: absolute; bottom: 10px; right: 5px; background: none; border: none;">
-              <img style="width: 15px; height: 15px;" src="../pencil-icon.svg" alt="view"/>
+            <button
+              type="submit"
+              style="position: absolute; bottom: 10px; right: 5px; background: none; border: none;"
+            >
+              <img
+                style="width: 15px; height: 15px;"
+                src="../pencil-icon.svg"
+                alt="view"
+              />
             </button>
           </div>`
         )}
