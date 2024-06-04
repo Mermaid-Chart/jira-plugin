@@ -3,6 +3,7 @@ import { useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
 
 const html = htm.bind(h);
+let timeout;
 
 function App() {
   const [accessToken, setAccessToken] = useState(mcAccessToken);
@@ -29,10 +30,6 @@ function App() {
 
     const windowObjectReference = window.open(loginURL, "loginWindow", options);
     windowObjectReference.focus();
-
-    let timeout;
-    const [accessToken, setAccessToken] = useState(mcAccessToken);
-    const [user, setUser] = useState(loggedUser);
 
     const onLogin = (token, user) => {
       setAccessToken(token);
