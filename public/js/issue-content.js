@@ -105,7 +105,8 @@ function App() {
     console.log("Log in");
   });
 
-  if (accessToken) {
+  //if (accessToken) {
+  if (false) {
     return html`
       <div id="images" style="display: flex; overflow-x: scroll;">
         ${images.map(
