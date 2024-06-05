@@ -91,8 +91,8 @@ export default function routes(app, addon) {
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {}
 
-    //const auth = user ? {} : await mermaidAPI.getAuthorizationData();
-    const auth = { url: "", state: "" };
+    const auth = user ? {} : await mermaidAPI.getAuthorizationData();
+    // const auth = { url: "", state: "" };
 
     res.render("issue-content.hbs", {
       issueKey,
