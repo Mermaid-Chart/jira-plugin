@@ -65,7 +65,7 @@ function App() {
     return false;
   };
 
-  const viewDiagramClick = (url) => {
+  const viewDiagramClick = (image) => {
     //window.open(url, '_blank');
 
     AP.dialog
@@ -75,6 +75,7 @@ function App() {
         height: "400px",
         chrome: true,
         customData: {
+          image ,
           baseUrl: MC_BASE_URL,
           accessToken: accessToken,
         },
@@ -140,8 +141,8 @@ function App() {
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
   //     />
-  if (accessToken) {
-    // if (true) {
+  //if (accessToken) {
+     if (true) {
     return html`
       <div id="images" style="display: flex; overflow-x: scroll;">
         ${charts.map(
@@ -153,7 +154,7 @@ function App() {
             />
 
             <button
-              onclick="${(e) => viewDiagramClick(image.url)}"
+              onclick="${(e) => viewDiagramClick(image)}"
               style="position: absolute; bottom: 10px; left: 5px; background: none; border: none;"
             >
               <img
@@ -162,10 +163,9 @@ function App() {
                 alt="view"
               />
             </button>
-            <form
-              action="/delete-diagram"
-              method="POST"
-              style="position: absolute; top: 5px; right: 5px;"
+            <button
+                onclick="${(e) => deleteDiagram()}"
+              style="position: absolute; top: 5px; right: 5px; background: none; border: none;"
             >
               <input type="hidden" name="issueKey" value="${issueKey}" />
               <input type="hidden" name="diagramId" value="${image.id}" />
@@ -173,11 +173,12 @@ function App() {
                 <img
                   style="width: 15px; height: 15px;"
                   src="../close-line-icon.svg"
-                  alt="view"
+                  alt="close"
                 />
               </button>
-            </form>
+            </button>
             <button
+                onclick="${(e) => editDiagramClick()}"
               type="submit"
               style="position: absolute; bottom: 10px; right: 5px; background: none; border: none;"
             >
@@ -186,10 +187,20 @@ function App() {
                 src="../pencil-icon.svg"
                 alt="view"
               />
-            </button>
+            </button >
+          
+            
           </div>`
         )}
-        <div></div>
+        <button
+            onclick="${addChartClick}"
+            style="width: 150px; height: 150px; margin: 5px; border: 1px solid grey; background: none; display: flex; align-items: center; justify-content: center">
+          <img
+              style="width: 40px; height: 40px;"
+              src="../plus-line-icon.svg"
+              alt="add"
+          />
+        </button>
       </div>
 
       <button onclick="${addChartClick}">Add Chart</button>

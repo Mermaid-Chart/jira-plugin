@@ -7,10 +7,12 @@ const html = htm.bind(h);
 function App() {
   const [accessToken, setAccessToken] = useState(mcAccessToken);
   const [user, setUser] = useState(loggedUser);
+  const [image, setImage] = useState(savedCharts);
 
   AP.dialog.getCustomData(function (customData) {
     console.log("customData");
     console.log(customData);
+    setImage(image);
   });
 
   console.log("accessToken");
@@ -21,7 +23,7 @@ function App() {
   // };
 
   const iframeUrl = buildUrl(
-    `/app/projects/${document.projectID}/diagrams/${document.documentID}/version/v.${document.major}.${document.minor}/edit`
+    `/app/projects/${image.projectID}/diagrams/${image.documentID}/version/v.${image.major}.${image.minor}/edit`
   );
 
   // const iframeURL = buildUrl(`/app/plugins/confluence/select`);
