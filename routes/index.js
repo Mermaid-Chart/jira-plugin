@@ -91,7 +91,9 @@ export default function routes(app, addon) {
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {}
 
-    const auth = user ? {} : await mermaidAPI.getAuthorizationData();
+    //const auth = user ? {} : await mermaidAPI.getAuthorizationData();
+    const auth = { url: "", state: "" };
+
     res.render("issue-content.hbs", {
       issueKey,
       charts: JSON.stringify(charts),
@@ -104,40 +106,14 @@ export default function routes(app, addon) {
   });
 
   app.get("/editor", addon.authenticate(), async (req, res) => {
-    let access_token, user;
-    try {
-      access_token = await fetchToken(
-        req.context.http,
-        req.context.userAccountId
-      );
-      user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
-    } catch (e) {}
-
-    const auth = user ? {} : await mermaidAPI.getAuthorizationData();
-
     res.render("editor.hbs", {
       MC_BASE_URL: MC_BASE_URL,
-      mcAccessToken: user ? access_token : "",
-      loginURL: auth.url,
-      loginState: auth.state,
-      user: user ? JSON.stringify(user) : "null",
     });
   });
 
   app.get("/select", addon.authenticate(), async (req, res) => {
-    let access_token, user;
-    try {
-      access_token = await fetchToken(
-        req.context.http,
-        req.context.userAccountId
-      );
-      user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
-    } catch (e) {}
-
     res.render("select.hbs", {
       MC_BASE_URL: MC_BASE_URL,
-      mcAccessToken: user ? access_token : "",
-      user: user ? JSON.stringify(user) : "null",
     });
   });
 

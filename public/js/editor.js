@@ -5,8 +5,8 @@ import htm from "https://esm.sh/htm";
 const html = htm.bind(h);
 
 function App() {
-  const [accessToken, setAccessToken] = useState(mcAccessToken);
-  const [user, setUser] = useState(loggedUser);
+  const [accessToken, setAccessToken] = useState(null);
+  // const [user, setUser] = useState(loggedUser);
   const [image, setImage] = useState(null);
 
   const [initialized, setInitialized] = useState(false);
@@ -16,6 +16,7 @@ function App() {
       console.log("customData");
       console.log(customData);
       setImage(customData.image);
+      setAccessToken(customData.accessToken);
       setInitialized(true);
     });
   }, []);
@@ -31,9 +32,9 @@ function App() {
     `;
   }
 
-  // const buildUrl = (pathname) => {
-  //   return `${MC_BASE_URL}/oauth/frame/?token=${accessToken}&redirect=${pathname}`;
-  // };
+  const buildUrl = (pathname) => {
+    return `${MC_BASE_URL}/oauth/frame/?token=${accessToken}&redirect=${pathname}`;
+  };
 
   const iframeURL = buildUrl(
     `/app/projects/${image.projectID}/diagrams/${image.documentID}/version/v.${image.major}.${image.minor}/edit`

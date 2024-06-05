@@ -5,8 +5,8 @@ import htm from "https://esm.sh/htm";
 const html = htm.bind(h);
 
 function App() {
-  const [accessToken, setAccessToken] = useState(mcAccessToken);
-  const [user, setUser] = useState(loggedUser);
+  const [accessToken, setAccessToken] = useState(null);
+  // const [user, setUser] = useState(loggedUser);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
