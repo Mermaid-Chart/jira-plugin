@@ -71,8 +71,8 @@ function App() {
     AP.dialog
       .create({
         key: "dialog-module-view",
-        width: "700px",
-        height: "400px",
+        width: "1100px",
+        height: "600px",
         chrome: true,
         customData: {
           image,
@@ -93,8 +93,8 @@ function App() {
     AP.dialog
       .create({
         key: "dialog-module-edit",
-        width: "700px",
-        height: "400px",
+        width: "1100px",
+        height: "600px",
         chrome: true,
         customData: {
             image,
@@ -111,8 +111,8 @@ function App() {
     AP.dialog
       .create({
         key: "dialog-module-select",
-        width: "700px",
-        height: "400px",
+        width: "1100px",
+        height: "600px",
         chrome: true,
         customData: {
           baseUrl: MC_BASE_URL,
@@ -138,6 +138,10 @@ function App() {
     });
   }
 
+  window.AP.events.on("dialog.submit", async (data) => {
+    console.log("submit", data);
+  });
+
   //   <img
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
@@ -153,7 +157,7 @@ function App() {
                     src="data:image/x-png;base64, ${image.diagramImage}"
               alt="${image.title}"
             />
-<div class="background"></div>
+            <div class="background"></div>
             <button
                     class="view-btn"
               onclick="${(e) => viewDiagramClick(image)}"
