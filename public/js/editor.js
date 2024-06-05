@@ -35,7 +35,7 @@ function App() {
   //   return `${MC_BASE_URL}/oauth/frame/?token=${accessToken}&redirect=${pathname}`;
   // };
 
-  const iframeUrl = buildUrl(
+  const iframeURL = buildUrl(
     `/app/projects/${image.projectID}/diagrams/${image.documentID}/version/v.${image.major}.${image.minor}/edit`
   );
 
