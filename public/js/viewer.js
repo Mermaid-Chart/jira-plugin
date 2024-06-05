@@ -38,7 +38,7 @@ function App() {
   return html`
     <img
       src="data:image/x-png;base64, ${image.diagramImage}"
-      alt="${image.title}"
+      alt=""
       style="width: 100%; height: 100%;  border: 1px solid grey;"
     />
   `;
