@@ -34,7 +34,7 @@
     z-index: 10;
 }
 .tile-image{
-    object-fit: cover;
+    object-fit: contain;
    width: 150px;
     height: 150px;
     border: 1px solid grey;
@@ -88,4 +88,13 @@ button{
     opacity: 0.55;
     transition: all 0.3s ease-in-out;
     z-index: 1;
+}
+.connect-btn{
+    border: solid var(--border-color) 1px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: white;
+        background-color: rgb(0, 82, 204);
+        padding: 6px 12px;
+        font-weight: bold;
 }

@@ -211,7 +211,7 @@ function App() {
       <div>
         <p>Visualize your task with diagrams</p>
       </div>
-      <button onclick="${(e) => connectToMermaidClick()}">Connect</button>`;
+      <button class="connect-btn" onclick="${(e) => connectToMermaidClick()}">Connect</button>`;
   }
 }
 
