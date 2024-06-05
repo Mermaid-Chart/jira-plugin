@@ -19,7 +19,6 @@ function App() {
   console.log(charts);
   console.log(accessToken);
   console.log(user);
-  console.log(savedCharts);
 
   const connectToMermaidClick = () => {
     const width = 500;

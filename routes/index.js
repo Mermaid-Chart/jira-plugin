@@ -75,6 +75,15 @@ export default function routes(app, addon) {
         minor: 1,
         url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
       },
+      {
+        id: 1,
+        title: "name",
+        projectID: 1,
+        documentID: 1,
+        major: 1,
+        minor: 1,
+        url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
+      },
     ];
 
     // const images = await getJiraIssueProperty(
@@ -93,10 +102,9 @@ export default function routes(app, addon) {
     } catch (e) {}
 
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
-
     res.render("issue-content.hbs", {
       issueKey,
-      charts,
+      charts: JSON.stringify(charts),
       MC_BASE_URL: MC_BASE_URL,
       loginURL: auth.url,
       loginState: auth.state,
