@@ -12,7 +12,7 @@ function App() {
     AP.dialog.getCustomData(function (customData) {
       console.log("customData");
       console.log(customData);
-      setImage(image);
+      setImage(customData.image);
       setInitialized(true);
     });
   }, []);
