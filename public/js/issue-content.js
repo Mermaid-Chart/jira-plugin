@@ -149,7 +149,7 @@ function App() {
         ${charts.map(
           (image) => html` <div style="position: relative; margin: 5px;">
             <img
-              src="${image.url}"
+                    src="data:image/x-png;base64, ${image.diagramImage}"
               alt="${image.title}"
               style="width: 150px; height: 150px;  border: 1px solid grey;"
             />
