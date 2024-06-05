@@ -5,25 +5,30 @@ import htm from "https://esm.sh/htm";
 const html = htm.bind(h);
 
 function App() {
-  // const [diagramImage, setDiagramImage] = useState(null);
-  // const [title, setTitle] = useState(null);
-  // const [url, setUrl] = useState(null);
-
   const [image, setImage] = useState(null);
+  const [initialized, setInitialized] = useState(false);
 
-  AP.dialog.getCustomData(function (customData) {
-    console.log("customData");
-    console.log(customData);
-    setImage(image);
-    // setDiagramImage(customData.diagramImage);
-    // setTitle(customData.title);
-    // setUrl(customData.url);
-  });
+  useEffect(() => {
+    AP.dialog.getCustomData(function (customData) {
+      console.log("customData");
+      console.log(customData);
+      setImage(image);
+      setInitialized(true);
+    });
+  }, []);
 
   // return html`<img
   //   src="data:image/x-png;base64, ${diagramImage}"
   //   alt="${title}"
   // /> `;
+
+  if (!initialized) {
+    return html`
+      <div id="page-spinner">
+        <img src="/spinner.svg" alt="Loading" />
+      </div>
+    `;
+  }
 
   return html`
     <img
