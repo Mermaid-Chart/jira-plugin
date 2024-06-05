@@ -30,9 +30,14 @@ function App() {
     `;
   }
 
+  //   <img
+  //         src="data:image/x-png;base64, ${image.diagramImage}"
+  //         src="${image.url}"
+  //         alt="${image.title}"
+  //     />
   return html`
     <img
-      src="${image.url}"
+      src="data:image/x-png;base64, ${image.diagramImage}"
       alt="${image.title}"
       style="width: 100%; height: 100%;  border: 1px solid grey;"
     />

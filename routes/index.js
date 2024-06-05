@@ -67,22 +67,13 @@ export default function routes(app, addon) {
     const issueKey = req.query.issueKey;
     const charts = [
       {
-        id: 1,
-        title: "name",
-        projectID: 1,
-        documentID: 1,
-        major: 1,
+        documentID: "e90d1a09-457a-463c-850f-6130612006d9",
+        projectID: "1ad8729f-9382-445f-a93b-a28ab6365822",
+        diagramImage:
+          "iVBORw0KGgoAAAANSUhEUgAADwAAAAxXCAYAAAB+WNrvAAAAAX…DAAAAAAAAAAAAAAAAAMBITA8pBXZMPpAAAAAASUVORK5CYII=",
+        major: 0,
         minor: 1,
-        url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
-      },
-      {
-        id: 1,
-        title: "name",
-        projectID: 1,
-        documentID: 1,
-        major: 1,
-        minor: 1,
-        url: "https://images.adsttc.com/media/images/5a0a/1feb/b22e/3847/6300/02a5/newsletter/2.jpg",
+        projectID: "1ad8729f-9382-445f-a93b-a28ab6365822",
       },
     ];
 

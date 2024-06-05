@@ -9,14 +9,27 @@ function App() {
   const [user, setUser] = useState(loggedUser);
   const [image, setImage] = useState(null);
 
-  AP.dialog.getCustomData(function (customData) {
-    console.log("customData");
-    console.log(customData);
-    setImage(image);
-  });
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    AP.dialog.getCustomData(function (customData) {
+      console.log("customData");
+      console.log(customData);
+      setImage(customData.image);
+      setInitialized(true);
+    });
+  }, []);
 
   console.log("accessToken");
   console.log(accessToken);
+
+  if (!initialized) {
+    return html`
+      <div id="page-spinner">
+        <img src="/spinner.svg" alt="Loading" />
+      </div>
+    `;
+  }
 
   // const buildUrl = (pathname) => {
   //   return `${MC_BASE_URL}/oauth/frame/?token=${accessToken}&redirect=${pathname}`;
