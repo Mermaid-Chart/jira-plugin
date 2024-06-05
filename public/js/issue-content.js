@@ -70,6 +70,44 @@ function App() {
 
     AP.dialog
       .create({
+        key: "dialog-module-view",
+        width: "700px",
+        height: "400px",
+        chrome: true,
+        customData: {
+          baseUrl: MC_BASE_URL,
+          accessToken: accessToken,
+        },
+        buttons: [
+          /*{
+            text: 'Close',
+            identifier: 'mc-close-button'
+          }*/
+        ],
+      })
+      .on("close", closeCallback);
+  };
+
+  const editDiagramClick = (url) => {
+    AP.dialog
+      .create({
+        key: "dialog-module-edit",
+        width: "700px",
+        height: "400px",
+        chrome: true,
+        customData: {
+          baseUrl: MC_BASE_URL,
+          accessToken: accessToken,
+        },
+      })
+      .on("close", closeCallback);
+  };
+
+  function closeCallback() {}
+
+  const addChartClick = () => {
+    AP.dialog
+      .create({
         key: "dialog-module-select",
         width: "700px",
         height: "400px",
@@ -80,17 +118,13 @@ function App() {
         },
         buttons: [
           /*{
-                  text: 'Close',
-                  identifier: 'mc-close-button'
-                }*/
+            text: 'Close',
+            identifier: 'mc-close-button'
+          }*/
         ],
       })
       .on("close", closeCallback);
   };
-
-  function closeCallback() {}
-
-  const addChartClick = () => {};
 
   function deleteDiagram(issueKey, diagramId) {
     fetch("/delete-chart", {
@@ -106,8 +140,8 @@ function App() {
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
   //     />
-  //if (accessToken) {
-  if (true) {
+  if (accessToken) {
+    // if (true) {
     return html`
       <div id="images" style="display: flex; overflow-x: scroll;">
         ${charts.map(
