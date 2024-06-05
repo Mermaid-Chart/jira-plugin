@@ -5,7 +5,6 @@ import htm from "https://esm.sh/htm";
 const html = htm.bind(h);
 
 function App() {
-  const [accessToken, setAccessToken] = useState(mcAccessToken);
   const [diagramImage, setDiagramImage] = useState(null);
   const [title, setTitle] = useState(null);
   const [url, setUrl] = useState(null);
@@ -19,10 +18,18 @@ function App() {
     setUrl(customData.url);
   });
 
-  return html`<img
-    src="data:image/x-png;base64, ${diagramImage}"
-    alt="${title}"
-  /> `;
+  // return html`<img
+  //   src="data:image/x-png;base64, ${diagramImage}"
+  //   alt="${title}"
+  // /> `;
+
+  return html`
+    <img
+      src="${url}"
+      alt="${title}"
+      style="width: 150px; height: 150px;  border: 1px solid grey;"
+    />
+  `;
 }
 
 render(html` <${App} />`, document.getElementById("selector-content"));

@@ -113,7 +113,7 @@ export default function routes(app, addon) {
     });
   });
 
-  app.get("/editor", async (req, res) => {
+  app.get("/editor", addon.authenticate(), async (req, res) => {
     let access_token, user;
     try {
       access_token = await fetchToken(
@@ -134,7 +134,7 @@ export default function routes(app, addon) {
     });
   });
 
-  app.get("/select", async (req, res) => {
+  app.get("/select", addon.authenticate(), async (req, res) => {
     let access_token, user;
     try {
       access_token = await fetchToken(
@@ -145,23 +145,6 @@ export default function routes(app, addon) {
     } catch (e) {}
 
     res.render("select.hbs", {
-      MC_BASE_URL: MC_BASE_URL,
-      mcAccessToken: user ? access_token : "",
-      user: user ? JSON.stringify(user) : "null",
-    });
-  });
-
-  app.get("/viewer", async (req, res) => {
-    let access_token, user;
-    try {
-      access_token = await fetchToken(
-        req.context.http,
-        req.context.userAccountId
-      );
-      user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
-    } catch (e) {}
-
-    res.render("viewer.hbs", {
       MC_BASE_URL: MC_BASE_URL,
       mcAccessToken: user ? access_token : "",
       user: user ? JSON.stringify(user) : "null",
