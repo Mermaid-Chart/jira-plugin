@@ -75,7 +75,7 @@ function App() {
         height: "400px",
         chrome: true,
         customData: {
-          image ,
+          image,
           baseUrl: MC_BASE_URL,
           accessToken: accessToken,
         },
@@ -141,8 +141,8 @@ function App() {
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
   //     />
-  //if (accessToken) {
-     if (true) {
+  if (accessToken) {
+    //  if (true) {
     return html`
       <div id="images" style="display: flex; overflow-x: scroll;">
         ${charts.map(
@@ -164,7 +164,7 @@ function App() {
               />
             </button>
             <button
-                onclick="${(e) => deleteDiagram()}"
+              onclick="${(e) => deleteDiagram()}"
               style="position: absolute; top: 5px; right: 5px; background: none; border: none;"
             >
               <input type="hidden" name="issueKey" value="${issueKey}" />
@@ -178,7 +178,7 @@ function App() {
               </button>
             </button>
             <button
-                onclick="${(e) => editDiagramClick()}"
+              onclick="${(e) => editDiagramClick()}"
               type="submit"
               style="position: absolute; bottom: 10px; right: 5px; background: none; border: none;"
             >
@@ -187,18 +187,17 @@ function App() {
                 src="../pencil-icon.svg"
                 alt="view"
               />
-            </button >
-          
-            
+            </button>
           </div>`
         )}
         <button
-            onclick="${addChartClick}"
-            style="width: 150px; height: 150px; margin: 5px; border: 1px solid grey; background: none; display: flex; align-items: center; justify-content: center">
+          onclick="${addChartClick}"
+          style="width: 150px; height: 150px; margin: 5px; border: 1px solid grey; background: none; display: flex; align-items: center; justify-content: center"
+        >
           <img
-              style="width: 40px; height: 40px;"
-              src="../plus-line-icon.svg"
-              alt="add"
+            style="width: 40px; height: 40px;"
+            src="../plus-line-icon.svg"
+            alt="add"
           />
         </button>
       </div>
