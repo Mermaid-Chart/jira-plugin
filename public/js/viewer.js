@@ -39,7 +39,7 @@ function App() {
     <img
       src="data:image/x-png;base64, ${image.diagramImage}"
       alt=""
-      style="width: 100%; height: 100%;  border: 1px solid grey; object-fit: contain;"
+      style="border: 1px solid grey; object-fit: contain;"
     />
   `;
 }
