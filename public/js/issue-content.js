@@ -202,17 +202,13 @@ function App() {
           />
         </button>
       </div>
-
-      <button onclick="${addChartClick}">Add Chart</button>
-    `;
+          `;
   } else {
     return html`
       <div>
         <p>Visualize your task with diagrams</p>
       </div>
-      <button onclick="${(e) => connectToMermaidClick()}">Connect</button>
-      <button onclick="${(e) => viewDiagramClick("")}">View</button>
-    `;
+      <button onclick="${(e) => connectToMermaidClick()}">Connect</button>`;
   }
 }
 
