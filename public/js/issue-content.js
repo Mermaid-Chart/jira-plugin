@@ -72,7 +72,7 @@ function App() {
       .create({
         key: "dialog-module-view",
         width: "1100px",
-        height: "600px",
+        height: "500px",
         chrome: true,
         customData: {
           image,
@@ -94,7 +94,7 @@ function App() {
       .create({
         key: "dialog-module-edit",
         width: "1100px",
-        height: "600px",
+        height: "500px",
         chrome: true,
         customData: {
             image,
@@ -112,7 +112,7 @@ function App() {
       .create({
         key: "dialog-module-select",
         width: "1100px",
-        height: "600px",
+        height: "500px",
         chrome: true,
         customData: {
           baseUrl: MC_BASE_URL,
