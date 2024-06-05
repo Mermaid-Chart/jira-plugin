@@ -7,7 +7,7 @@ const html = htm.bind(h);
 function App() {
   const [accessToken, setAccessToken] = useState(mcAccessToken);
   const [user, setUser] = useState(loggedUser);
-  const [image, setImage] = useState(savedCharts);
+  const [image, setImage] = useState(null);
 
   AP.dialog.getCustomData(function (customData) {
     console.log("customData");

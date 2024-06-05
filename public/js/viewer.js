@@ -9,12 +9,12 @@ function App() {
   // const [title, setTitle] = useState(null);
   // const [url, setUrl] = useState(null);
 
-  const [image, setImage] = useState(savedCharts);
+  const [image, setImage] = useState(null);
 
   AP.dialog.getCustomData(function (customData) {
     console.log("customData");
     console.log(customData);
-setImage(image);
+    setImage(image);
     // setDiagramImage(customData.diagramImage);
     // setTitle(customData.title);
     // setUrl(customData.url);
