@@ -61,13 +61,24 @@
       {
         "url": "/select",
         "options": {
-          "height": "200px",
-          "width": "300px",
+          "height": "500px",
+          "width": "600px",
           "header": {
             "value": "MermaidChart"
           }
         },
         "key": "dialog-module-select"
+      },
+      {
+        "url": "/viewer",
+        "options": {
+          "height": "500px",
+          "width": "600px",
+          "header": {
+            "value": "MermaidChart"
+          }
+        },
+        "key": "dialog-module-view"
       }
     ]
   }
