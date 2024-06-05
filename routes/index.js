@@ -151,6 +151,23 @@ export default function routes(app, addon) {
     });
   });
 
+  app.get("/viewer", async (req, res) => {
+    let access_token, user;
+    try {
+      access_token = await fetchToken(
+        req.context.http,
+        req.context.userAccountId
+      );
+      user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
+    } catch (e) {}
+
+    res.render("viewer.hbs", {
+      MC_BASE_URL: MC_BASE_URL,
+      mcAccessToken: user ? access_token : "",
+      user: user ? JSON.stringify(user) : "null",
+    });
+  });
+
   app.get("/check_token", addon.checkValidToken(), async (req, res) => {
     if (!req.query.state) {
       return res.status(404).end();

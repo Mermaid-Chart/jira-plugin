@@ -11,6 +11,8 @@ function App() {
   AP.dialog.getCustomData(function (customData) {
     console.log("customData");
     console.log(customData);
+
+    setAccessToken(customData.accessToken);
   });
 
   // if (!accessToken) {
