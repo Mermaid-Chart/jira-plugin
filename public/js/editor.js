@@ -47,4 +47,4 @@ function App() {
   }
 }
 
-render(html` <${App} />`, document.getElementById("selector-content"));
+render(html` <${App} />`, document.getElementById("editor-content"));
