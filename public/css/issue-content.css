@@ -1,0 +1,91 @@
+.tile{
+    position: relative;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.tile:hover .background{
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: #626f86;
+        z-index: 5;
+    border-radius: 5px;
+    top: 0;
+    left: 0;
+    opacity: 0.55;
+    transition: all 0.3s ease-in-out;
+    }
+.tile:hover .delete-btn{
+    display: flex;
+    transition: all 0.3s ease-in-out;
+    z-index: 10;
+}
+.tile:hover .view-btn{
+    display: flex;
+    transition: all 0.3s ease-in-out;
+    z-index: 10;
+}
+.tile:hover .edit-btn{
+    display: flex;
+    transition: all 0.3s ease-in-out;
+    z-index: 10;
+}
+.tile-image{
+    object-fit: cover;
+   width: 150px;
+    height: 150px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+button{
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin: 5px;
+}
+.view-btn{
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+}
+.delete-btn{
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.edit-btn{
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+}
+.add-chart-btn{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    border: 1px solid grey;
+    background: none;
+    border-radius: 5px;
+}
+
+.add-chart-btn img{
+        position: absolute;
+        top: 55px;
+        left: 55px;
+        width: 40px;
+        height: 40px;
+        z-index: 5;
+    }
+
+.add-chart-btn:hover{
+    background: #626f86;
+    opacity: 0.55;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+}

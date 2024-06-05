@@ -143,20 +143,20 @@ function App() {
   //         alt="${image.title}"
   //     />
   if (accessToken) {
-    //  if (true) {
+      //if (true) {
     return html`
       <div id="images" style="display: flex; overflow-x: scroll;">
         ${charts.map(
-          (image) => html` <div style="position: relative; margin: 5px;">
+          (image) => html` <div class="tile" >
             <img
+                    class="tile-image"
                     src="data:image/x-png;base64, ${image.diagramImage}"
               alt="${image.title}"
-              style="width: 150px; height: 150px;  border: 1px solid grey;"
             />
-
+<div class="background"></div>
             <button
+                    class="view-btn"
               onclick="${(e) => viewDiagramClick(image)}"
-              style="position: absolute; bottom: 10px; left: 5px; background: none; border: none;"
             >
               <img
                 style="width: 20px; height: 20px;"
@@ -164,24 +164,23 @@ function App() {
                 alt="view"
               />
             </button>
-            <button
+            <button 
+                    class="delete-btn"
               onclick="${(e) => deleteDiagram()}"
-              style="position: absolute; top: 5px; right: 5px; background: none; border: none;"
+                    type="submit"
             >
               <input type="hidden" name="issueKey" value="${issueKey}" />
               <input type="hidden" name="diagramId" value="${image.id}" />
-              <button type="submit" style="background: none; border: none;">
                 <img
                   style="width: 15px; height: 15px;"
                   src="../close-line-icon.svg"
                   alt="close"
                 />
-              </button>
             </button>
             <button
+                    class="edit-btn"
               onclick="${(e) => editDiagramClick(image)}"
               type="submit"
-              style="position: absolute; bottom: 10px; right: 5px; background: none; border: none;"
             >
               <img
                 style="width: 15px; height: 15px;"
@@ -192,11 +191,10 @@ function App() {
           </div>`
         )}
         <button
+                class="add-chart-btn"
           onclick="${addChartClick}"
-          style="width: 150px; height: 150px; margin: 5px; border: 1px solid grey; background: none; display: flex; align-items: center; justify-content: center"
         >
           <img
-            style="width: 40px; height: 40px;"
             src="../plus-line-icon.svg"
             alt="add"
           />
