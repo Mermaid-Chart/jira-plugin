@@ -89,7 +89,7 @@ function App() {
       .on("close", closeCallback);
   };
 
-  const editDiagramClick = (url) => {
+  const editDiagramClick = (image) => {
     AP.dialog
       .create({
         key: "dialog-module-edit",
@@ -97,6 +97,7 @@ function App() {
         height: "400px",
         chrome: true,
         customData: {
+            image,
           baseUrl: MC_BASE_URL,
           accessToken: accessToken,
         },
@@ -178,7 +179,7 @@ function App() {
               </button>
             </button>
             <button
-              onclick="${(e) => editDiagramClick()}"
+              onclick="${(e) => editDiagramClick(image)}"
               type="submit"
               style="position: absolute; bottom: 10px; right: 5px; background: none; border: none;"
             >
@@ -201,7 +202,8 @@ function App() {
           />
         </button>
       </div>
-          `;
+      
+    `;
   } else {
     return html`
       <div>
