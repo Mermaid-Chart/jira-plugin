@@ -107,6 +107,10 @@ export default function routes(app, addon) {
       loginState: auth.state,
       mcAccessToken: user ? access_token : "",
       user: user ? JSON.stringify(user) : "null",
+      other: JSON.stringify({
+        http: req.context.http,
+        userAccountId: req.context.userAccountId,
+      }),
     });
   });
 
