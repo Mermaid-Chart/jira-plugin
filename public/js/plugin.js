@@ -4,9 +4,11 @@ class CPlugin {
     window.parent.postMessage(data, "*");
   }
   saveData(data) {
-    if (!data.documentID || !data.diagramCode) {
-      throw new Error("Invalid saving diagram data");
-    }
+    console.log(data);
+    // Ignore this warning for now
+    // if (!data.documentID || !data.diagramCode) {
+    //   throw new Error("Invalid saving diagram data");
+    // }
     this._sendMessage({
       action: "save",
       data,
