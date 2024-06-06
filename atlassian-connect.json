@@ -36,6 +36,9 @@
           "type": "web_panel",
           "url": "/issue-content?issueKey={issue.key}"
         },
+        "tooltip": {
+          "value": ""
+        },
         "jiraNativeAppsEnabled": false,
         "name": {
           "value": "MermaidChart"
