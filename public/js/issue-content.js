@@ -97,7 +97,7 @@ function App() {
         height: "500px",
         chrome: true,
         customData: {
-            image,
+          image,
           baseUrl: MC_BASE_URL,
           accessToken: accessToken,
         },
@@ -105,7 +105,10 @@ function App() {
       .on("close", closeCallback);
   };
 
-  function closeCallback() {}
+  function closeCallback(data) {
+    console.log("data");
+    console.log(data);
+  }
 
   const addChartClick = () => {
     AP.dialog
@@ -147,19 +150,19 @@ function App() {
   //         alt="${image.title}"
   //     />
   if (accessToken) {
-      //if (true) {
+    //if (true) {
     return html`
       <div id="images" style="display: flex; overflow-x: scroll;">
         ${charts.map(
-          (image) => html` <div class="tile" >
+          (image) => html` <div class="tile">
             <img
-                    class="tile-image"
-                    src="data:image/x-png;base64, ${image.diagramImage}"
+              class="tile-image"
+              src="data:image/x-png;base64, ${image.diagramImage}"
               alt="${image.title}"
             />
             <div class="background"></div>
             <button
-                    class="view-btn"
+              class="view-btn"
               onclick="${(e) => viewDiagramClick(image)}"
             >
               <img
@@ -168,21 +171,21 @@ function App() {
                 alt="view"
               />
             </button>
-            <button 
-                    class="delete-btn"
+            <button
+              class="delete-btn"
               onclick="${(e) => deleteDiagram()}"
-                    type="submit"
+              type="submit"
             >
               <input type="hidden" name="issueKey" value="${issueKey}" />
               <input type="hidden" name="diagramId" value="${image.id}" />
-                <img
-                  style="width: 15px; height: 15px;"
-                  src="../close-line-icon.svg"
-                  alt="close"
-                />
+              <img
+                style="width: 15px; height: 15px;"
+                src="../close-line-icon.svg"
+                alt="close"
+              />
             </button>
             <button
-                    class="edit-btn"
+              class="edit-btn"
               onclick="${(e) => editDiagramClick(image)}"
               type="submit"
             >
@@ -194,24 +197,18 @@ function App() {
             </button>
           </div>`
         )}
-        <button
-                class="add-chart-btn"
-          onclick="${addChartClick}"
-        >
-          <img
-            src="../plus-line-icon.svg"
-            alt="add"
-          />
+        <button class="add-chart-btn" onclick="${addChartClick}">
+          <img src="../plus-line-icon.svg" alt="add" />
         </button>
       </div>
-      
     `;
   } else {
-    return html`
-      <div>
+    return html` <div>
         <p>Visualize your task with diagrams</p>
       </div>
-      <button class="connect-btn" onclick="${(e) => connectToMermaidClick()}">Connect</button>`;
+      <button class="connect-btn" onclick="${(e) => connectToMermaidClick()}">
+        Connect
+      </button>`;
   }
 }
 
