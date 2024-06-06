@@ -32,7 +32,7 @@ function App() {
           break;
 
         case "save":
-          setData((prev) => ({ ...prev, ...e.data.data }));
+          //setData((prev) => ({ ...prev, ...e.data.data }));
           AP.dialog.close({ image: e.data.data });
 
           break;
