@@ -82,7 +82,7 @@ export default function routes(app, addon) {
     //   "diagrams"
     // );
 
-    let access_token, user;
+    let access_token, user, error;
     try {
       access_token = await fetchToken(
         req.context.http,
@@ -91,6 +91,7 @@ export default function routes(app, addon) {
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {
       console.log(e);
+      error = e;
     }
 
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
@@ -110,6 +111,7 @@ export default function routes(app, addon) {
       other: JSON.stringify({
         http: req.context.http,
         userAccountId: req.context.userAccountId,
+        error,
       }),
     });
   });
