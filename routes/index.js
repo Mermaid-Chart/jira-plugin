@@ -89,10 +89,15 @@ export default function routes(app, addon) {
         req.context.userAccountId
       );
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
 
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
     // const auth = { url: "", state: "" };
+
+    console.log("issue auth");
+    console.log(auth);
 
     res.render("issue-content.hbs", {
       issueKey,
@@ -128,7 +133,11 @@ export default function routes(app, addon) {
     await mermaidAPI.delToken(req.query.state);
 
     const user = await mermaidAPI.getUser(token);
-
+    console.log("save token ");
+    console.log(req.context.http);
+    console.log(req.context.userAccountId);
+    console.log(token);
+    console.log(user);
     try {
       await saveToken(req.context.http, req.context.userAccountId, token);
       return res.json({ token, user }).end();
