@@ -1,7 +1,7 @@
 import { h, render } from "https://esm.sh/preact";
 import { useEffect, useRef, useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
-
+import log from "./logger.js";
 const html = htm.bind(h);
 
 function App() {
@@ -10,8 +10,10 @@ function App() {
 
   useEffect(() => {
     AP.dialog.getCustomData(function (customData) {
-      console.log("customData");
-      console.log(customData);
+      // console.log("customData");
+      // console.log(customData);
+      log.info("customData: ", customData);
+
       setImage(customData.image);
       setInitialized(true);
     });
@@ -36,13 +38,15 @@ function App() {
   //         alt="${image.title}"
   //     />
   return html`
-    <div class="image-container" 
-         style="width: 100%; display: flex; align-items: center; justify-content: center">
-    <img
-      src="data:image/x-png;base64, ${image.diagramImage}"
-      alt=""
-      style="width: 20%; border: 1px solid grey; object-fit: contain;"
-    />
+    <div
+      class="image-container"
+      style="width: 100%; display: flex; align-items: center; justify-content: center"
+    >
+      <img
+        src="data:image/x-png;base64, ${image.diagramImage}"
+        alt=""
+        style="width: 20%; border: 1px solid grey; object-fit: contain;"
+      />
     </div>
   `;
 }

@@ -1,10 +1,13 @@
-"use strict";
+import log from "./logger";
+
+("use strict");
 class CPlugin {
   _sendMessage(data) {
     window.parent.postMessage(data, "*");
   }
   saveData(data) {
-    console.log(data);
+    //console.log(data);
+    log.info("saveData: ", data);
     if (!data.documentID || !data.diagramCode) {
       throw new Error("Invalid saving diagram data");
     }

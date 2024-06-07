@@ -5,6 +5,7 @@ import {
   setJiraIssueProperty,
 } from "../utils/index.js";
 import { MermaidChart } from "../utils/MermaidChart.js";
+import log from "../utils/logger.js";
 
 const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
 const MC_CLIENT_ID =
@@ -33,7 +34,8 @@ export default function routes(app, addon) {
     try {
       charts = await getJiraIssueProperty(req, req.query.issueKey, "diagrams");
     } catch (e) {
-      console.log(e);
+      //console.log(e);
+      log.error("error_charts: ", e);
       error_charts = e;
     }
 
@@ -45,15 +47,17 @@ export default function routes(app, addon) {
       );
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {
-      console.log(e);
+      //console.log(e);
+      log.error("error: ", e);
       error = e;
     }
 
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
     // const auth = { url: "", state: "" };
 
-    console.log("issue auth");
-    console.log(auth);
+    // console.log("issue auth");
+    // console.log(auth);
+    log.info("issue auth: ", auth);
 
     res.render("issue-content.hbs", {
       issueKey,
@@ -95,16 +99,22 @@ export default function routes(app, addon) {
     await mermaidAPI.delToken(req.query.state);
 
     const user = await mermaidAPI.getUser(token);
-    console.log("save token ");
-    console.log(req.context.http);
-    console.log(req.context.userAccountId);
-    console.log(token);
-    console.log(user);
+    // console.log("save token ");
+    // console.log(req.context.http);
+    // console.log(req.context.userAccountId);
+    // console.log(token);
+    // console.log(user);
+    log.info("save token ");
+    log.info(req.context.http);
+    log.info(req.context.userAccountId);
+    log.info(token);
+    log.info(user);
     try {
       await saveToken(req.context.http, req.context.userAccountId, token);
       return res.json({ token, user }).end();
     } catch (e) {
-      console.error(e);
+      //console.error(e);
+      log.error("error: ", e);
       res.status(503).end();
     }
   });

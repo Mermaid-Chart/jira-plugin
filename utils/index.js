@@ -1,5 +1,6 @@
 import { Buffer } from "buffer";
 import crypto from "crypto";
+import log from "./logger.js";
 
 const fetchToken = async (httpClient, atlassianAccountId) => {
   return new Promise((resolve, reject) => {
@@ -12,7 +13,8 @@ const fetchToken = async (httpClient, atlassianAccountId) => {
       },
       function (err, _, body) {
         if (err) {
-          console.error('Failed on reading user property "token"');
+          log.error("Failed on reading user property 'token'", err);
+          //console.error('Failed on reading user property "token"');
           reject(err);
           return;
         }
@@ -40,12 +42,20 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
           httpClient
             .asUserByAccountId(atlassianAccountId)
             .post(requestOpt, (err2, res2, body2) => {
-              console.log("post", err2, body2);
+              //console.log("post", err2, body2);
+              log.info(`${"post" + err2 + body2}`);
               if (err2 || res2.statusCode !== 200) {
-                console.error(
-                  'Failed on saving user property "token"',
-                  err2,
-                  res2.statusCode
+                // console.error(
+                //   'Failed on saving user property "token"',
+                //   err2,
+                //   res2.statusCode
+                // );
+                log.error(
+                  `${
+                    "Failed on saving user property token" +
+                    err2 +
+                    res2.statusCode
+                  }`
                 );
                 return reject(err);
               }

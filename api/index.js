@@ -26,6 +26,7 @@ import nocache from "nocache";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
 import { createRequire } from "node:module";
+import log from "../utils/logger.js";
 
 // Routes live here; this is the C in MVC
 import routes from "../routes/index.js";
@@ -41,25 +42,34 @@ ace.store.register("@upstash/redis", function (logger, opts) {
   return new ServerlessRedisAdapter(logger, opts);
 });
 
-console.log("CWD is ", process.cwd());
-console.log("config.json is at ", resolve("config.json"));
-console.log(
-  "config.json is at ",
-  createRequire(import.meta.url).resolve("../config.json")
-);
-console.log(
-  "config.json contents are ",
-  readFileSync("config.json", { encoding: "utf8" })
+//console.log("CWD is ", process.cwd());
+log.info(`CWD is ${process.cwd()}`);
+
+//console.log("config.json is at ", resolve("config.json"));
+log.info(`config.json is at ${resolve("config.json")}`);
+
+//console.log("config.json is at ", createRequire(import.meta.url).resolve("../config.json"));
+log.info(
+  `config.json is at ${createRequire(import.meta.url).resolve(
+    "../config.json"
+  )}`
 );
 
-console.log("atlassian-connect.json is at ", resolve("atlassian-connect.json"));
-console.log(
-  "atlassian-connect.json is at ",
-  createRequire(import.meta.url).resolve("../atlassian-connect.json")
+//console.log("config.json contents are ", readFileSync("config.json", { encoding: "utf8" }));
+log.info(
+  `config.json contents are ${readFileSync("config.json", {
+    encoding: "utf8",
+  })}`
 );
-console.log(
-  "atlassian-connect.json contents are ",
-  readFileSync("atlassian-connect.json", { encoding: "utf8" })
+
+//console.log("atlassian-connect.json is at ", resolve("atlassian-connect.json"));
+log.info(`atlassian-connect.json is at ${resolve("atlassian-connect.json")}`);
+
+//console.log("atlassian-connect.json is at ", createRequire(import.meta.url).resolve("../atlassian-connect.json"));
+log.info(
+  `atlassian-connect.json is at ${createRequire(import.meta.url).resolve(
+    "../atlassian-connect.json"
+  )}`
 );
 
 // Bootstrap Express and atlassian-connect-express
@@ -67,7 +77,9 @@ const app = express();
 export const addon = ace(app, {
   config: {
     descriptorTransformer(self, config) {
-      console.log("Transformed descriptor is ", self);
+      //console.log("Transformed descriptor is ", self);
+      log.info(`Transformed descriptor is:`, self);
+
       return self;
     },
   },
@@ -77,7 +89,8 @@ export const addon = ace(app, {
 const port = addon.config.port();
 app.set("port", port);
 
-console.log("localBaseUrl is ", addon.config.localBaseUrl());
+//console.log("localBaseUrl is ", addon.config.localBaseUrl());
+log.info(`localBaseUrl is ${addon.config.localBaseUrl()}`);
 
 // Log requests, using an appropriate formatter by env
 export const devEnv = app.get("env") === "development";
