@@ -4,6 +4,8 @@ import log from "./logger.js";
 
 const fetchToken = async (httpClient, atlassianAccountId) => {
   return new Promise((resolve, reject) => {
+    log.info(`fetchToken for: ${atlassianAccountId}`);
+
     httpClient.asUserByAccountId(atlassianAccountId).get(
       {
         url: `/rest/api/user/${atlassianAccountId}/property/token?jsonValue=true`,
@@ -21,8 +23,8 @@ const fetchToken = async (httpClient, atlassianAccountId) => {
         }
 
         const response = JSON.parse(body);
-        log.error("fetchToken: ");
-        log.error(response);
+        log.info("fetchToken response: ");
+        log.info(response);
         const token = (response.value || {}).token || "";
         resolve(token);
       }
@@ -30,6 +32,8 @@ const fetchToken = async (httpClient, atlassianAccountId) => {
   });
 };
 const saveToken = async (httpClient, atlassianAccountId, token) => {
+  log.info(`fetchToken for: ${atlassianAccountId}`);
+
   return new Promise((resolve, reject) => {
     const requestOpt = {
       url: `/rest/api/user/${atlassianAccountId}/property/token`,
