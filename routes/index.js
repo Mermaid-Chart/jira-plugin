@@ -1,4 +1,9 @@
-import { fetchToken, saveToken, setJiraIssueProperty } from "../utils/index.js";
+import {
+  fetchToken,
+  saveToken,
+  getJiraIssueProperty,
+  setJiraIssueProperty,
+} from "../utils/index.js";
 import { MermaidChart } from "../utils/MermaidChart.js";
 
 const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
