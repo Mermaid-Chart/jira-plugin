@@ -32,6 +32,7 @@ function App() {
           break;
 
         case "save":
+          console.log("save");
           //setData((prev) => ({ ...prev, ...e.data.data }));
           AP.dialog.close({ image: e.data.data });
 
@@ -42,9 +43,6 @@ function App() {
   // if (!accessToken) {
   //   return html` <${Login} onLogin="${onLogin}" /> `;
   // }
-
-  console.log("accessToken");
-  console.log(accessToken);
 
   if (!initialized) {
     return html`

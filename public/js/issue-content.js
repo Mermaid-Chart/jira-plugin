@@ -103,24 +103,17 @@ function App() {
   };
 
   const addChartClick = () => {
-    AP.dialog
-      .create({
-        key: "dialog-module-select",
-        width: "1100px",
-        height: "500px",
-        chrome: true,
-        customData: {
-          baseUrl: MC_BASE_URL,
-          accessToken: accessToken,
-        },
-        buttons: [
-          /*{
-            text: 'Close',
-            identifier: 'mc-close-button'
-          }*/
-        ],
-      })
-      .on("close", closeCallback);
+    AP.dialog.create({
+      key: "dialog-module-select",
+      width: "1100px",
+      height: "500px",
+      chrome: true,
+      customData: {
+        baseUrl: MC_BASE_URL,
+        accessToken: accessToken,
+      },
+      buttons: [],
+    });
   };
 
   function deleteDiagram(issueKey, diagramId) {
@@ -134,21 +127,24 @@ function App() {
   }
 
   window.AP.events.on("dialog.close", async (data) => {
-    console.log("submit", data);
+    console.log("dialog.close", data);
 
     if (data && data.chart) {
       fetch("/add-chart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ issueKey, chart: data.chart }),
-      }).then(() => {
+      }).then((result) => {
+        console.log("/add-chart");
+        console.log(result);
+
         location.reload();
       });
     }
   });
 
   window.AP.events.on("dialog.submit", async (data) => {
-    console.log("submit", data);
+    console.log("dialog.submit", data);
   });
 
   //   <img

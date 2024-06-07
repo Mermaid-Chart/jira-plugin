@@ -130,8 +130,14 @@ export default function routes(app, addon) {
     );
 
     charts.push(res.chart);
-    await setJiraIssueProperty(req, req.query.issueKey, "diagrams", charts);
-    res.end();
+    let result = await setJiraIssueProperty(
+      req,
+      req.query.issueKey,
+      "diagrams",
+      charts
+    );
+
+    return res.json({ result }).end();
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
@@ -145,7 +151,13 @@ export default function routes(app, addon) {
     const index = charts.findIndex((i) => i.documentID > chart.documentID);
     if (index) charts.splice(index, 1);
 
-    await setJiraIssueProperty(req, req.query.issueKey, "diagrams", charts);
-    res.end();
+    let result = await setJiraIssueProperty(
+      req,
+      req.query.issueKey,
+      "diagrams",
+      charts
+    );
+
+    return res.json({ result }).end();
   });
 }
