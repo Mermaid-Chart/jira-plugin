@@ -119,7 +119,10 @@ function App() {
   function deleteDiagram(issueKey, diagramId) {
     fetch("/delete-chart", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${JWTToken}`,
+      },
       body: JSON.stringify({ issueKey, diagramId }),
     }).then(() => {
       location.reload();
@@ -132,7 +135,10 @@ function App() {
     if (data && data.chart) {
       fetch("/add-chart", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${JWTToken}`,
+        },
         body: JSON.stringify({ issueKey, chart: data.chart }),
       }).then((result) => {
         console.log("/add-chart");
