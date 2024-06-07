@@ -68,4 +68,52 @@ const getEncodedSHA256Hash = async (str) => {
     .replace(/=+$/, "");
 };
 
-export { fetchToken, saveToken, getEncodedSHA256Hash };
+//////////// JIRA
+const getJiraIssueProperty = async (req, issueKey, propertyKey) => {
+  const httpClient = addon.httpClient(req);
+  const url = `/rest/api/3/issue/${issueKey}/properties/${propertyKey}`;
+
+  return new Promise((resolve, reject) => {
+    httpClient.get(
+      {
+        url,
+        json: true,
+      },
+      (err, res, body) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(body.value || []);
+      }
+    );
+  });
+};
+
+const setJiraIssueProperty = async (req, issueKey, propertyKey, value) => {
+  const httpClient = addon.httpClient(req);
+  const url = `/rest/api/3/issue/${issueKey}/properties/${propertyKey}`;
+
+  return new Promise((resolve, reject) => {
+    httpClient.put(
+      {
+        url,
+        json: true,
+        body: value,
+      },
+      (err, res, body) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(body);
+      }
+    );
+  });
+};
+
+export {
+  fetchToken,
+  saveToken,
+  getEncodedSHA256Hash,
+  getJiraIssueProperty,
+  setJiraIssueProperty,
+};

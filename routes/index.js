@@ -23,12 +23,14 @@ export default function routes(app, addon) {
 
   app.get("/issue-content", addon.authenticate(), async (req, res) => {
     const issueKey = req.query.issueKey;
+    let charts, error_charts;
 
-    const charts = await getJiraIssueProperty(
-      req,
-      req.query.issueKey,
-      "diagrams"
-    );
+    try {
+      charts = await getJiraIssueProperty(req, req.query.issueKey, "diagrams");
+    } catch (e) {
+      console.log(e);
+      error_charts = e;
+    }
 
     let access_token, user, error;
     try {
@@ -60,6 +62,7 @@ export default function routes(app, addon) {
         http: req.context.http,
         userAccountId: req.context.userAccountId,
         error,
+        error_charts,
       }),
     });
   });
