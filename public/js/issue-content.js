@@ -69,47 +69,38 @@ function App() {
   const viewDiagramClick = (image) => {
     //window.open(url, '_blank');
 
-    AP.dialog
-      .create({
-        key: "dialog-module-view",
-        width: "1100px",
-        height: "500px",
-        chrome: true,
-        customData: {
-          image,
-          baseUrl: MC_BASE_URL,
-          accessToken: accessToken,
-        },
-        buttons: [
-          /*{
+    AP.dialog.create({
+      key: "dialog-module-view",
+      width: "1100px",
+      height: "500px",
+      chrome: true,
+      customData: {
+        image,
+        baseUrl: MC_BASE_URL,
+        accessToken: accessToken,
+      },
+      buttons: [
+        /*{
             text: 'Close',
             identifier: 'mc-close-button'
           }*/
-        ],
-      })
-      .on("close", closeCallback);
+      ],
+    });
   };
 
   const editDiagramClick = (image) => {
-    AP.dialog
-      .create({
-        key: "dialog-module-edit",
-        width: "1100px",
-        height: "500px",
-        chrome: true,
-        customData: {
-          image,
-          baseUrl: MC_BASE_URL,
-          accessToken: accessToken,
-        },
-      })
-      .on("close", closeCallback);
+    AP.dialog.create({
+      key: "dialog-module-edit",
+      width: "1100px",
+      height: "500px",
+      chrome: true,
+      customData: {
+        image,
+        baseUrl: MC_BASE_URL,
+        accessToken: accessToken,
+      },
+    });
   };
-
-  function closeCallback(data) {
-    console.log("data");
-    console.log(data);
-  }
 
   const addChartClick = () => {
     AP.dialog
@@ -141,6 +132,20 @@ function App() {
       location.reload();
     });
   }
+
+  window.AP.events.on("dialog.close", async (data) => {
+    console.log("submit", data);
+
+    if (data && data.chart) {
+      fetch("/add-chart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ issueKey, chart: data.chart }),
+      }).then(() => {
+        location.reload();
+      });
+    }
+  });
 
   window.AP.events.on("dialog.submit", async (data) => {
     console.log("submit", data);
