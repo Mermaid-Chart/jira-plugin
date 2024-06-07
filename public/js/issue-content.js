@@ -14,17 +14,11 @@ function App() {
     setUser(user);
   };
 
-  // console.log("loginURL", loginURL);
-  // console.log(charts);
-  // console.log(accessToken);
-  // console.log(user);
-  // console.log(other);
-
-  log.info("loginURL: ", loginURL);
-  log.info("charts: ", charts);
-  log.info("accessToken: ", accessToken);
-  log.info("user: ", user);
-  log.info("other: ", other);
+  console.log("loginURL", loginURL);
+  console.log(charts);
+  console.log(accessToken);
+  console.log(user);
+  console.log(other);
 
   const connectToMermaidClick = () => {
     const width = 500;
@@ -36,8 +30,8 @@ function App() {
     options += ",top=" + top;
     options += ",left=" + left;
 
-    //console.log("loginURL: ", loginURL);
-    log.info("loginURL: ", loginURL);
+    console.log("loginURL: ", loginURL);
+    // log.info("loginURL: ", loginURL);
 
     const windowObjectReference = window.open(loginURL, "loginWindow", options);
     windowObjectReference.focus();
@@ -48,8 +42,8 @@ function App() {
     };
 
     const callback = async () => {
-      //console.log("login callback");
-      log.info("login callback");
+      console.log("login callback");
+      // log.info("login callback");
       const res = await fetch(`/check_token?state=${loginState}`, {
         headers: {
           Authorization: `JWT ${JWTToken}`,
@@ -57,9 +51,9 @@ function App() {
       });
       if (res.ok) {
         const body = await res.json();
-        // console.log("login token");
-        // console.log(body);
-        log.info("login token: ", body);
+        console.log("login token");
+        console.log(body);
+        // log.info("login token: ", body);
         onLogin(body.token, body.user);
       } else {
         timeout = setTimeout(callback, 500);
@@ -138,8 +132,8 @@ function App() {
   }
 
   window.AP.events.on("dialog.close", async (data) => {
-    //console.log("dialog.close", data);
-    log.info("dialog.close: ", data);
+    console.log("dialog.close", data);
+    // log.info("dialog.close: ", data);
 
     if (data && data.chart) {
       fetch("/add-chart", {
@@ -150,17 +144,17 @@ function App() {
         },
         body: JSON.stringify({ issueKey, chart: data.chart }),
       }).then((result) => {
-        // console.log("/add-chart");
-        // console.log(result);\
-        log.info("/add-chart: ", result);
+        console.log("/add-chart");
+        console.log(result);
+        // log.info("/add-chart: ", result);
         location.reload();
       });
     }
   });
 
   window.AP.events.on("dialog.submit", async (data) => {
-    //console.log("dialog.submit", data);
-    log.info("dialog.submit: ", data);
+    console.log("dialog.submit", data);
+    // log.info("dialog.submit: ", data);
   });
 
   //   <img

@@ -1,7 +1,6 @@
 import { h, render } from "https://esm.sh/preact";
 import { useEffect, useRef, useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
-
 const html = htm.bind(h);
 
 function App() {
@@ -11,9 +10,9 @@ function App() {
 
   useEffect(() => {
     AP.dialog.getCustomData(function (customData) {
-      // console.log("customData");
-      // console.log(customData);
-      log.info("customData: ", customData);
+      console.log("customData");
+      console.log(customData);
+      // log.info("customData: ", customData);
       setAccessToken(customData.accessToken);
       setInitialized(true);
     });
@@ -33,8 +32,8 @@ function App() {
           break;
 
         case "save":
-          //console.log("save");
-          log.info("save: ", e.data.data);
+          console.log("save");
+          // log.info("save: ", e.data.data);
           //setData((prev) => ({ ...prev, ...e.data.data }));
           AP.dialog.close({ chart: e.data.data });
 
@@ -63,8 +62,8 @@ function App() {
   // );
 
   const iframeURL = buildUrl(`/app/plugins/confluence/select`);
-  //console.log("buildUrl:", iframeURL);
-  log.info("buildUrl: ", iframeURL);
+  console.log("buildUrl:", iframeURL);
+  // log.info("buildUrl: ", iframeURL);
 
   if (iframeURL) {
     //<iframe src="${iframeURL}" name="${JSON.stringify(iframeData)}" />

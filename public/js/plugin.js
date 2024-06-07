@@ -4,8 +4,6 @@ class CPlugin {
     window.parent.postMessage(data, "*");
   }
   saveData(data) {
-    //console.log(data);
-    log.info("saveData: ", data);
     if (!data.documentID || !data.diagramCode) {
       throw new Error("Invalid saving diagram data");
     }

@@ -12,20 +12,19 @@ function App() {
 
   useEffect(() => {
     AP.dialog.getCustomData(function (customData) {
-      //console.log("customData");
-      //console.log(customData);
-      log.info("customData: ",customData);
-      
+      console.log("customData");
+      console.log(customData);
+      // log.info("customData: ",customData);
+
       setImage(customData.image);
       setAccessToken(customData.accessToken);
       setInitialized(true);
     });
   }, []);
 
-  // console.log("accessToken");
-  // console.log(accessToken);
-  log.info("accessToken: ",accessToken);
- 
+  console.log("accessToken");
+  console.log(accessToken);
+  // log.info("accessToken: ",accessToken);
 
   if (!initialized) {
     return html`
@@ -44,8 +43,8 @@ function App() {
   );
 
   //const iframeURL = buildUrl(`/app/plugins/confluence/select`);
-  //console.log("buildUrl:", iframeURL);
-  log.info("buildUrl: ", iframeURL);\
+  console.log("buildUrl:", iframeURL);
+  // log.info("buildUrl: ", iframeURL);\
 
   if (iframeURL) {
     return html` <iframe src="${iframeURL}" name="" /> `;

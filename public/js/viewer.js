@@ -9,9 +9,9 @@ function App() {
 
   useEffect(() => {
     AP.dialog.getCustomData(function (customData) {
-      // console.log("customData");
-      // console.log(customData);
-      log.info("customData: ", customData);
+      console.log("customData");
+      console.log(customData);
+      // log.info("customData: ", customData);
 
       setImage(customData.image);
       setInitialized(true);
