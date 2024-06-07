@@ -14,6 +14,7 @@ const fetchToken = async (httpClient, atlassianAccountId) => {
       function (err, _, body) {
         if (err) {
           log.error("Failed on reading user property 'token'", err);
+          log.error(err);
           //console.error('Failed on reading user property "token"');
           reject(err);
           return;
@@ -41,12 +42,17 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
       .asUserByAccountId(atlassianAccountId)
       .put(requestOpt, (err, res, body) => {
         log.info("first attemt to save token, body: ", body);
+        log.info(body);
         log.info("first attemt to save token, res: ", res);
+        log.info(res);
 
         if (err || res.statusCode > 399) {
           log.error("error of first attemt to save token: ", err);
+          log.error(err);
 
           log.error("second attemt to save token: ", body, ", res: ", res);
+          log.error(body);
+          log.error(res);
           httpClient
             .asUserByAccountId(atlassianAccountId)
             .post(requestOpt, (err2, res2, body2) => {
@@ -59,7 +65,9 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
                 //   res2.statusCode
                 // );
                 log.error("Failed on saving user property token: ", err2);
+                log.error(err2);
                 log.error("status code: ", res2.statusCode);
+                log.error(res2);
                 return reject(err);
               }
             });
