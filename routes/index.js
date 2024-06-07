@@ -94,10 +94,12 @@ export default function routes(app, addon) {
 
   app.get("/check_token", addon.checkValidToken(), async (req, res) => {
     if (!req.query.state) {
+      log.error("check_token no req.query.state: ", req.query);
       return res.status(404).end();
     }
     const token = await mermaidAPI.getToken(req.query.state);
     if (!token) {
+      log.error("check_token no token: ", req.query);
       return res.status(404).end();
     }
     await mermaidAPI.delToken(req.query.state);
@@ -118,7 +120,7 @@ export default function routes(app, addon) {
       return res.json({ token, user }).end();
     } catch (e) {
       //console.error(e);
-      log.error("error: ", e);
+      log.error("check_token error: ", e);
       res.status(503).end();
     }
   });
