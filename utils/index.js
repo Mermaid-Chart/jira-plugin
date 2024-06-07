@@ -42,23 +42,22 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
     httpClient
       .asUserByAccountId(atlassianAccountId)
       .put(requestOpt, (err, res, body) => {
-        log.info("first attemt to save token, body: ", body);
+        log.info("first attemt to save token, body: ");
         log.info(body);
-        log.info("first attemt to save token, res: ", res);
+        log.info("first attemt to save token, res: ");
         log.info(res);
 
         if (err || res.statusCode > 399) {
-          log.error("error of first attemt to save token: ", err);
+          log.error(`error of first attemt to save token: ${res.statusCode}`);
           log.error(err);
 
-          log.error("second attemt to save token: ", body, ", res: ", res);
-          log.error(body);
-          log.error(res);
+          log.info("second attemt to save token: ");
           httpClient
             .asUserByAccountId(atlassianAccountId)
             .post(requestOpt, (err2, res2, body2) => {
               //console.log("post", err2, body2);
-              // log.info("post: ", err2, ", body: ", body2, res2);
+              log.error("post: ", err2, ", body: ", body2, res2);
+              log.error("post: ", err2, ", body: ", body2, res2);
               if (err2 || res2.statusCode !== 200) {
                 // console.error(
                 //   'Failed on saving user property "token"',
