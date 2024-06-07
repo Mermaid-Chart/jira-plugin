@@ -35,15 +35,26 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
       body: JSON.stringify({ value: { token } }),
     };
 
+    log.info("Save token for: ", atlassianAccountId, requestOpt);
+
     httpClient
       .asUserByAccountId(atlassianAccountId)
       .put(requestOpt, (err, res, body) => {
+        log.err(
+          "first attemt to save token, put: ",
+          err,
+          ", body: ",
+          body,
+          ", res: ",
+          res
+        );
+
         if (err || res.statusCode > 399) {
           httpClient
             .asUserByAccountId(atlassianAccountId)
             .post(requestOpt, (err2, res2, body2) => {
               //console.log("post", err2, body2);
-              log.info("post: ", err2, ", body: ", body2);
+              // log.info("post: ", err2, ", body: ", body2, res2);
               if (err2 || res2.statusCode !== 200) {
                 // console.error(
                 //   'Failed on saving user property "token"',
