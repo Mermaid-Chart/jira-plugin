@@ -52,7 +52,7 @@ export default function routes(app, addon) {
 
     res.render("issue-content.hbs", {
       issueKey,
-      charts: JSON.stringify(charts),
+      charts: charts ? JSON.stringify(charts) : "[]",
       MC_BASE_URL: MC_BASE_URL,
       loginURL: auth.url,
       loginState: auth.state,
