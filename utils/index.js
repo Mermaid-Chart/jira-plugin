@@ -40,7 +40,7 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
     httpClient
       .asUserByAccountId(atlassianAccountId)
       .put(requestOpt, (err, res, body) => {
-        log.err(
+        log.error(
           "first attemt to save token, put: ",
           err,
           ", body: ",
