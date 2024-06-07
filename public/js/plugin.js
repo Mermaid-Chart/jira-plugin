@@ -1,5 +1,3 @@
-import log from "../../utils/logger.js";
-
 ("use strict");
 class CPlugin {
   _sendMessage(data) {

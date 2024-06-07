@@ -79,8 +79,7 @@ const getEncodedSHA256Hash = async (str) => {
 };
 
 //////////// JIRA
-const getJiraIssueProperty = async (req, issueKey, propertyKey) => {
-  const httpClient = addon.httpClient(req);
+const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
   const url = `/rest/api/3/issue/${issueKey}/properties/${propertyKey}`;
 
   return new Promise((resolve, reject) => {
@@ -99,8 +98,12 @@ const getJiraIssueProperty = async (req, issueKey, propertyKey) => {
   });
 };
 
-const setJiraIssueProperty = async (req, issueKey, propertyKey, value) => {
-  const httpClient = addon.httpClient(req);
+const setJiraIssueProperty = async (
+  httpClient,
+  issueKey,
+  propertyKey,
+  value
+) => {
   const url = `/rest/api/3/issue/${issueKey}/properties/${propertyKey}`;
 
   return new Promise((resolve, reject) => {

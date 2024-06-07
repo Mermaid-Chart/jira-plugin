@@ -32,7 +32,11 @@ export default function routes(app, addon) {
     let charts, error_charts;
 
     try {
-      charts = await getJiraIssueProperty(req, req.query.issueKey, "diagrams");
+      charts = await getJiraIssueProperty(
+        req.context.http,
+        req.query.issueKey,
+        "diagrams"
+      );
     } catch (e) {
       //console.log(e);
       log.error("error_charts: ", e);
@@ -141,7 +145,11 @@ export default function routes(app, addon) {
     let charts, error_get_charts, error_set_charts, error_push_charts;
     let result;
     try {
-      charts = await getJiraIssueProperty(req, req.query.issueKey, "diagrams");
+      charts = await getJiraIssueProperty(
+        req.context.http,
+        req.query.issueKey,
+        "diagrams"
+      );
     } catch (e) {
       charts = [];
       console.log(e);
@@ -179,7 +187,7 @@ export default function routes(app, addon) {
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
     const charts = await getJiraIssueProperty(
-      req,
+      req.context.http,
       req.query.issueKey,
       "diagrams"
     );
@@ -189,7 +197,7 @@ export default function routes(app, addon) {
     if (index) charts.splice(index, 1);
 
     let result = await setJiraIssueProperty(
-      req,
+      req.context.http,
       req.query.issueKey,
       "diagrams",
       charts
