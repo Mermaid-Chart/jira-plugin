@@ -36,7 +36,8 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
       body: JSON.stringify({ value: { token } }),
     };
 
-    log.info("Save token for: ", atlassianAccountId, requestOpt);
+    log.info(`Save token for: ${atlassianAccountId}`);
+    log.info(requestOpt);
 
     httpClient
       .asUserByAccountId(atlassianAccountId)
