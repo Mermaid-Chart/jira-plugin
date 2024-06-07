@@ -1,8 +1,7 @@
 import { h, render } from "https://esm.sh/preact";
 import { useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
-import log from "./../../utils/logger.js";
-
+import log from "../../utils/logger.js";
 const html = htm.bind(h);
 let timeout;
 
