@@ -123,25 +123,39 @@ export default function routes(app, addon) {
   });
 
   app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
-    let charts, error_charts;
+    let charts, error_get_charts, error_set_charts;
 
     try {
       charts = await getJiraIssueProperty(req, req.query.issueKey, "diagrams");
     } catch (e) {
       charts = [];
       console.log(e);
-      error_charts = e;
+      error_get_charts = e;
     }
 
     charts.push(res.chart);
-    let result = await setJiraIssueProperty(
-      req,
-      req.query.issueKey,
-      "diagrams",
-      charts
-    );
+    try {
+      let result = await setJiraIssueProperty(
+        req,
+        req.query.issueKey,
+        "diagrams",
+        charts
+      );
+    } catch (e) {
+      charts = [];
+      console.log(e);
+      error_set_charts = e;
+    }
 
-    return res.json({ result, charts, chart: res.chart }).end();
+    return res
+      .json({
+        result,
+        charts,
+        chart: res.chart,
+        error_get_charts,
+        error_set_charts,
+      })
+      .end();
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
