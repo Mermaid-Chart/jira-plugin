@@ -123,8 +123,8 @@ export default function routes(app, addon) {
   });
 
   app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
-    let charts, error_get_charts, error_set_charts;
-
+    let charts, error_get_charts, error_set_charts, error_push_charts;
+    let result;
     try {
       charts = await getJiraIssueProperty(req, req.query.issueKey, "diagrams");
     } catch (e) {
@@ -132,10 +132,13 @@ export default function routes(app, addon) {
       console.log(e);
       error_get_charts = e;
     }
-
-    charts.push(res.chart);
     try {
-      let result = await setJiraIssueProperty(
+      charts.push(res.chart);
+    } catch (e) {
+      error_push_charts = e;
+    }
+    try {
+      result = await setJiraIssueProperty(
         req,
         req.query.issueKey,
         "diagrams",
@@ -154,6 +157,7 @@ export default function routes(app, addon) {
         chart: res.chart,
         error_get_charts,
         error_set_charts,
+        error_push_charts,
       })
       .end();
   });
