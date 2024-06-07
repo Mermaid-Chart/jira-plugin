@@ -40,16 +40,13 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
     httpClient
       .asUserByAccountId(atlassianAccountId)
       .put(requestOpt, (err, res, body) => {
-        log.error(
-          "first attemt to save token, put: ",
-          err,
-          ", body: ",
-          body,
-          ", res: ",
-          res
-        );
+        log.info("first attemt to save token, body: ", body);
+        log.info("first attemt to save token, res: ", res);
 
         if (err || res.statusCode > 399) {
+          log.error("error of first attemt to save token: ", err);
+
+          log.error("second attemt to save token: ", body, ", res: ", res);
           httpClient
             .asUserByAccountId(atlassianAccountId)
             .post(requestOpt, (err2, res2, body2) => {
