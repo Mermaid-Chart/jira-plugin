@@ -143,12 +143,12 @@ export default function routes(app, addon) {
       error_push_charts = e;
     }
     try {
-      result = await setJiraIssueProperty(
-        req,
-        req.query.issueKey,
-        "diagrams",
-        charts
-      );
+      // result = await setJiraIssueProperty(
+      //   req,
+      //   req.query.issueKey,
+      //   "diagrams",
+      //   charts
+      // );
     } catch (e) {
       charts = [];
       console.log(e);
