@@ -19,7 +19,10 @@ const fetchToken = async (httpClient, atlassianAccountId) => {
           reject(err);
           return;
         }
+
         const response = JSON.parse(body);
+        log.error("fetchToken: ");
+        log.error(response);
         const token = (response.value || {}).token || "";
         resolve(token);
       }
