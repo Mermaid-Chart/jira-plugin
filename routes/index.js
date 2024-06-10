@@ -142,7 +142,7 @@ export default function routes(app, addon) {
 
   app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
     log.info("add-chart begin:");
-    log.info(res.chart);
+    log.info(req);
 
     let charts;
     try {
