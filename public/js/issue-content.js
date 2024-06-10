@@ -118,14 +118,14 @@ function App() {
     });
   };
 
-  function deleteDiagram(issueKey, documentID) {
+  function deleteDiagram(image) {
     fetch("/delete-chart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `JWT ${JWTToken}`,
       },
-      body: JSON.stringify({ issueKey, documentID }),
+      body: JSON.stringify({ issueKey, documentID: image.documentID }),
     }).then(() => {
       location.reload();
     });
@@ -190,7 +190,7 @@ function App() {
             </button>
             <button
               class="delete-btn"
-              onclick="${(e) => deleteDiagram()}"
+              onclick="${(e) => deleteDiagram(image)}"
               type="submit"
             >
               <input type="hidden" name="issueKey" value="${issueKey}" />
