@@ -25,8 +25,6 @@ const fetchToken = async (httpClient, atlassianAccountId) => {
         }
 
         const response = JSON.parse(body);
-        log.info("fetchToken response: ");
-        log.info(response);
         const token = (response.value.value || {}).token || "";
         resolve(token);
       }
@@ -46,17 +44,9 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
       body: JSON.stringify({ value: { token } }),
     };
 
-    log.info(`Save token for: ${atlassianAccountId}`);
-    log.info(requestOpt);
-
     httpClient
       .asUserByAccountId(atlassianAccountId)
       .put(requestOpt, (err, res, body) => {
-        log.info("first attemt to save token, body: ");
-        log.info(body);
-        log.info("first attemt to save token, res: ");
-        log.info(res);
-
         if (err || res.statusCode > 399) {
           log.error(`error of first attemt to save token: ${res.statusCode}`);
           log.error(err);
@@ -66,15 +56,8 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
             .asUserByAccountId(atlassianAccountId)
             .post(requestOpt, (err2, res2, body2) => {
               if (err2 || res2.statusCode !== 200) {
-                // console.error(
-                //   'Failed on saving user property "token"',
-                //   err2,
-                //   res2.statusCode
-                // );
                 log.error("Failed on saving user property token: ", err2);
                 log.error(err2);
-                log.error("status code: ", res2.statusCode);
-                log.error(res2);
                 return reject(err);
               }
             });
@@ -108,8 +91,13 @@ const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
 
     httpClient.get(requestOpt, (err, res, body) => {
       if (err) {
+        log.error("get chart error");
+        log.error(err);
         return reject(err);
       }
+
+      log.info("Get charts");
+      log.info(body);
       resolve(body.value || []);
     });
   });
@@ -122,6 +110,8 @@ const setJiraIssueProperty = async (
   value
 ) => {
   return new Promise((resolve, reject) => {
+    log.info("Set charts attempt");
+    log.info(value);
     const requestOpt = {
       url: `/rest/api/2/issue/${issueKey}/properties/${propertyKey}`,
       json: true,
@@ -134,8 +124,13 @@ const setJiraIssueProperty = async (
 
     httpClient.put(requestOpt, (err, res, body) => {
       if (err) {
+        log.error("set chart error");
+        log.error(err);
         return reject(err);
       }
+
+      log.info("Set charts final");
+      log.info(body);
       resolve(body);
     });
   });

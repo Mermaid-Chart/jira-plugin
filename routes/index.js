@@ -62,8 +62,6 @@ export default function routes(app, addon) {
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
     // const auth = { url: "", state: "" };
 
-    // console.log("issue auth");
-    // console.log(auth);
     log.info("issue auth: ", auth);
 
     res.render("issue-content.hbs", {
@@ -108,16 +106,6 @@ export default function routes(app, addon) {
     await mermaidAPI.delToken(req.query.state);
 
     const user = await mermaidAPI.getUser(token);
-    // console.log("save token ");
-    // console.log(req.context.http);
-    // console.log(req.context.userAccountId);
-    // console.log(token);
-    // console.log(user);
-    log.info("save token ");
-    log.info(req.context.http);
-    log.info(req.context.userAccountId);
-    log.info(token);
-    log.info(user);
     try {
       await saveToken(req.context.http, req.context.userAccountId, token);
       return res.json({ token, user }).end();
@@ -147,8 +135,7 @@ export default function routes(app, addon) {
   });
 
   app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
-    let charts, error_get_charts, error_set_charts, error_push_charts;
-    let result;
+    let charts;
     try {
       charts = await getJiraIssueProperty(
         req.context.http,
@@ -158,36 +145,26 @@ export default function routes(app, addon) {
     } catch (e) {
       charts = [];
       console.log(e);
-      error_get_charts = e;
-    }
-    try {
-      charts.push(res.chart);
-    } catch (e) {
-      error_push_charts = e;
-    }
-    try {
-      // result = await setJiraIssueProperty(
-      //   req,
-      //   req.query.issueKey,
-      //   "diagrams",
-      //   charts
-      // );
-    } catch (e) {
-      charts = [];
-      console.log(e);
-      error_set_charts = e;
     }
 
-    return res
-      .json({
-        result,
-        charts,
-        chart: res.chart,
-        error_get_charts,
-        error_set_charts,
-        error_push_charts,
-      })
-      .end();
+    log.info("Add chart charts:");
+    log.info(charts);
+
+    charts.push(res.chart);
+
+    try {
+      charts = await setJiraIssueProperty(
+        req,
+        req.query.issueKey,
+        "diagrams",
+        charts
+      );
+    } catch (e) {
+      charts = [];
+      log.error(e);
+    }
+
+    return res.json({ charts }).end();
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
@@ -201,13 +178,13 @@ export default function routes(app, addon) {
     const index = charts.findIndex((i) => i.documentID > chart.documentID);
     if (index) charts.splice(index, 1);
 
-    let result = await setJiraIssueProperty(
+    let charts_upated = await setJiraIssueProperty(
       req.context.http,
       req.query.issueKey,
       "diagrams",
       charts
     );
 
-    return res.json({ result }).end();
+    return res.json({ charts: charts_upated }).end();
   });
 }
