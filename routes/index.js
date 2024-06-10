@@ -189,6 +189,11 @@ export default function routes(app, addon) {
     const chartId = data.documentID;
     const issueKey = data.issueKey;
 
+    log.info(chartId);
+    log.info(issueKey);
+
+    return res.status(200).end();
+
     const charts = await getJiraIssueProperty(
       req.context.http,
       issueKey,
