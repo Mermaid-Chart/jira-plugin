@@ -22,9 +22,26 @@ function App() {
     });
   }, []);
 
-  console.log("accessToken");
-  console.log(accessToken);
-  // log.info("accessToken: ",accessToken);
+  useEffect(() => {
+    window.AP.dialog.disableCloseOnSubmit();
+
+    window.onmessage = function (e) {
+      const action = e.data.action;
+      switch (action) {
+        case "cancel":
+          break;
+
+        case "logout":
+          onLogout();
+          break;
+
+        case "save":
+          console.log("save");
+          AP.dialog.close({ chart: e.data.data });
+          break;
+      }
+    };
+  }, []);
 
   if (!initialized) {
     return html`
