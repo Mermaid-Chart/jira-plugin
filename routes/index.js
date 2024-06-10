@@ -185,7 +185,14 @@ export default function routes(app, addon) {
       diagramsPropertyName
     );
 
-    const index = charts.findIndex((i) => i.documentID > chartId);
+    let index;
+    try {
+      index = charts.findIndex((i) => i.documentID > chartId);
+    } catch (e) {
+      log.error("delete-chart index find failed");
+      log.error(e);
+    }
+
     log.info("delete-chart index");
     log.info(index);
     if (index) charts.splice(index, 1);
