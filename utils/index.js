@@ -98,11 +98,18 @@ const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
 
       log.info("Get charts");
       const diagrams = body;
+
+      for (var prop in diagrams) {
+        log.info(`Key: ${prop}`);
+        log.info("Value: ");
+        log.info(diagrams[prop]);
+      }
+
       log.info(diagrams);
-      const propertyName = diagrams.get("key");
+      const propertyName = diagrams["key"];
       log.info(propertyName);
       log.info("Get charts body.value");
-      const propertyValue = diagrams.get("value");
+      const propertyValue = diagrams["value"];
       log.info(propertyValue);
       let charts;
 
