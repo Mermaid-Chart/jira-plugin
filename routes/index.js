@@ -203,12 +203,19 @@ export default function routes(app, addon) {
     log.info(issueKey);
 
     // return res.status(200).json({ chartId: chartId, issueKey: issueKey }).end();
+    let charts;
+    try {
+      charts = await getJiraIssueProperty(
+        req.context.http,
+        issueKey,
+        diagramsPropertyName
+      );
 
-    const charts = await getJiraIssueProperty(
-      req.context.http,
-      issueKey,
-      diagramsPropertyName
-    );
+      log.info("properly get charts: ", charts);
+    } catch (e) {
+      charts = [];
+      log.error(e);
+    }
 
     // return res.status(200).json({ chartId, issueKey }).end();
     let index = charts.findIndex((i) => i.documentID === chartId);
