@@ -37,7 +37,7 @@ function App() {
 
         case "save":
           console.log("save");
-          AP.dialog.close({ chart: e.data.data });
+          AP.dialog.close({ chart: e.data.data, replace: true });
           break;
       }
     };

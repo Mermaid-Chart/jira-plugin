@@ -147,7 +147,11 @@ function App() {
           "Content-Type": "application/json",
           Authorization: `JWT ${JWTToken}`,
         },
-        body: JSON.stringify({ issueKey, chart: data.chart }),
+        body: JSON.stringify({
+          issueKey,
+          chart: data.chart,
+          replace: data.replace,
+        }),
       }).then((result) => {
         console.log("/add-chart result: ");
         console.log(result);

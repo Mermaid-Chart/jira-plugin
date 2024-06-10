@@ -35,7 +35,7 @@ function App() {
           console.log("save");
           // log.info("save: ", e.data.data);
           //setData((prev) => ({ ...prev, ...e.data.data }));
-          AP.dialog.close({ chart: e.data.data });
+          AP.dialog.close({ chart: e.data.data, replace: false });
 
           break;
       }

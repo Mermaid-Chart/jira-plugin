@@ -141,8 +141,9 @@ export default function routes(app, addon) {
     const data = req.body;
     const issueKey = data.issueKey;
     const chart = data.chart;
+    const isReplace = data.replace;
 
-    chart.diagramImage = "";
+    //chart.diagramImage = "";
 
     let charts;
     try {
@@ -156,13 +157,16 @@ export default function routes(app, addon) {
       log.error(e);
     }
 
-    // let index = charts.findIndex((i) => i.documentID === chart.documentID);
-    // if (index) {
-    //   log.info(`chart alreadey added: ${chart.documentID}`);
-    //   return res.status(400).json({ message: "Chart already added" }).end();
-    // }
+    let index = charts.findIndex((i) => i.documentID === chart.documentID);
 
-    if (chart) charts.push(chart);
+    if (isReplace && index > -1) {
+      charts[index] = chart;
+    } else if (index != -1) {
+      log.info(`chart alreadey added: ${chart.documentID}`);
+      return res.status(400).json({ message: "Chart already added" }).end();
+    } else {
+      charts.push(chart);
+    }
 
     log.info("Add chart charts:");
     log.info(charts);
@@ -206,7 +210,7 @@ export default function routes(app, addon) {
     let index = charts.findIndex((i) => i.documentID === chartId);
     log.info("delete-chart index");
     log.info(index);
-    if (index) charts.splice(index, 1);
+    if (index != -1) charts.splice(index, 1);
 
     let charts_updated = await setJiraIssueProperty(
       req.context.http,
