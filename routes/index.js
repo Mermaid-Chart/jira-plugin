@@ -179,11 +179,23 @@ export default function routes(app, addon) {
 
     const chartId = req.body.documentID;
     const issueKey = req.body.issueKey;
-    const charts = await getJiraIssueProperty(
-      req.context.http,
-      issueKey,
-      diagramsPropertyName
-    );
+
+    try {
+      charts = await getJiraIssueProperty(
+        req.context.http,
+        issueKey,
+        diagramsPropertyName
+      );
+    } catch (e) {
+      charts = [];
+      log.error(e);
+    }
+
+    // const charts = await getJiraIssueProperty(
+    //   req.context.http,
+    //   issueKey,
+    //   diagramsPropertyName
+    // );
 
     let index;
     try {
@@ -197,6 +209,7 @@ export default function routes(app, addon) {
     log.info(index);
     if (index) charts.splice(index, 1);
     return res.status(200).end();
+
     let charts_updated = await setJiraIssueProperty(
       req.context.http,
       issueKey,
