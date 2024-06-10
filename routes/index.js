@@ -138,8 +138,7 @@ export default function routes(app, addon) {
     log.info("add-chart begin:");
     log.info(req.body);
 
-    const data = JSON.parse(req.body);
-
+    const data = req.body;
     const issueKey = data.issueKey;
     const chart = data.chart;
 
@@ -185,8 +184,7 @@ export default function routes(app, addon) {
     log.info("delete-chart begin:");
     log.info(req.body);
 
-    return res.status(200).end();
-    const data = JSON.parse(req.body);
+    const data = req.body; //JSON.parse(req.body);
     const chartId = data.documentID;
     const issueKey = data.issueKey;
 
@@ -199,11 +197,11 @@ export default function routes(app, addon) {
       diagramsPropertyName
     );
 
+    // return res.status(200).json({ chartId, issueKey }).end();
     let index = charts.findIndex((i) => i.documentID > chartId);
     log.info("delete-chart index");
     log.info(index);
     if (index) charts.splice(index, 1);
-    return res.status(200).end();
 
     let charts_updated = await setJiraIssueProperty(
       req.context.http,
