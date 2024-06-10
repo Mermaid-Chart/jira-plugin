@@ -154,7 +154,7 @@ export default function routes(app, addon) {
       log.error(e);
     }
 
-    let index = charts.findIndex((i) => i.documentID > chart.documentID);
+    let index = charts.findIndex((i) => i.documentID === chart.documentID);
     if (index)
       return res.status(400).json({ message: "Chart already added" }).end();
 
@@ -199,7 +199,7 @@ export default function routes(app, addon) {
     );
 
     // return res.status(200).json({ chartId, issueKey }).end();
-    let index = charts.findIndex((i) => i.documentID > chartId);
+    let index = charts.findIndex((i) => i.documentID === chartId);
     log.info("delete-chart index");
     log.info(index);
     if (index) charts.splice(index, 1);
