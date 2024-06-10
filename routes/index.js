@@ -133,7 +133,7 @@ export default function routes(app, addon) {
     });
   });
 
-  app.post("/add-chart", addon.authenticate(), async (req, res) => {
+  app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
     log.info("add-chart begin:");
     log.info(req.body);
     const issueKey = req.body.issueKey;
@@ -171,7 +171,7 @@ export default function routes(app, addon) {
     return res.json({ charts }).end();
   });
 
-  app.post("/delete-chart", addon.authenticate(), async (req, res) => {
+  app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
     log.info("delete-chart begin:");
     log.info(req.body);
 
