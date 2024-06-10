@@ -149,8 +149,6 @@ export default function routes(app, addon) {
         issueKey,
         diagramsPropertyName
       );
-
-      log.info("properly get charts: ", charts);
     } catch (e) {
       charts = [];
       log.error(e);
@@ -197,7 +195,7 @@ export default function routes(app, addon) {
     const chartId = data.documentID;
     const issueKey = data.issueKey;
 
-    log.info("delete-chart chartId");
+    log.info("delete-chart chartId:");
     log.info(chartId);
     log.info(issueKey);
 
@@ -209,9 +207,6 @@ export default function routes(app, addon) {
         issueKey,
         diagramsPropertyName
       );
-
-      log.info("properly get charts: ", charts);
-      console.log("properly get charts: ", charts);
     } catch (e) {
       charts = [];
       log.error("Failed to get charts: ", e);
@@ -219,7 +214,7 @@ export default function routes(app, addon) {
 
     // return res.status(200).json({ chartId, issueKey }).end();
     let index = charts.findIndex((i) => i.documentID === chartId);
-    log.info("delete-chart index");
+    log.info("delete-chart index: ");
     log.info(index);
     if (index != -1) charts.splice(index, 1);
 
