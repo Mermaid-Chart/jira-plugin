@@ -185,14 +185,13 @@ export default function routes(app, addon) {
     log.info("delete-chart begin:");
     log.info(req.body);
 
+    return res.status(200).end();
     const data = JSON.parse(req.body);
     const chartId = data.documentID;
     const issueKey = data.issueKey;
 
     log.info(chartId);
     log.info(issueKey);
-
-    return res.status(200).end();
 
     const charts = await getJiraIssueProperty(
       req.context.http,
