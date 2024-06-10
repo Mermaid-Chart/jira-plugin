@@ -176,7 +176,7 @@ export default function routes(app, addon) {
       );
     } catch (e) {
       charts = [];
-      log.error("add-chart set charts error:");
+      log.error("add-chart set charts error: ", e);
       log.error(e);
     }
 
