@@ -98,13 +98,15 @@ const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
 
       log.info("Get charts");
       log.info(body);
-      log.info(body.key);
+      const propertyName = body.key;
+      log.info(propertyName);
       log.info("Get charts body.value");
-      log.info(body.value);
+      const propertyValue = body.value;
+      log.info(propertyValue);
       let charts;
 
       try {
-        charts = JSON.parse(body.value).value;
+        charts = JSON.parse(propertyValue).value;
       } catch (e) {
         //console.log(e);
         log.error("error_charts: ", e);
