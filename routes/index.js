@@ -133,8 +133,7 @@ export default function routes(app, addon) {
     });
   });
 
-  /*addon.checkValidToken(),*/
-  app.post("/add-chart", async (req, res) => {
+  app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
     log.info("add-chart begin:");
     log.info(req.body);
 
@@ -189,8 +188,7 @@ export default function routes(app, addon) {
     res.status(200).json({ charts }).end();
   });
 
-  /* addon.checkValidToken(),*/
-  app.post("/delete-chart", async (req, res) => {
+  app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
     log.info("delete-chart begin:");
     log.info(req.body);
 
@@ -212,9 +210,10 @@ export default function routes(app, addon) {
       );
 
       log.info("properly get charts: ", charts);
+      console.log("properly get charts: ", charts);
     } catch (e) {
       charts = [];
-      log.error(e);
+      log.error("Failed to get charts: ", e);
     }
 
     // return res.status(200).json({ chartId, issueKey }).end();
