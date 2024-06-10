@@ -141,7 +141,7 @@ export default function routes(app, addon) {
     const issueKey = data.issueKey;
     const chart = data.chart;
     const isReplace = data.replace;
-
+    chart.diagramImage = "";
     let charts;
     try {
       charts = await getJiraIssueProperty(
@@ -181,7 +181,6 @@ export default function routes(app, addon) {
     } catch (e) {
       //charts = [];
       log.error("add-chart set charts error: ", e);
-      log.error(e);
     }
 
     res.status(200).json({ charts }).end();
