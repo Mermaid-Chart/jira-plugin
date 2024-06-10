@@ -133,7 +133,8 @@ export default function routes(app, addon) {
     });
   });
 
-  app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
+  /*addon.checkValidToken(),*/
+  app.post("/add-chart", async (req, res) => {
     log.info("add-chart begin:");
     log.info(req.body);
     const issueKey = req.body.issueKey;
@@ -171,7 +172,8 @@ export default function routes(app, addon) {
     res.status(200).json({ charts }).end();
   });
 
-  app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
+  /* addon.checkValidToken(),*/
+  app.post("/delete-chart", async (req, res) => {
     log.info("delete-chart begin:");
     log.info(req.body);
 
