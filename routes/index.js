@@ -188,6 +188,7 @@ export default function routes(app, addon) {
     const chartId = data.documentID;
     const issueKey = data.issueKey;
 
+    log.info("chartId");
     log.info(chartId);
     log.info(issueKey);
 
