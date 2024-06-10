@@ -98,28 +98,14 @@ const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
 
       log.info("Get charts");
       const diagrams = JSON.parse(body);
-
-      // for (var prop in diagrams) {
-      //   log.info(`Key: ${prop}`);
-      //   log.info("Value: ");
-      //   log.info(diagrams[prop]);
-      // }
-
-      log.info(diagrams);
-      const propertyName = diagrams["key"];
-      log.info(propertyName);
-      log.info("Get charts body.value");
       const propertyValue = diagrams["value"];
-      log.info(propertyValue);
       let charts;
 
       try {
         let parsedValue = JSON.parse(propertyValue);
         charts = parsedValue.value;
       } catch (e) {
-        //console.log(e);
         log.error("error_charts: ", e);
-
         charts = [];
       }
       resolve(charts);
@@ -154,8 +140,9 @@ const setJiraIssueProperty = async (
       }
 
       log.info("Set charts final");
-      log.info(body);
-      resolve(body);
+      const diagrams = JSON.parse(body);
+      log.info(diagrams);
+      resolve(diagrams);
     });
   });
 };

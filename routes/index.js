@@ -172,6 +172,9 @@ export default function routes(app, addon) {
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
+    log.info("delete-chart begin:");
+    log.info(req.body);
+
     const chartId = req.body.documentID;
     const issueKey = req.body.issueKey;
     const charts = await getJiraIssueProperty(
@@ -183,13 +186,16 @@ export default function routes(app, addon) {
     const index = charts.findIndex((i) => i.documentID > chartId);
     if (index) charts.splice(index, 1);
 
-    let charts_upated = await setJiraIssueProperty(
+    let charts_updated = await setJiraIssueProperty(
       req.context.http,
       issueKey,
       diagramsPropertyName,
       charts
     );
 
-    return res.json({ charts: charts_upated }).end();
+    log.info("delete-chart charts_updated");
+    log.info(charts_updated);
+
+    return res.json({ charts }).end();
   });
 }
