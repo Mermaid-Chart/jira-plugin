@@ -66,6 +66,9 @@ console.log(
 
 // Bootstrap Express and atlassian-connect-express
 const app = express();
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
 export const addon = ace(app, {
   config: {
     descriptorTransformer(self, config) {

@@ -138,13 +138,11 @@ export default function routes(app, addon) {
     log.info("add-chart begin:");
     log.info(req.body);
 
-    return res.status(200).json({ 1: "1" }).end();
-
     const data = req.body;
     const issueKey = data.issueKey;
     const chart = data.chart;
 
-    chart.diagramImage = "";
+    // chart.diagramImage = "";
 
     let charts;
     try {
