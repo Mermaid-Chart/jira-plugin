@@ -171,12 +171,15 @@ export default function routes(app, addon) {
     log.info(charts);
 
     try {
-      charts = await setJiraIssueProperty(
+      let charts_updated = await setJiraIssueProperty(
         req.context.http,
         issueKey,
         diagramsPropertyName,
         charts
       );
+
+      log.info("delete-chart charts_updated");
+      log.info(charts_updated);
     } catch (e) {
       //charts = [];
       log.error("add-chart set charts error: ", e);
@@ -220,21 +223,21 @@ export default function routes(app, addon) {
     log.info(index);
     if (index != -1) charts.splice(index, 1);
 
-    // try {
-    //   let charts_updated = await setJiraIssueProperty(
-    //     req.context.http,
-    //     issueKey,
-    //     diagramsPropertyName,
-    //     charts
-    //   );
-    // } catch (e) {
-    //   // charts = [];
-    //   log.error("add-chart set charts error: ", e);
-    //   log.error(e);
-    // }
+    try {
+      let charts_updated = await setJiraIssueProperty(
+        req.context.http,
+        issueKey,
+        diagramsPropertyName,
+        charts
+      );
 
-    // log.info("delete-chart charts_updated");
-    // log.info(charts_updated);
+      log.info("delete-chart charts_updated");
+      log.info(charts_updated);
+    } catch (e) {
+      // charts = [];
+      log.error("add-chart set charts error: ", e);
+      log.error(e);
+    }
 
     res.status(200).json({ charts }).end();
   });
