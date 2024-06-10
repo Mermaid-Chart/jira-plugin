@@ -142,7 +142,7 @@ export default function routes(app, addon) {
     const issueKey = data.issueKey;
     const chart = data.chart;
 
-    // chart.diagramImage = "";
+    chart.diagramImage = "";
 
     let charts;
     try {
