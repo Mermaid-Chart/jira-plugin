@@ -142,8 +142,6 @@ export default function routes(app, addon) {
     const chart = data.chart;
     const isReplace = data.replace;
 
-    chart.diagramImage = "";
-
     let charts;
     try {
       charts = await getJiraIssueProperty(
