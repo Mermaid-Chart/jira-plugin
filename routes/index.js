@@ -152,6 +152,8 @@ export default function routes(app, addon) {
         issueKey,
         diagramsPropertyName
       );
+
+      log.info("properly get charts: ", charts);
     } catch (e) {
       charts = [];
       log.error(e);

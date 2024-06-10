@@ -138,7 +138,7 @@ function App() {
 
     if (data && data.chart) {
       data.chart.diagramCode = "";
-      // data.chart.diagramImage = "";
+      data.chart.diagramImage = "";
 
       console.log(data);
       fetch("/add-chart", {
