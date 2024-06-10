@@ -36,7 +36,7 @@ export default function routes(app, addon) {
     try {
       charts = await getJiraIssueProperty(
         req.context.http,
-        req.query.issueKey,
+        issueKey,
         diagramsPropertyName
       );
 
@@ -46,13 +46,6 @@ export default function routes(app, addon) {
       //console.log(e);
       log.error("error_charts: ", e);
     }
-
-    // charts = await setJiraIssueProperty(
-    //   req,
-    //   req.query.issueKey,
-    //   diagramsPropertyName,
-    //   charts
-    // );
 
     let access_token, user, error;
     try {
