@@ -143,7 +143,6 @@ export default function routes(app, addon) {
   app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
     log.info("add-chart begin:");
     log.info(req.body);
-    const chartId = req.body.documentID;
     const issueKey = req.body.issueKey;
 
     let charts;
@@ -158,20 +157,21 @@ export default function routes(app, addon) {
       console.log(e);
     }
 
+    if (req.body.chart) charts.push(req.body.chart);
+
     log.info("Add chart charts:");
     log.info(charts);
 
-    if (req.body.chart) charts.push(req.body.chart);
-
     try {
       charts = await setJiraIssueProperty(
-        req,
+        req.context.http,
         issueKey,
         diagramsPropertyName,
         charts
       );
     } catch (e) {
       charts = [];
+      log.error("add-chart set charts error:");
       log.error(e);
     }
 
