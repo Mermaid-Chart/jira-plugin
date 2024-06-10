@@ -137,6 +137,7 @@ function App() {
     // log.info("dialog.close: ", data);
 
     if (data && data.chart) {
+      data.chart.diagramCode = "";
       fetch("/add-chart", {
         method: "POST",
         headers: {
