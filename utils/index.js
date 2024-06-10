@@ -123,6 +123,8 @@ const setJiraIssueProperty = async (
   return new Promise((resolve, reject) => {
     log.info("Set charts attempt");
     log.info(value);
+    log.info("httpClient: ", httpClient);
+
     const requestOpt = {
       url: `/rest/api/2/issue/${issueKey}/properties/${propertyKey}`,
       json: true,
