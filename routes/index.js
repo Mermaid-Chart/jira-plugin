@@ -185,9 +185,9 @@ export default function routes(app, addon) {
       diagramsPropertyName
     );
 
-    return res.status(200).end();
-
     const index = charts.findIndex((i) => i.documentID > chartId);
+    log.info("delete-chart index");
+    log.info(index);
     if (index) charts.splice(index, 1);
 
     let charts_updated = await setJiraIssueProperty(
@@ -196,6 +196,8 @@ export default function routes(app, addon) {
       diagramsPropertyName,
       charts
     );
+
+    return res.status(200).end();
 
     log.info("delete-chart charts_updated");
     log.info(charts_updated);
