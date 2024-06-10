@@ -137,7 +137,11 @@ export default function routes(app, addon) {
   app.post("/add-chart", async (req, res) => {
     log.info("add-chart begin:");
     log.info(req.body);
-    const issueKey = req.body.issueKey;
+
+    const data = JSON.parse(req.body);
+
+    const issueKey = data.issueKey;
+    const chart = data.chart;
 
     let charts;
     try {
@@ -151,7 +155,11 @@ export default function routes(app, addon) {
       log.error(e);
     }
 
-    if (req.body.chart) charts.push(req.body.chart);
+    let index = charts.findIndex((i) => i.documentID > chart.documentID);
+    if (index)
+      return res.status(400).json({ message: "Chart already added" }).end();
+
+    if (chart) charts.push(chart);
 
     log.info("Add chart charts:");
     log.info(charts);
@@ -177,34 +185,17 @@ export default function routes(app, addon) {
     log.info("delete-chart begin:");
     log.info(req.body);
 
-    const chartId = req.body.documentID;
-    const issueKey = req.body.issueKey;
+    const data = JSON.parse(req.body);
+    const chartId = data.documentID;
+    const issueKey = data.issueKey;
 
-    try {
-      charts = await getJiraIssueProperty(
-        req.context.http,
-        issueKey,
-        diagramsPropertyName
-      );
-    } catch (e) {
-      charts = [];
-      log.error(e);
-    }
+    const charts = await getJiraIssueProperty(
+      req.context.http,
+      issueKey,
+      diagramsPropertyName
+    );
 
-    // const charts = await getJiraIssueProperty(
-    //   req.context.http,
-    //   issueKey,
-    //   diagramsPropertyName
-    // );
-
-    let index;
-    try {
-      index = charts.findIndex((i) => i.documentID > chartId);
-    } catch (e) {
-      log.error("delete-chart index find failed");
-      log.error(e);
-    }
-
+    let index = charts.findIndex((i) => i.documentID > chartId);
     log.info("delete-chart index");
     log.info(index);
     if (index) charts.splice(index, 1);
