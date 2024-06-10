@@ -66,14 +66,14 @@ export default function routes(app, addon) {
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {
       //console.log(e);
-      log.error("error: ", e);
-      error = e;
+      log.error("issue-content fetchToken error: ");
+      log.error(e);
     }
 
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
     // const auth = { url: "", state: "" };
 
-    log.info("issue auth: ", auth);
+    log.info("issue-content issue auth: ", auth);
 
     res.render("issue-content.hbs", {
       issueKey,
@@ -83,12 +83,7 @@ export default function routes(app, addon) {
       loginState: auth.state,
       mcAccessToken: user ? access_token : "",
       user: user ? JSON.stringify(user) : "null",
-      other: JSON.stringify({
-        http: req.context.http,
-        userAccountId: req.context.userAccountId,
-        error,
-        error_charts,
-      }),
+      other: JSON.stringify({}),
     });
   });
 
