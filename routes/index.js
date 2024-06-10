@@ -39,17 +39,20 @@ export default function routes(app, addon) {
         req.query.issueKey,
         diagramsPropertyName
       );
+
+      log.info("issue-content getJiraIssueProperty");
+      log.info(charts);
     } catch (e) {
       //console.log(e);
       log.error("error_charts: ", e);
-
-      charts = await setJiraIssueProperty(
-        req,
-        req.query.issueKey,
-        diagramsPropertyName,
-        charts
-      );
     }
+
+    // charts = await setJiraIssueProperty(
+    //   req,
+    //   req.query.issueKey,
+    //   diagramsPropertyName,
+    //   charts
+    // );
 
     let access_token, user, error;
     try {
