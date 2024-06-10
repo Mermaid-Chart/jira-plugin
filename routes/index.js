@@ -141,7 +141,7 @@ export default function routes(app, addon) {
     const issueKey = data.issueKey;
     const chart = data.chart;
     const isReplace = data.replace;
-    chart.diagramImage = "";
+    // chart.diagramImage = "";
     let charts;
     try {
       charts = await getJiraIssueProperty(
@@ -176,14 +176,14 @@ export default function routes(app, addon) {
         charts
       );
 
-      log.info("delete-chart charts_updated");
+      log.info("add-chart charts_updated");
       log.info(charts_updated);
     } catch (e) {
       //charts = [];
       log.error("add-chart set charts error: ", e);
     }
 
-    res.status(200).json({ charts }).end();
+    return res.status(200).json({ charts }).end();
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
@@ -233,6 +233,6 @@ export default function routes(app, addon) {
       log.error(e);
     }
 
-    res.status(200).json({ charts }).end();
+    return res.status(200).json({ charts }).end();
   });
 }
