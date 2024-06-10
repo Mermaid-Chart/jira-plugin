@@ -2,13 +2,15 @@ import { Buffer } from "buffer";
 import crypto from "crypto";
 import log from "./logger.js";
 
+const tokenPropertyKey = "token";
+
 const fetchToken = async (httpClient, atlassianAccountId) => {
   return new Promise((resolve, reject) => {
     log.info(`fetchToken for: ${atlassianAccountId}`);
 
     httpClient.asUserByAccountId(atlassianAccountId).get(
       {
-        url: `/rest/api/user/${atlassianAccountId}/property/token?jsonValue=true`,
+        url: `/rest/api/2/user/properties/${tokenPropertyKey}?accountId=${atlassianAccountId}`,
         headers: {
           Accept: "application/json",
         },
@@ -36,8 +38,9 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
 
   return new Promise((resolve, reject) => {
     const requestOpt = {
-      url: `/rest/api/user/${atlassianAccountId}/property/token`,
+      url: `/rest/api/2/user/properties/${tokenPropertyKey}?accountId=${atlassianAccountId}`,
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ value: { token } }),
@@ -62,11 +65,6 @@ const saveToken = async (httpClient, atlassianAccountId, token) => {
           httpClient
             .asUserByAccountId(atlassianAccountId)
             .post(requestOpt, (err2, res2, body2) => {
-              //console.log("post", err2, body2);
-              log.error("post: ", err2);
-              log.error(err2);
-              log.error(body2);
-              log.error(res2);
               if (err2 || res2.statusCode !== 200) {
                 // console.error(
                 //   'Failed on saving user property "token"',
@@ -100,21 +98,20 @@ const getEncodedSHA256Hash = async (str) => {
 
 //////////// JIRA
 const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
-  const url = `/rest/api/3/issue/${issueKey}/properties/${propertyKey}`;
-
   return new Promise((resolve, reject) => {
-    httpClient.get(
-      {
-        url,
-        json: true,
+    const requestOpt = {
+      url: `/rest/api/2/issue/${issueKey}/properties/${propertyKey}`,
+      headers: {
+        Accept: "application/json",
       },
-      (err, res, body) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve(body.value || []);
+    };
+
+    httpClient.get(requestOpt, (err, res, body) => {
+      if (err) {
+        return reject(err);
       }
-    );
+      resolve(body.value || []);
+    });
   });
 };
 
@@ -124,22 +121,23 @@ const setJiraIssueProperty = async (
   propertyKey,
   value
 ) => {
-  const url = `/rest/api/3/issue/${issueKey}/properties/${propertyKey}`;
-
   return new Promise((resolve, reject) => {
-    httpClient.put(
-      {
-        url,
-        json: true,
-        body: value,
+    const requestOpt = {
+      url: `/rest/api/2/issue/${issueKey}/properties/${propertyKey}`,
+      json: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      (err, res, body) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve(body);
+      body: JSON.stringify({ value }),
+    };
+
+    httpClient.put(requestOpt, (err, res, body) => {
+      if (err) {
+        return reject(err);
       }
-    );
+      resolve(body);
+    });
   });
 };
 
