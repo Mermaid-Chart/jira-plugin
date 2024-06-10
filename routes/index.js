@@ -142,13 +142,15 @@ export default function routes(app, addon) {
 
   app.post("/add-chart", addon.checkValidToken(), async (req, res) => {
     log.info("add-chart begin:");
-    log.info(req);
+    log.info(req.body);
+    const chartId = req.body.documentID;
+    const issueKey = req.body.issueKey;
 
     let charts;
     try {
       charts = await getJiraIssueProperty(
         req.context.http,
-        req.query.issueKey,
+        issueKey,
         diagramsPropertyName
       );
     } catch (e) {
@@ -159,12 +161,12 @@ export default function routes(app, addon) {
     log.info("Add chart charts:");
     log.info(charts);
 
-    charts.push(res.chart);
+    if (req.body.chart) charts.push(req.body.chart);
 
     try {
       charts = await setJiraIssueProperty(
         req,
-        req.query.issueKey,
+        issueKey,
         diagramsPropertyName,
         charts
       );
@@ -177,19 +179,20 @@ export default function routes(app, addon) {
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
+    const chartId = req.body.documentID;
+    const issueKey = req.body.issueKey;
     const charts = await getJiraIssueProperty(
       req.context.http,
-      req.query.issueKey,
+      issueKey,
       diagramsPropertyName
     );
 
-    const chart = res.chart;
-    const index = charts.findIndex((i) => i.documentID > chart.documentID);
+    const index = charts.findIndex((i) => i.documentID > chartId);
     if (index) charts.splice(index, 1);
 
     let charts_upated = await setJiraIssueProperty(
       req.context.http,
-      req.query.issueKey,
+      issueKey,
       diagramsPropertyName,
       charts
     );

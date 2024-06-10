@@ -118,14 +118,14 @@ function App() {
     });
   };
 
-  function deleteDiagram(issueKey, diagramId) {
+  function deleteDiagram(issueKey, documentID) {
     fetch("/delete-chart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `JWT ${JWTToken}`,
       },
-      body: JSON.stringify({ issueKey, diagramId }),
+      body: JSON.stringify({ issueKey, documentID }),
     }).then(() => {
       location.reload();
     });
