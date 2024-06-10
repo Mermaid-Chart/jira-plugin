@@ -155,8 +155,10 @@ export default function routes(app, addon) {
     }
 
     let index = charts.findIndex((i) => i.documentID === chart.documentID);
-    if (index)
+    if (index) {
+      log.info(`chart alreadey added: ${chart.documentID}`);
       return res.status(400).json({ message: "Chart already added" }).end();
+    }
 
     if (chart) charts.push(chart);
 
