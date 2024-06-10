@@ -156,11 +156,11 @@ export default function routes(app, addon) {
       log.error(e);
     }
 
-    let index = charts.findIndex((i) => i.documentID === chart.documentID);
-    if (index) {
-      log.info(`chart alreadey added: ${chart.documentID}`);
-      return res.status(400).json({ message: "Chart already added" }).end();
-    }
+    // let index = charts.findIndex((i) => i.documentID === chart.documentID);
+    // if (index) {
+    //   log.info(`chart alreadey added: ${chart.documentID}`);
+    //   return res.status(400).json({ message: "Chart already added" }).end();
+    // }
 
     if (chart) charts.push(chart);
 
