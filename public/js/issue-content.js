@@ -16,9 +16,9 @@ function App() {
 
   console.log("loginURL", loginURL);
   console.log(charts);
-  console.log(accessToken);
-  console.log(user);
-  console.log(other);
+  // console.log(accessToken);
+  // console.log(user);
+  // console.log(other);
 
   const connectToMermaidClick = () => {
     const width = 500;
