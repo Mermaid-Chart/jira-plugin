@@ -11,6 +11,8 @@ const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
 const MC_CLIENT_ID =
   process.env.MC_CLIENT_ID || "6643413f-36fe-41f5-83b6-18674ec599f0";
 
+const diagramsPropertyName = "diagrams";
+
 export default function routes(app, addon) {
   const mermaidAPI = new MermaidChart({
     baseURL: MC_BASE_URL,
@@ -29,18 +31,24 @@ export default function routes(app, addon) {
 
   app.get("/issue-content", addon.authenticate(), async (req, res) => {
     const issueKey = req.query.issueKey;
-    let charts, error_charts;
+    let charts;
 
     try {
       charts = await getJiraIssueProperty(
         req.context.http,
         req.query.issueKey,
-        "diagrams"
+        diagramsPropertyName
       );
     } catch (e) {
       //console.log(e);
       log.error("error_charts: ", e);
-      error_charts = e;
+
+      charts = await setJiraIssueProperty(
+        req,
+        req.query.issueKey,
+        diagramsPropertyName,
+        charts
+      );
     }
 
     let access_token, user, error;
@@ -140,7 +148,7 @@ export default function routes(app, addon) {
       charts = await getJiraIssueProperty(
         req.context.http,
         req.query.issueKey,
-        "diagrams"
+        diagramsPropertyName
       );
     } catch (e) {
       charts = [];
@@ -156,7 +164,7 @@ export default function routes(app, addon) {
       charts = await setJiraIssueProperty(
         req,
         req.query.issueKey,
-        "diagrams",
+        diagramsPropertyName,
         charts
       );
     } catch (e) {
@@ -171,7 +179,7 @@ export default function routes(app, addon) {
     const charts = await getJiraIssueProperty(
       req.context.http,
       req.query.issueKey,
-      "diagrams"
+      diagramsPropertyName
     );
 
     const chart = res.chart;
@@ -181,7 +189,7 @@ export default function routes(app, addon) {
     let charts_upated = await setJiraIssueProperty(
       req.context.http,
       req.query.issueKey,
-      "diagrams",
+      diagramsPropertyName,
       charts
     );
 
