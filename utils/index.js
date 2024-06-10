@@ -102,13 +102,7 @@ const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
       log.info(propertyName);
       log.info("Get charts body.value");
 
-      const testJson = {
-        key: "diagrams",
-        value:
-          '{"value":[{"documentID":"477191f7-a9e0-441d-9097-4cb1bf0281e2","projectID":"1ad8729f-9382-445f-a93b-a28ab6365822","diagramCode":"","diagramImage":"","major":0,"minor":1}]}',
-      };
-
-      const propertyValue = testJson["value"];
+      const propertyValue = body["value"];
       log.info(propertyValue);
       let charts;
 
