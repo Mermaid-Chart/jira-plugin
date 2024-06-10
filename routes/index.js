@@ -143,7 +143,7 @@ export default function routes(app, addon) {
     const chart = data.chart;
     const isReplace = data.replace;
 
-    //chart.diagramImage = "";
+    chart.diagramImage = "";
 
     let charts;
     try {
@@ -179,7 +179,7 @@ export default function routes(app, addon) {
         charts
       );
     } catch (e) {
-      charts = [];
+      //charts = [];
       log.error("add-chart set charts error: ", e);
       log.error(e);
     }
@@ -196,9 +196,11 @@ export default function routes(app, addon) {
     const chartId = data.documentID;
     const issueKey = data.issueKey;
 
-    log.info("chartId");
+    log.info("delete-chart chartId");
     log.info(chartId);
     log.info(issueKey);
+
+    // return res.status(200).json({ chartId: chartId, issueKey: issueKey }).end();
 
     const charts = await getJiraIssueProperty(
       req.context.http,
@@ -212,15 +214,21 @@ export default function routes(app, addon) {
     log.info(index);
     if (index != -1) charts.splice(index, 1);
 
-    let charts_updated = await setJiraIssueProperty(
-      req.context.http,
-      issueKey,
-      diagramsPropertyName,
-      charts
-    );
+    try {
+      let charts_updated = await setJiraIssueProperty(
+        req.context.http,
+        issueKey,
+        diagramsPropertyName,
+        charts
+      );
+    } catch (e) {
+      // charts = [];
+      log.error("add-chart set charts error: ", e);
+      log.error(e);
+    }
 
-    log.info("delete-chart charts_updated");
-    log.info(charts_updated);
+    // log.info("delete-chart charts_updated");
+    // log.info(charts_updated);
 
     res.status(200).json({ charts }).end();
   });
