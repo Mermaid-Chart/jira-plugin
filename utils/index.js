@@ -98,6 +98,8 @@ const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
 
       log.info("Get charts");
       log.info(body);
+      log.info(body.key);
+      log.info(body.value);
       // resolve(JSON.parse(body.value) || []);
       resolve(body.value || []);
     });
