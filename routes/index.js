@@ -147,7 +147,7 @@ export default function routes(app, addon) {
       );
     } catch (e) {
       charts = [];
-      console.log(e);
+      log.error(e);
     }
 
     if (req.body.chart) charts.push(req.body.chart);
@@ -168,7 +168,7 @@ export default function routes(app, addon) {
       log.error(e);
     }
 
-    return res.status(200).json({ charts }).end();
+    res.status(200).json({ charts }).end();
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
@@ -196,6 +196,6 @@ export default function routes(app, addon) {
     log.info("delete-chart charts_updated");
     log.info(charts_updated);
 
-    return res.status(200).json({ charts }).end();
+    res.status(200).json({ charts }).end();
   });
 }
