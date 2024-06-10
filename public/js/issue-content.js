@@ -138,6 +138,7 @@ function App() {
 
     if (data && data.chart) {
       data.chart.diagramCode = "";
+      data.chart.diagramImage = "";
       fetch("/add-chart", {
         method: "POST",
         headers: {
