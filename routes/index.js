@@ -189,15 +189,13 @@ export default function routes(app, addon) {
     log.info("delete-chart index");
     log.info(index);
     if (index) charts.splice(index, 1);
-
+    return res.status(200).end();
     let charts_updated = await setJiraIssueProperty(
       req.context.http,
       issueKey,
       diagramsPropertyName,
       charts
     );
-
-    return res.status(200).end();
 
     log.info("delete-chart charts_updated");
     log.info(charts_updated);
