@@ -132,7 +132,8 @@ function App() {
   }
 
   window.AP.events.on("dialog.close", async (data) => {
-    console.log("dialog.close", data);
+    console.log("dialog.close:");
+    console.log(data);
     // log.info("dialog.close: ", data);
 
     if (data && data.chart) {
@@ -144,7 +145,7 @@ function App() {
         },
         body: JSON.stringify({ issueKey, chart: data.chart }),
       }).then((result) => {
-        console.log("/add-chart");
+        console.log("/add-chart result: ");
         console.log(result);
         // log.info("/add-chart: ", result);
         location.reload();
