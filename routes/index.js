@@ -49,6 +49,9 @@ export default function routes(app, addon) {
         req.context.http,
         req.context.userAccountId
       );
+
+      log.info(`Token ${access_token}`);
+
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {
       //console.log(e);
