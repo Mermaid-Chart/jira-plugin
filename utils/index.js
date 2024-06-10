@@ -108,12 +108,13 @@ const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
           '{"value":[{"documentID":"477191f7-a9e0-441d-9097-4cb1bf0281e2","projectID":"1ad8729f-9382-445f-a93b-a28ab6365822","diagramCode":"","diagramImage":"","major":0,"minor":1}]}',
       };
 
-      const propertyValue = testJson.value;
+      const propertyValue = testJson["value"];
       log.info(propertyValue);
       let charts;
 
       try {
-        charts = JSON.parse(propertyValue).value;
+        let parsedValue = JSON.parse(propertyValue);
+        charts = parsedValue.value;
       } catch (e) {
         //console.log(e);
         log.error("error_charts: ", e);
