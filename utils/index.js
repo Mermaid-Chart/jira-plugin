@@ -25,7 +25,7 @@ const fetchToken = async (httpClient, atlassianAccountId) => {
         }
 
         const response = JSON.parse(body);
-        const token = (response.value.value || {}).token || "";
+        const token = ((response.value || {}).value || {}).token || "";
         resolve(token);
       }
     );
