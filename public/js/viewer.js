@@ -8,6 +8,7 @@ function App() {
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
+    window.AP.dialog.getButton("submit").hide();
     AP.dialog.getCustomData(function (customData) {
       console.log("customData");
       console.log(customData);

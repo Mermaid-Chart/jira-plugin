@@ -23,7 +23,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    window.AP.dialog.disableCloseOnSubmit();
+    window.AP.dialog.getButton("submit").hide();
+    // window.AP.dialog.disableCloseOnSubmit();
 
     window.onmessage = function (e) {
       const action = e.data.action;
