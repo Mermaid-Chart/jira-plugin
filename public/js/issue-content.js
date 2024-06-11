@@ -138,7 +138,7 @@ function App() {
 
     if (data && data.chart) {
       data.chart.diagramCode = "";
-      // data.chart.diagramImage = "";
+      data.chart.diagramImage = "";
 
       console.log(data);
       fetch("/add-chart", {
@@ -178,7 +178,7 @@ function App() {
           (image) => html` <div class="tile">
             <img
               class="tile-image"
-              src="data:image/x-png;base64, ${image.diagramImage}"
+              src="${image.diagramUrl}"
               alt="${image.title}"
             />
             <div class="background"></div>

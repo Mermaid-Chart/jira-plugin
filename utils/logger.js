@@ -1,7 +1,7 @@
 import { WinstonTransport as AxiomTransport } from "@axiomhq/winston";
-import winston from "winston";
+import winston, { loggers } from "winston";
 
-const logger = winston.createLogger({
+const winstonLogger = winston.createLogger({
   level: "info",
   format: winston.format.json(),
   defaultMeta: { service: "jira-plugin" },
@@ -16,4 +16,26 @@ const logger = winston.createLogger({
   ],
 });
 
-export default logger;
+class Logger {
+  info(message) {
+    winstonLogger.info(message);
+    console.log(message);
+  }
+
+  info(message, ...meta) {
+    winstonLogger.info(message, meta);
+    console.log(message, meta);
+  }
+
+  error(message) {
+    winstonLogger.error(message);
+    console.error(message);
+  }
+
+  error(message, ...meta) {
+    winstonLogger.error(message, meta);
+    console.error(message, meta);
+  }
+}
+
+export default new Logger();

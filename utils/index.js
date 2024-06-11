@@ -96,9 +96,7 @@ const getJiraIssueProperty = async (httpClient, issueKey, propertyKey) => {
         return reject(err);
       }
 
-      log.info("Get charts");
       const diagrams = JSON.parse(body);
-      log.info(diagrams);
       const propertyValue = diagrams["value"];
       let charts;
 
@@ -121,10 +119,6 @@ const setJiraIssueProperty = async (
   value
 ) => {
   return new Promise((resolve, reject) => {
-    log.info("Set charts attempt");
-    log.info(value);
-    log.info("httpClient: ", httpClient);
-
     const requestOpt = {
       url: `/rest/api/2/issue/${issueKey}/properties/${propertyKey}`,
       json: true,
@@ -143,9 +137,9 @@ const setJiraIssueProperty = async (
       }
 
       log.info("Set charts final");
-      const diagrams = JSON.parse(body);
-      log.info(diagrams);
-      resolve(diagrams);
+      log.info(body);
+
+      resolve([]);
     });
   });
 };

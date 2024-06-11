@@ -6,6 +6,7 @@ import {
 } from "../utils/index.js";
 import { MermaidChart } from "../utils/MermaidChart.js";
 import log from "../utils/logger.js";
+import logger from "../utils/logger.js";
 
 const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
 const MC_CLIENT_ID =
@@ -33,20 +34,6 @@ export default function routes(app, addon) {
     const issueKey = req.query.issueKey;
     let charts;
 
-    try {
-      charts = await getJiraIssueProperty(
-        req.context.http,
-        issueKey,
-        diagramsPropertyName
-      );
-
-      log.info("issue-content getJiraIssueProperty");
-      log.info(charts);
-    } catch (e) {
-      //console.log(e);
-      log.error("error_charts: ", e);
-    }
-
     let access_token, user, error;
     try {
       access_token = await fetchToken(
@@ -63,10 +50,38 @@ export default function routes(app, addon) {
       log.error(e);
     }
 
+    try {
+      charts = await getJiraIssueProperty(
+        req.context.http,
+        issueKey,
+        diagramsPropertyName
+      );
+
+      log.info("issue-content getJiraIssueProperty");
+      log.info(charts);
+    } catch (e) {
+      charts = [];
+      //console.log(e);
+      log.error("error_charts: ", e);
+    }
+
+    try {
+      for (let index = 0; index < charts.length; ++index) {
+        const chart = charts[index];
+        // chart.diagramImage = await mermaidAPI.getDocumentAsPng(
+        //   chart,
+        //   access_token
+        // );
+
+        chart.diagramUrl = mermaidAPI.getDocumentAsPngUrl(chart);
+      }
+    } catch (e) {
+      log.error("error getting pngs: ", e);
+    }
+
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
     // const auth = { url: "", state: "" };
-
-    log.info("issue-content issue auth: ", auth);
+    // log.info("issue-content issue auth: ", auth);
 
     res.render("issue-content.hbs", {
       issueKey,
@@ -167,23 +182,23 @@ export default function routes(app, addon) {
 
     log.info("Add chart charts:");
     log.info(charts);
+    // return res.status(200).json({ charts }).end();
+    // try {
+    let charts_updated = await setJiraIssueProperty(
+      req.context.http,
+      issueKey,
+      diagramsPropertyName,
+      charts
+    );
 
-    try {
-      let charts_updated = await setJiraIssueProperty(
-        req.context.http,
-        issueKey,
-        diagramsPropertyName,
-        charts
-      );
+    log.info("add-chart charts_updated");
+    log.info(charts_updated);
+    // } catch (e) {
+    //   //charts = [];
+    //   log.error("add-chart set charts error: ", e);
+    // }
 
-      log.info("add-chart charts_updated");
-      log.info(charts_updated);
-    } catch (e) {
-      //charts = [];
-      log.error("add-chart set charts error: ", e);
-    }
-
-    return res.status(200).json({ charts }).end();
+    res.status(200).json({ charts }).end();
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
@@ -233,6 +248,6 @@ export default function routes(app, addon) {
       log.error(e);
     }
 
-    return res.status(200).json({ charts }).end();
+    res.status(200).json({ charts }).end();
   });
 }

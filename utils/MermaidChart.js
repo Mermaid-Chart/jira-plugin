@@ -38,6 +38,7 @@ class MermaidChart {
     },
     raw: (document, theme = "light") => {
       const base = `/raw/${document.documentID}?version=v${document.major}.${document.minor}&theme=${theme}&format=`;
+
       return {
         html: base + "html",
         svg: base + "svg",
@@ -168,13 +169,34 @@ class MermaidChart {
     return url;
   }
 
-  async getDocumentAsPng(document, theme = "light") {
-    const png = await fetch(this.URLS.raw(document, theme).png);
-    return await png.text();
+  getViewURL(document) {
+    const url = `${this.baseURL}${this.URLS.diagram(document).view}`;
+    return url;
+  }
+
+  getDocumentAsPngUrl(document, theme = "light") {
+    const url = `${this.baseURL}${this.URLS.raw(document, theme).png}`;
+    return url;
+  }
+
+  async getDocumentAsPng(document, accessToken, theme = "light") {
+    const url = `${this.baseURL}${this.URLS.raw(document, theme).png}`;
+    const png = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const base64Image = Buffer.from(await png.arrayBuffer(), "binary").toString(
+      "base64"
+    );
+
+    return base64Image;
   }
 
   async getRawDocument(document, theme = "light") {
-    const raw = await fetch(this.URLS.raw(document, theme).svg);
+    const raw = await fetch(
+      `${this.baseURL}${this.URLS.raw(document, theme).svg}`
+    );
     return await raw.text();
   }
 
