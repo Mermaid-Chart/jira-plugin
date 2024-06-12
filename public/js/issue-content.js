@@ -225,6 +225,7 @@ function App() {
             <img
               style="display: flex;"
               class="tile-image"
+              src="${image.diagramUrl}"
               alt="${image.title}"
             />
             <div class="load" style="display: none">
