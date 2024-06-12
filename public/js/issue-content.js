@@ -1,6 +1,7 @@
 import { h, render } from "https://esm.sh/preact";
 import { useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
+import { Header } from "./editor/header.js";
 const html = htm.bind(h);
 let timeout;
 
@@ -221,11 +222,12 @@ function App() {
           <img src="../plus-line-icon.svg" alt="add" />
         </button>
         ${charts.map((image) => {
+          // src="${image.diagramUrl}"
           return html` <div class="tile">
             <img
               style="display: flex;"
               class="tile-image"
-              src="${image.diagramUrl}"
+              src="../pencil-icon.svg"
               alt="${image.title}"
             />
             <div class="load" style="display: none">
