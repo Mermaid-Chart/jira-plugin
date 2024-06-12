@@ -20,6 +20,18 @@ function App() {
   // console.log(user);
   // console.log(other);
 
+  const onLogout = async () => {
+    await fetch("/logout", {
+      method: "post",
+      headers: {
+        Authorization: `JWT ${JWTToken}`,
+      },
+    });
+    setAccessToken(undefined);
+    setUser(null);
+    window.location.reload();
+  };
+
   const connectToMermaidClick = () => {
     const width = 500;
     const height = 650;
@@ -35,11 +47,6 @@ function App() {
 
     const windowObjectReference = window.open(loginURL, "loginWindow", options);
     windowObjectReference.focus();
-
-    const onLogin = (token, user) => {
-      setAccessToken(token);
-      setUser(user);
-    };
 
     const callback = async () => {
       console.log("login callback");
@@ -186,6 +193,7 @@ function App() {
   if (accessToken) {
     //if (true) {
     return html`
+      <${Header} user="${user}" onLogout="${onLogout}"/>
       <div id="images" style="display: flex; overflow-x: scroll; flex-wrap: wrap;">
         <button class="add-chart-btn" onclick="${addChartClick}">
           <img src="../plus-line-icon.svg" alt="add" />
