@@ -209,11 +209,12 @@ function App() {
   //     />
   if (true) {
     //if (true) {
+    // <${Header} user="${user}" onLogout="${onLogout}" />
     return html`
       <div>
         <p>Visualize your task with diagrams</p>
       </div>
-      <${Header} user="${user}" onLogout="${onLogout}" />
+
       <div
         id="images"
         style="display: flex; overflow-x: scroll; flex-wrap: wrap;"
