@@ -166,6 +166,19 @@ function App() {
     // log.info("dialog.submit: ", data);
   });
 
+
+  window.onload=function (){
+    let img=document.querySelectorAll('.tile-image');
+    let load = document.querySelectorAll('.load')
+
+    img.forEach((i)=> {
+      i.style.display='flex'
+    })
+    load.forEach((l)=> {
+      l.style.display='none'
+    })
+  }
+
   //   <img
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
@@ -173,14 +186,19 @@ function App() {
   if (accessToken) {
     //if (true) {
     return html`
-      <div id="images" style="display: flex; overflow-x: scroll;">
+      <div id="images" style="display: flex; overflow-x: scroll; flex-wrap: wrap;">
+        <button class="add-chart-btn" onclick="${addChartClick}">
+          <img src="../plus-line-icon.svg" alt="add" />
+        </button>
         ${charts.map(
-          (image) => html` <div class="tile">
-            <img
+          (image) => {
+            return (html` <div class="tile">
+            <img style="display: flex;"
               class="tile-image"
               src="${image.diagramUrl}"
               alt="${image.title}"
             />
+            <div class="load" style="display: none"><div class="spinner"></div></div>
             <div class="background"></div>
             <button
               class="view-btn"
@@ -217,10 +235,8 @@ function App() {
               />
             </button>
           </div>`
-        )}
-        <button class="add-chart-btn" onclick="${addChartClick}">
-          <img src="../plus-line-icon.svg" alt="add" />
-        </button>
+        )})}
+        
       </div>
     `;
   } else {
