@@ -157,6 +157,13 @@ function App() {
       data.chart.diagramCode = "";
       data.chart.diagramImage = "";
 
+      const existingChart = charts.findIndex(
+        (e) => e.documentID === data.chart.documentID
+      );
+      if (data.replace == false && existingChart > -1) {
+        alert("This chart already added.");
+      }
+
       console.log(data);
       fetch("/add-chart", {
         method: "POST",
