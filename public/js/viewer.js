@@ -41,12 +41,12 @@ function App() {
   return html`
     <div
       class="image-container"
-      style="width: 100%; display: flex; align-items: center; justify-content: center"
+      style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center"
     >
       <img
         src=" ${image.diagramUrl}"
         alt=""
-        style="width: 20%; border: 1px solid grey; object-fit: contain;"
+        style="width: 100%; height: 100%; border: 1px solid grey; object-fit: contain;"
       />
     </div>
   `;
