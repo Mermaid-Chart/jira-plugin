@@ -11,7 +11,7 @@
         width: 150px;
         height: 150px;
         background: #626f86;
-        z-index: 5;
+        z-index: 1;
     border-radius: 5px;
     top: 0;
     left: 0;
@@ -19,11 +19,6 @@
     transition: all 0.3s ease-in-out;
     }
 .tile:hover .delete-btn{
-    display: flex;
-    transition: all 0.3s ease-in-out;
-    z-index: 10;
-}
-.tile:hover .view-btn{
     display: flex;
     transition: all 0.3s ease-in-out;
     z-index: 10;
@@ -40,6 +35,28 @@
     border: 1px solid grey;
     border-radius: 5px;
 }
+.title-text{
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+}
+ .tile:hover .title-text{
+    display: inline;
+    z-index: 15;
+    width: 100%;
+    height: 25%;
+    background: white;
+border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid grey;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+     white-space: nowrap;
+}
 .load{
     align-items: center;
     justify-content: center;
@@ -55,12 +72,6 @@ button{
     border: none;
     margin: 5px;
 }
-.view-btn{
-    display: none;
-    position: absolute;
-    bottom: 10px;
-    left: 5px;
-}
 .delete-btn{
     display: none;
     position: absolute;
@@ -70,8 +81,8 @@ button{
 .edit-btn{
     display: none;
     position: absolute;
-    bottom: 10px;
-    right: 5px;
+    top: 5px;
+    left: 5px;
 }
 .add-chart-btn{
     position: relative;
@@ -112,9 +123,9 @@ button{
     margin: 1em auto;
     width: 40px;
     height: 40px;
-    border-radius: 40px; /* Сделаем элемент круглым */
+    border-radius: 40px;
     border: solid 5px #ddd;
-    border-left: solid 5px #999; /* Одна из границ должна отличаться по цвету */
+    border-left: solid 5px #999;
 }
 @keyframes spin {
     0% {
@@ -125,8 +136,8 @@ button{
     }
 }
 .spinner {
-    animation-name: spin; /* Применяем анимацию вращения */
-    animation-duration: 1s; /* Период вращения */
-    animation-iteration-count: infinite; /* Если не указать, то сделает только одно вращение */
-    animation-timing-function: linear; /* Для того, чтобы вращение было равномерным */
+    animation-name: spin;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }

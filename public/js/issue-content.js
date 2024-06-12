@@ -205,6 +205,7 @@ function App() {
     });
   };
 
+
   //   <img
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
@@ -230,25 +231,18 @@ function App() {
           // src="${image.diagramUrl}"
           return html` <div class="tile">
             <img
-              style="display: flex;"
+              style="display: none;"
               class="tile-image"
               src="../pencil-icon.svg"
               alt="${image.title}"
             />
-            <div class="load" style="display: none">
+            <div class="load" style="display: flex">
               <div class="spinner"></div>
             </div>
-            <div class="background"></div>
-            <button
-              class="view-btn"
-              onclick="${(e) => viewDiagramClick(image)}"
-            >
-              <img
-                style="width: 20px; height: 20px;"
-                src="../eye-icon.svg"
-                alt="view"
-              />
-            </button>
+            <div class="background" onclick="${(e) => viewDiagramClick(image)}" >
+            </div>
+            <div class="title-text">${image.title}</div>
+            
             <button
               class="delete-btn"
               onclick="${(e) => deleteDiagram(image)}"
