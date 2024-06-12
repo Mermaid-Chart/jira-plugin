@@ -98,6 +98,11 @@ function App() {
   };
 
   const editDiagramClick = (image) => {
+    if (!accessToken) {
+      connectToMermaidClick();
+      return;
+    }
+
     AP.dialog.create({
       key: "dialog-module-edit",
       width: "1100px",
@@ -112,6 +117,11 @@ function App() {
   };
 
   const addChartClick = () => {
+    if (!accessToken) {
+      connectToMermaidClick();
+      return;
+    }
+
     AP.dialog.create({
       key: "dialog-module-select",
       width: "1100px",
@@ -173,40 +183,47 @@ function App() {
     // log.info("dialog.submit: ", data);
   });
 
+  window.onload = function () {
+    let img = document.querySelectorAll(".tile-image");
+    let load = document.querySelectorAll(".load");
 
-  window.onload=function (){
-    let img=document.querySelectorAll('.tile-image');
-    let load = document.querySelectorAll('.load')
-
-    img.forEach((i)=> {
-      i.style.display='flex'
-    })
-    load.forEach((l)=> {
-      l.style.display='none'
-    })
-  }
+    img.forEach((i) => {
+      i.style.display = "flex";
+    });
+    load.forEach((l) => {
+      l.style.display = "none";
+    });
+  };
 
   //   <img
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
   //     />
-  if (accessToken) {
+  if (true) {
     //if (true) {
     return html`
-      <${Header} user="${user}" onLogout="${onLogout}"/>
-      <div id="images" style="display: flex; overflow-x: scroll; flex-wrap: wrap;">
+      <div>
+        <p>Visualize your task with diagrams</p>
+      </div>
+      <${Header} user="${user}" onLogout="${onLogout}" />
+      <div
+        id="images"
+        style="display: flex; overflow-x: scroll; flex-wrap: wrap;"
+      >
         <button class="add-chart-btn" onclick="${addChartClick}">
           <img src="../plus-line-icon.svg" alt="add" />
         </button>
-        ${charts.map(
-          (image) => {
-            return (html` <div class="tile">
-            <img style="display: flex;"
+        ${charts.map((image) => {
+          return html` <div class="tile">
+            <img
+              style="display: flex;"
               class="tile-image"
               src="${image.diagramUrl}"
               alt="${image.title}"
             />
-            <div class="load" style="display: none"><div class="spinner"></div></div>
+            <div class="load" style="display: none">
+              <div class="spinner"></div>
+            </div>
             <div class="background"></div>
             <button
               class="view-btn"
@@ -242,9 +259,8 @@ function App() {
                 alt="view"
               />
             </button>
-          </div>`
-        )})}
-        
+          </div>`;
+        })}
       </div>
     `;
   } else {
