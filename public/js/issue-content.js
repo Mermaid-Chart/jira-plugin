@@ -1,4 +1,4 @@
-import { h, render } from "https://esm.sh/preact";
+import { h, render, Fragment } from "https://esm.sh/preact";
 import { useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
 import { Header } from "./editor/header.js";
@@ -161,8 +161,10 @@ function App() {
       const existingChart = charts.findIndex(
         (e) => e.documentID === data.chart.documentID
       );
+
       if (data.replace == false && existingChart > -1) {
-        alert("This chart already added.");
+        //alert("This chart already added.");
+        return;
       }
 
       console.log(data);
@@ -209,12 +211,14 @@ function App() {
   //     />
   if (true) {
     //if (true) {
-    // <${Header} user="${user}" onLogout="${onLogout}" />
+    //
     return html`
       <div>
         <p>Visualize your task with diagrams</p>
       </div>
-
+      <${Fragment}>
+        <${Header} user="${user}" onLogout="${onLogout}" />
+      </Fragment>
       <div
         id="images"
         style="display: flex; overflow-x: scroll; flex-wrap: wrap;"
