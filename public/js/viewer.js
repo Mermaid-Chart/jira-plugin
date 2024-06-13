@@ -46,7 +46,7 @@ function App() {
       <img
         src=" ${image.diagramUrl}"
         alt=""
-        style="width: 100%; height: 100%; border: 1px solid grey; object-fit: contain;"
+        style="width: 100%; max-height: 480px; object-fit: contain;"
       />
     </div>
   `;
