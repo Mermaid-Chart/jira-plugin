@@ -204,10 +204,6 @@ function App() {
       l.style.display = "none";
     });
   };
-let images = [{diagramUrl:'https://png.pngtree.com/background/20230422/original/pngtree-lotus-blooming-beautiful-wallpapers-on-desktop-picture-image_2452151.jpg',title:'odbdrtv'},
-  {diagramUrl:'https://cdn.pixabay.com/photo/2023/05/27/16/08/flowers-8021795_1280.jpg',title:'odbdrtv'},
-  {diagramUrl:'https://png.pngtree.com/thumb_back/fh260/background/20230612/pngtree-free-desktop-wallpaper-beautiful-green-fields-image_2950823.jpg',title:'odbdrtv'}]
-
   //   <img
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
@@ -231,7 +227,7 @@ let images = [{diagramUrl:'https://png.pngtree.com/background/20230422/original/
         <button class="add-chart-btn" onclick="${addChartClick}">
           <img src="../plus-line-icon.svg" alt="add" />
         </button>
-        ${images.map((image) => {
+        ${charts.map((image) => {
           // src="${image.diagramUrl}"
           return html` <div class="tile">
             <img
