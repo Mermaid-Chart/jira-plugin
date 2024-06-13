@@ -214,12 +214,14 @@ function App() {
     //if (true) {
     //
     return html`
-      <div>
+      <div class="header-block">
+      <div class="subheader">
         <p>Visualize your task with diagrams</p>
       </div>
       <${Fragment}>
         <${Header} user="${user}" onLogout="${onLogout}" />
       </Fragment>
+      </div>
       <div
         id="images"
         style="display: flex; overflow-x: scroll; flex-wrap: wrap;"

@@ -5,7 +5,15 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
-
+.header-block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 20px 15px;
+}
+.subheader{
+    width: 300px;
+}
 .tile:hover .background{
         position: absolute;
         width: 150px;

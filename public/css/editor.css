@@ -14,11 +14,11 @@ iframe {
 }
 
 #header {
+  width: 100px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-end;
   gap: 8px;
   align-items: center;
-  padding: 0 24px;
 }
 #header img.logo {
   height: 40px;
@@ -36,8 +36,8 @@ iframe {
   transform: translateY(85%);
   display: none;
   white-space: nowrap;
-  bottom: 0;
-  left: 0;
+  top: 0;
+  right: 0;
 }
 #header .settings:hover button.logout {
   display: block;
