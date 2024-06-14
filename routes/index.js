@@ -282,4 +282,8 @@ export default function routes(app, addon) {
 
     res.status(200).json({ charts }).end();
   });
+
+  app.get("/alert", addon.authenticate(), async (req, res) => {
+    res.render("alert.hbs");
+  });
 }
