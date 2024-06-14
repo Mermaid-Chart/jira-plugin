@@ -234,18 +234,10 @@ export default function routes(app, addon) {
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
-    log.info("delete-chart begin:");
-    log.info(req.body);
-
     const data = req.body; //JSON.parse(req.body);
     const chartId = data.documentID;
     const issueKey = data.issueKey;
 
-    log.info("delete-chart chartId:");
-    log.info(chartId);
-    log.info(issueKey);
-
-    // return res.status(200).json({ chartId: chartId, issueKey: issueKey }).end();
     let charts;
     try {
       charts = await getJiraIssueProperty(
@@ -262,7 +254,11 @@ export default function routes(app, addon) {
     let index = charts.findIndex((i) => i.documentID === chartId);
     log.info("delete-chart index: ");
     log.info(index);
-    if (index != -1) charts.splice(index, 1);
+    let attachmentId;
+    if (index != -1) {
+      attachmentId = charts[index].attachmentId;
+      charts.splice(index, 1);
+    }
 
     try {
       let charts_updated = await setJiraIssueProperty(
@@ -278,6 +274,10 @@ export default function routes(app, addon) {
       // charts = [];
       log.error("add-chart set charts error: ", e);
       log.error(e);
+    }
+
+    if (attachmentId) {
+      await deleteJiraIssueAttachment(req.context.http, issueKey, attachmentId);
     }
 
     res.status(200).json({ charts }).end();
