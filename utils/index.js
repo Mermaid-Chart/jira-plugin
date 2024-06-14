@@ -144,10 +144,135 @@ const setJiraIssueProperty = async (
   });
 };
 
+const getJiraIssueAttachment = async (httpClient, issueKey, attachmentId) => {
+  // const response = await api
+  //   .asUser()
+  //   .requestJira(route`/rest/api/2/attachment/{id}`, {
+  //     headers: {
+  //       Accept: "application/json",
+  //     },
+  //   });
+
+  return new Promise((resolve, reject) => {
+    const requestOpt = {
+      url: `/rest/api/2/attachment/${attachmentId}`,
+      headers: {
+        Accept: "application/json",
+      },
+    };
+
+    httpClient.get(requestOpt, (err, res, body) => {
+      if (err) {
+        log.error("get chart error", err);
+        return reject(err);
+      }
+
+      const attachment = JSON.parse(body);
+      log.info("attachment", attachment);
+      resolve(attachments);
+    });
+  });
+};
+
+const setJiraIssueAttachment = async (httpClient, issueKey, fileData) => {
+  // const response = await api.asUser().requestJira(route`/rest/api/2/issue/{issueIdOrKey}/attachments`, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Accept': 'application/json'
+  //   }
+  // });
+
+  return new Promise((resolve, reject) => {
+    const requestOpt = {
+      url: `/rest/api/2/issue/${issueKey}/attachments`,
+      json: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-Atlassian-Token": "nocheck",
+      },
+      formData: {
+        file: {
+          value: fileData,
+          options: {
+            filename: `${issueKey}-attachment.png`,
+            contentType: "image/x-png",
+          },
+        },
+      },
+    };
+
+    httpClient.post(requestOpt, (err, res, body) => {
+      if (err) {
+        log.info(`Set attachment error`, err);
+      }
+
+      if (res && res.statusCode && res.statusCode > 399) {
+        log.info(`Set attachment res ${res.statusCode} ${res.statusMessage}`);
+        return reject(err);
+      }
+      resolve(body);
+    });
+  });
+};
+
+const deleteJiraIssueAttachment = async (
+  httpClient,
+  issueKey,
+  attachmentId
+) => {
+  // const response = await api.asUser().requestJira(route`/rest/api/2/attachment/{id}`, {
+  //   method: 'DELETE'
+  // });
+
+  return new Promise((resolve, reject) => {
+    const requestOpt = {
+      url: `/rest/api/2/attachment/${attachmentId}`,
+      json: true,
+      headers: {},
+    };
+
+    httpClient.delete(requestOpt, (err, res, body) => {
+      if (err) {
+        log.error("delete chart error");
+        log.error(err);
+        return reject(err);
+      }
+      log.info("Set charts final");
+      log.info(body);
+
+      resolve(true);
+    });
+  });
+};
+
+function base64ToArrayBuffer(base64) {
+  var binaryString = atob(base64);
+  const buffer = Buffer.alloc(binaryString.length);
+
+  // var bytes = new Uint8Array(binaryString.length);
+  for (var i = 0; i < binaryString.length; i++) {
+    // bytes[i] = binaryString.charCodeAt(i);
+    buffer[i] = binaryString.charCodeAt(i);
+  }
+  return buffer;
+
+  // const buffer = Buffer.alloc(arrayBuffer.byteLength);
+  // const view = new Uint8Array(arrayBuffer);
+  // for (let i = 0; i < buffer.length; ++i) {
+  //   buffer[i] = view[i];
+  // }
+  // return buffer;
+}
+
 export {
   fetchToken,
   saveToken,
   getEncodedSHA256Hash,
   getJiraIssueProperty,
   setJiraIssueProperty,
+  getJiraIssueAttachment,
+  setJiraIssueAttachment,
+  deleteJiraIssueAttachment,
+  base64ToArrayBuffer,
 };

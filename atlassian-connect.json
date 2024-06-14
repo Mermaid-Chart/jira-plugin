@@ -79,6 +79,17 @@
           }
         },
         "key": "dialog-module-view"
+      },
+      {
+        "url": "/alert",
+        "options": {
+          "height": "500px",
+          "width": "600px",
+          "header": {
+            "value": "MermaidChart Alert"
+          }
+        },
+        "key": "dialog-module-alert"
       }
     ]
   }

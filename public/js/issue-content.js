@@ -17,9 +17,6 @@ function App() {
 
   console.log("loginURL", loginURL);
   console.log(charts);
-  // console.log(accessToken);
-  // console.log(user);
-  // console.log(other);
 
   const onLogout = async () => {
     await fetch("/logout", {
@@ -156,7 +153,7 @@ function App() {
 
     if (data && data.chart) {
       data.chart.diagramCode = "";
-      data.chart.diagramImage = "";
+      // data.chart.diagramImage = "";
 
       const existingChart = charts.findIndex(
         (e) => e.documentID === data.chart.documentID
@@ -164,6 +161,16 @@ function App() {
 
       if (data.replace == false && existingChart > -1) {
         //alert("This chart already added.");
+
+        AP.dialog.create({
+          key: "dialog-module-alert",
+          chrome: true,
+          customData: {
+            message: "Chart already added.",
+          },
+          buttons: [],
+        });
+
         return;
       }
 
@@ -208,10 +215,15 @@ function App() {
   //         src="data:image/x-png;base64, ${image.diagramImage}"
   //         alt="${image.title}"
   //     />
-  if (true) {
-    //if (true) {
-    //
-    return html`
+
+  // return html` <div>
+  //       <p>Visualize your task with diagrams</p>
+  //     </div>
+  //     <button class="connect-btn" onclick="${(e) => connectToMermaidClick()}">
+  //       Connect
+  //     </button>`;
+
+  return html`
       <div class="header-block">
       <div class="subheader">
         <p>Visualize your task with diagrams</p>
@@ -233,16 +245,18 @@ function App() {
             <img
               style="display: none;"
               class="tile-image"
-              src="../pencil-icon.svg"
+              src="${image.diagramUrl}"
               alt="${image.title}"
             />
             <div class="load" style="display: flex">
               <div class="spinner"></div>
             </div>
-            <div class="background" onclick="${(e) => viewDiagramClick(image)}" >
-            </div>
+            <div
+              class="background"
+              onclick="${(e) => viewDiagramClick(image)}"
+            ></div>
             <div class="title-text">${image.title}</div>
-            
+
             <button
               class="delete-btn"
               onclick="${(e) => deleteDiagram(image)}"
@@ -271,14 +285,6 @@ function App() {
         })}
       </div>
     `;
-  } else {
-    return html` <div>
-        <p>Visualize your task with diagrams</p>
-      </div>
-      <button class="connect-btn" onclick="${(e) => connectToMermaidClick()}">
-        Connect
-      </button>`;
-  }
 }
 
 render(html` <${App} />`, document.getElementById("editor-content"));

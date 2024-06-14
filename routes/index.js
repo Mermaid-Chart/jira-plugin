@@ -3,16 +3,20 @@ import {
   saveToken,
   getJiraIssueProperty,
   setJiraIssueProperty,
+  setJiraIssueAttachment,
+  base64ToArrayBuffer,
+  getJiraIssueAttachment,
+  deleteJiraIssueAttachment,
 } from "../utils/index.js";
 import { MermaidChart } from "../utils/MermaidChart.js";
 import log from "../utils/logger.js";
 import logger from "../utils/logger.js";
 
-const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
-const MC_CLIENT_ID =
-  process.env.MC_CLIENT_ID || "6643413f-36fe-41f5-83b6-18674ec599f0";
+const MC_BASE_URL = process.env.MC_BASE_URL;
+const MC_CLIENT_ID = process.env.MC_CLIENT_ID;
 
 const diagramsPropertyName = "diagrams";
+//const diagramsPropertyName = "mermaid-charts-diagrams";
 
 export default function routes(app, addon) {
   const mermaidAPI = new MermaidChart({
@@ -156,7 +160,7 @@ export default function routes(app, addon) {
     const issueKey = data.issueKey;
     const chart = data.chart;
     const isReplace = data.replace;
-    // chart.diagramImage = "";
+
     let charts;
     try {
       charts = await getJiraIssueProperty(
@@ -170,6 +174,39 @@ export default function routes(app, addon) {
     }
 
     let index = charts.findIndex((i) => i.documentID === chart.documentID);
+    if (index != -1) {
+      log.info(`chart alreadey added: ${chart.documentID}`);
+      return res.status(400).json({ message: "Chart already added" }).end();
+    }
+
+    if (chart.attachmentId && isReplace) {
+      // const attachment = await getJiraIssueAttachment(
+      //   req.context.http,
+      //   issueKey,
+      //   chart.attachmentId
+      // );
+
+      await deleteJiraIssueAttachment(
+        req.context.http,
+        issueKey,
+        chart.attachmentId
+      );
+    }
+
+    const attachmentInfo = (
+      await setJiraIssueAttachment(
+        req.context.http,
+        issueKey,
+        base64ToArrayBuffer(chart.diagramImage)
+      )
+    )[0];
+
+    chart.diagramImage = "";
+    chart.attachmentId = attachmentInfo.id;
+    chart.diagramUrl = attachmentInfo.content;
+
+    log.info("attachmentInfo");
+    log.info(attachmentInfo);
 
     if (isReplace && index > -1) {
       charts[index] = chart;
@@ -182,8 +219,7 @@ export default function routes(app, addon) {
 
     log.info("Add chart charts:");
     log.info(charts);
-    // return res.status(200).json({ charts }).end();
-    // try {
+
     let charts_updated = await setJiraIssueProperty(
       req.context.http,
       issueKey,
@@ -193,10 +229,6 @@ export default function routes(app, addon) {
 
     log.info("add-chart charts_updated");
     log.info(charts_updated);
-    // } catch (e) {
-    //   //charts = [];
-    //   log.error("add-chart set charts error: ", e);
-    // }
 
     res.status(200).json({ charts }).end();
   });
