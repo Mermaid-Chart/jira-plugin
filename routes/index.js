@@ -12,8 +12,9 @@ import { MermaidChart } from "../utils/MermaidChart.js";
 import log from "../utils/logger.js";
 import logger from "../utils/logger.js";
 
-const MC_BASE_URL = process.env.MC_BASE_URL;
-const MC_CLIENT_ID = process.env.MC_CLIENT_ID;
+const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
+const MC_CLIENT_ID =
+  process.env.MC_CLIENT_ID || "6643413f-36fe-41f5-83b6-18674ec599f0";
 
 const diagramsPropertyName = "diagrams";
 //const diagramsPropertyName = "mermaid-charts-diagrams";
@@ -234,18 +235,10 @@ export default function routes(app, addon) {
   });
 
   app.post("/delete-chart", addon.checkValidToken(), async (req, res) => {
-    log.info("delete-chart begin:");
-    log.info(req.body);
-
     const data = req.body; //JSON.parse(req.body);
     const chartId = data.documentID;
     const issueKey = data.issueKey;
 
-    log.info("delete-chart chartId:");
-    log.info(chartId);
-    log.info(issueKey);
-
-    // return res.status(200).json({ chartId: chartId, issueKey: issueKey }).end();
     let charts;
     try {
       charts = await getJiraIssueProperty(
@@ -262,7 +255,11 @@ export default function routes(app, addon) {
     let index = charts.findIndex((i) => i.documentID === chartId);
     log.info("delete-chart index: ");
     log.info(index);
-    if (index != -1) charts.splice(index, 1);
+    let attachmentId;
+    if (index != -1) {
+      attachmentId = charts[index].attachmentId;
+      charts.splice(index, 1);
+    }
 
     try {
       let charts_updated = await setJiraIssueProperty(
@@ -276,8 +273,12 @@ export default function routes(app, addon) {
       log.info(charts_updated);
     } catch (e) {
       // charts = [];
-      log.error("add-chart set charts error: ", e);
+      log.error("delete-charts set charts error: ", e);
       log.error(e);
+    }
+
+    if (attachmentId) {
+      await deleteJiraIssueAttachment(req.context.http, issueKey, attachmentId);
     }
 
     res.status(200).json({ charts }).end();

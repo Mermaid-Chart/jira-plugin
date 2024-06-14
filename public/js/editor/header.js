@@ -7,7 +7,8 @@ export function Header({ user, onLogout }) {
   return html`
     <div id="header">
       <!--            <img class="logo" src="/icon_80x80.png" alt="logo" />
-      <div>${user.fullName || user.email}</div>-->
+      <div>{user.fullName || user.email}</div>
+      -->
       <div class="settings">
         <img src="/settings.svg" alt="Settings" />
         <button class="logout" onclick="${onLogout}">
