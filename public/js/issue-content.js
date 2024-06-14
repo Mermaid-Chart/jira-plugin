@@ -225,6 +225,7 @@ function App() {
 
 
   const showHeader = accessToken ? '':'non-show';
+  console.log(accessToken)
   return html`
       <div class="header-block">
       <div class= 'subheader'>
@@ -258,6 +259,7 @@ function App() {
             <div
               class="background"
               onclick="${(e) => viewDiagramClick(image)}"
+              title="view"
             ></div>
             
              <div class="${titleText}">${image.title}</div>
@@ -265,11 +267,12 @@ function App() {
               class="delete-btn"
               onclick="${(e) => deleteDiagram(image)}"
               type="submit"
+              title="delele"
             >
               <input type="hidden" name="issueKey" value="${issueKey}" />
               <input type="hidden" name="diagramId" value="${image.id}" />
               <img
-                style="width: 15px; height: 15px;"
+                style="width: 20px; height: 20px;"
                 src="../close-line-icon.svg"
                 alt="close"
               />
@@ -278,9 +281,10 @@ function App() {
               class="edit-btn"
               onclick="${(e) => editDiagramClick(image)}"
               type="submit"
+              title="edit"
             >
               <img
-                style="width: 15px; height: 15px;"
+                style="width: 20px; height: 20px;"
                 src="../pencil-icon.svg"
                 alt="view"
               />

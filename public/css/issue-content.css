@@ -91,6 +91,16 @@ button{
     top: 5px;
     right: 5px;
 }
+.delete-btn:hover::after{
+    background: black;
+    border-radius: 2px;
+}
+button img{
+    opacity: 0.4;
+}
+button:hover img{
+    opacity: 1;
+}
 .edit-btn{
     display: none;
     position: absolute;
