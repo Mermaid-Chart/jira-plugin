@@ -223,13 +223,16 @@ function App() {
   //       Connect
   //     </button>`;
 
+
+  const showHeader = accessToken ? '':'non-show';
   return html`
       <div class="header-block">
-      <div class="subheader">
+      <div class= 'subheader'>
         <p>Visualize your task with diagrams</p>
       </div>
-      <${Fragment}>
-          <${Header} user="${user}" onLogout="${onLogout}"/>
+      <${Fragment} >
+        <${Header} class="${showHeader}" user="${user}" onLogout="${onLogout}"/>
+          
         </Fragment>
       </div>
       <div
@@ -241,6 +244,7 @@ function App() {
         </button>
         ${charts.map((image) => {
           // src="${image.diagramUrl}"
+           const titleText = image.title ? "title-text" : 'non-show';
           return html` <div class="tile">
             <img
               style="display: none;"
@@ -255,8 +259,8 @@ function App() {
               class="background"
               onclick="${(e) => viewDiagramClick(image)}"
             ></div>
-            <div class="title-text">${image.title}</div>
-
+            
+             <div class="${titleText}">${image.title}</div>
             <button
               class="delete-btn"
               onclick="${(e) => deleteDiagram(image)}"

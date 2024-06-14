@@ -10,7 +10,7 @@ cursor: pointer;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 20px 15px;
+    padding: 0 20px 40px;
 }
 .subheader{
     width: 300px;
@@ -19,13 +19,14 @@ cursor: pointer;
         position: absolute;
         width: 150px;
         height: 150px;
-        background: #626f86;
+        background: #2C2418;
         z-index: 1;
     border-radius: 5px;
     top: 0;
     left: 0;
-    opacity: 0.55;
+    opacity: 0.7;
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
     }
 .tile:hover .delete-btn{
     display: flex;
@@ -66,6 +67,9 @@ border-radius: 0 0 5px 5px;
     text-overflow: ellipsis;
      white-space: nowrap;
 }
+ .non-show{
+     display: none;
+ }
 .load{
     align-items: center;
     justify-content: center;
@@ -113,8 +117,8 @@ button{
     }
 
 .add-chart-btn:hover{
-    background: #626f86;
-    opacity: 0.55;
+    background: #2C2418;
+    opacity: 0.7;
     transition: all 0.3s ease-in-out;
     z-index: 1;
 }
@@ -126,6 +130,15 @@ button{
         background-color: rgb(0, 82, 204);
         padding: 6px 12px;
         font-weight: bold;
+}
+.logout{
+    border: solid var(--border-color) 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(0, 82, 204);
+    padding: 6px 12px;
+    font-weight: bold;
 }
 
 .spinner {
