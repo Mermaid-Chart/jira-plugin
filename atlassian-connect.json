@@ -83,8 +83,8 @@
       {
         "url": "/alert",
         "options": {
-          "height": "500px",
-          "width": "600px",
+          "height": "200px",
+          "width": "300px",
           "header": {
             "value": "MermaidChart Alert"
           }
