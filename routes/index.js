@@ -272,7 +272,7 @@ export default function routes(app, addon) {
       log.info(charts_updated);
     } catch (e) {
       // charts = [];
-      log.error("add-chart set charts error: ", e);
+      log.error("delete-charts set charts error: ", e);
       log.error(e);
     }
 

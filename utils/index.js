@@ -145,14 +145,6 @@ const setJiraIssueProperty = async (
 };
 
 const getJiraIssueAttachment = async (httpClient, issueKey, attachmentId) => {
-  // const response = await api
-  //   .asUser()
-  //   .requestJira(route`/rest/api/2/attachment/{id}`, {
-  //     headers: {
-  //       Accept: "application/json",
-  //     },
-  //   });
-
   return new Promise((resolve, reject) => {
     const requestOpt = {
       url: `/rest/api/2/attachment/${attachmentId}`,
@@ -175,13 +167,6 @@ const getJiraIssueAttachment = async (httpClient, issueKey, attachmentId) => {
 };
 
 const setJiraIssueAttachment = async (httpClient, issueKey, fileData) => {
-  // const response = await api.asUser().requestJira(route`/rest/api/2/issue/{issueIdOrKey}/attachments`, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Accept': 'application/json'
-  //   }
-  // });
-
   return new Promise((resolve, reject) => {
     const requestOpt = {
       url: `/rest/api/2/issue/${issueKey}/attachments`,
@@ -221,10 +206,6 @@ const deleteJiraIssueAttachment = async (
   issueKey,
   attachmentId
 ) => {
-  // const response = await api.asUser().requestJira(route`/rest/api/2/attachment/{id}`, {
-  //   method: 'DELETE'
-  // });
-
   return new Promise((resolve, reject) => {
     const requestOpt = {
       url: `/rest/api/2/attachment/${attachmentId}`,
@@ -238,7 +219,7 @@ const deleteJiraIssueAttachment = async (
         log.error(err);
         return reject(err);
       }
-      log.info("Set charts final");
+      log.info("Delete chart response: ");
       log.info(body);
 
       resolve(true);
@@ -250,19 +231,10 @@ function base64ToArrayBuffer(base64) {
   var binaryString = atob(base64);
   const buffer = Buffer.alloc(binaryString.length);
 
-  // var bytes = new Uint8Array(binaryString.length);
   for (var i = 0; i < binaryString.length; i++) {
-    // bytes[i] = binaryString.charCodeAt(i);
     buffer[i] = binaryString.charCodeAt(i);
   }
   return buffer;
-
-  // const buffer = Buffer.alloc(arrayBuffer.byteLength);
-  // const view = new Uint8Array(arrayBuffer);
-  // for (let i = 0; i < buffer.length; ++i) {
-  //   buffer[i] = view[i];
-  // }
-  // return buffer;
 }
 
 export {
