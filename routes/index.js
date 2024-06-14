@@ -12,8 +12,9 @@ import { MermaidChart } from "../utils/MermaidChart.js";
 import log from "../utils/logger.js";
 import logger from "../utils/logger.js";
 
-const MC_BASE_URL = process.env.MC_BASE_URL;
-const MC_CLIENT_ID = process.env.MC_CLIENT_ID;
+const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
+const MC_CLIENT_ID =
+  process.env.MC_CLIENT_ID || "6643413f-36fe-41f5-83b6-18674ec599f0";
 
 const diagramsPropertyName = "diagrams";
 //const diagramsPropertyName = "mermaid-charts-diagrams";
