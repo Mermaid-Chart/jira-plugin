@@ -46,8 +46,6 @@ export default function routes(app, addon) {
         req.context.userAccountId
       );
 
-      log.info(`Token ${access_token}`);
-
       user = access_token ? await mermaidAPI.getUser(access_token) : undefined;
     } catch (e) {
       //console.log(e);
@@ -70,18 +68,28 @@ export default function routes(app, addon) {
       log.error("error_charts: ", e);
     }
 
-    // try {
-    //   for (let index = 0; index < charts.length; ++index) {
-    //     const chart = charts[index];
-    //     // chart.diagramImage = await mermaidAPI.getDocumentAsPng(
-    //     //   chart,
-    //     //   access_token
-    //     // );
-    //     chart.diagramUrl = mermaidAPI.getDocumentAsPngUrl(chart);
-    //   }
-    // } catch (e) {
-    //   log.error("error getting pngs: ", e);
-    // }
+    try {
+      for (let index = 0; index < charts.length; ++index) {
+        const chart = charts[index];
+        // chart.diagramImage = await mermaidAPI.getDocumentAsPng(
+        //   chart,
+        //   access_token
+        // );
+
+        const attachment = await getJiraIssueAttachment(
+          req.context.http,
+          issueKey,
+          chart.attachmentId
+        );
+
+        //Fallback to MermaidCharts url instead of jira issue attachment
+        if (!attachment) {
+          chart.diagramUrl = mermaidAPI.getDocumentAsPngUrl(chart);
+        }
+      }
+    } catch (e) {
+      log.error("error getting pngs: ", e);
+    }
 
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
     // const auth = { url: "", state: "" };
