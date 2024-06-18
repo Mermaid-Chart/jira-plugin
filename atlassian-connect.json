@@ -20,7 +20,7 @@
   "lifecycle": {
     "installed": "/installed"
   },
-  "scopes": ["READ", "WRITE", "ACT_AS_USER"],
+  "scopes": ["READ", "WRITE", "DELETE", "ACT_AS_USER"],
   "apiMigrations": {
     "signed-install": true
   },

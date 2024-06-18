@@ -10,7 +10,6 @@ import {
 } from "../utils/index.js";
 import { MermaidChart } from "../utils/MermaidChart.js";
 import log from "../utils/logger.js";
-import logger from "../utils/logger.js";
 
 const MC_BASE_URL = process.env.MC_BASE_URL || "https://test.mermaidchart.com";
 const MC_CLIENT_ID =
@@ -91,7 +90,6 @@ export default function routes(app, addon) {
 
     const auth = user ? {} : await mermaidAPI.getAuthorizationData();
     // const auth = { url: "", state: "" };
-    // log.info("issue-content issue auth: ", auth);
 
     res.render("issue-content.hbs", {
       issueKey,
@@ -180,23 +178,9 @@ export default function routes(app, addon) {
     }
 
     let index = charts.findIndex((i) => i.documentID === chart.documentID);
-    if (index != -1) {
+    if (index != -1 && !isReplace) {
       log.info(`chart alreadey added: ${chart.documentID}`);
       return res.status(400).json({ message: "Chart already added" }).end();
-    }
-
-    if (chart.attachmentId && isReplace) {
-      // const attachment = await getJiraIssueAttachment(
-      //   req.context.http,
-      //   issueKey,
-      //   chart.attachmentId
-      // );
-
-      await deleteJiraIssueAttachment(
-        req.context.http,
-        issueKey,
-        chart.attachmentId
-      );
     }
 
     const attachmentInfo = (
@@ -215,10 +199,18 @@ export default function routes(app, addon) {
     log.info(attachmentInfo);
 
     if (isReplace && index > -1) {
+      const oldAttachmentId = charts[index].attachmentId;
       charts[index] = chart;
-    } else if (index != -1) {
-      log.info(`chart alreadey added: ${chart.documentID}`);
-      return res.status(400).json({ message: "Chart already added" }).end();
+
+      let isDeleted = await deleteJiraIssueAttachment(
+        req.context.http,
+        issueKey,
+        oldAttachmentId
+      );
+
+      log.info(
+        `Chart with atch: ${chart.attachmentId} was deleted: ${isDeleted}`
+      );
     } else {
       charts.push(chart);
     }

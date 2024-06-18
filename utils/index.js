@@ -136,9 +136,6 @@ const setJiraIssueProperty = async (
         return reject(err);
       }
 
-      log.info("Set charts final");
-      log.info(body);
-
       resolve([]);
     });
   });
@@ -159,9 +156,8 @@ const getJiraIssueAttachment = async (httpClient, issueKey, attachmentId) => {
         return reject(err);
       }
 
-      const attachment = JSON.parse(body);
-      log.info("attachment", attachment);
-      resolve(attachments);
+      const attachment = body; //JSON.parse(body);
+      resolve(attachment);
     });
   });
 };
@@ -209,18 +205,17 @@ const deleteJiraIssueAttachment = async (
   return new Promise((resolve, reject) => {
     const requestOpt = {
       url: `/rest/api/2/attachment/${attachmentId}`,
-      json: true,
-      headers: {},
+      headers: {
+        "X-Atlassian-Token": "nocheck",
+      },
     };
 
-    httpClient.delete(requestOpt, (err, res, body) => {
+    httpClient.del(requestOpt, (err, res, body) => {
       if (err) {
         log.error("delete chart error");
         log.error(err);
         return reject(err);
       }
-      log.info("Delete chart response: ");
-      log.info(body);
 
       resolve(true);
     });
