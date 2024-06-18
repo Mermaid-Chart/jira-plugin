@@ -217,6 +217,9 @@ const deleteJiraIssueAttachment = async (
         return reject(err);
       }
 
+      log.error("Delete chart response");
+      log.error(body);
+
       resolve(true);
     });
   });
