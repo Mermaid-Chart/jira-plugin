@@ -223,76 +223,83 @@ function App() {
   //       Connect
   //     </button>`;
 
-
-  const showHeader = accessToken ? '':'non-show';
-  console.log(accessToken)
+  const showHeader = accessToken ? "" : "non-show";
+  console.log(accessToken);
   return html`
-      <div class="header-block">
-      <div class= 'subheader'>
+    <div class="header-block">
+      <div class="subheader">
         <p>Visualize your task with diagrams</p>
+        ${!accessToken &&
+        html`<button
+          class="connect-btn"
+          onclick="${(e) => connectToMermaidClick()}"
+        >
+          Connect
+        </button>`}
       </div>
-      <${Fragment} >
-        <${Header} class="${showHeader}" user="${user}" onLogout="${onLogout}"/>
-          
-        </Fragment>
-      </div>
-      <div
-        id="images"
-        style="display: flex; overflow-x: scroll; flex-wrap: wrap;"
-      >
-        <button class="add-chart-btn" onclick="${addChartClick}">
-          <img src="../plus-line-icon.svg" alt="add" />
-        </button>
-        ${charts.map((image) => {
-          // src="${image.diagramUrl}"
-           const titleText = image.title ? "title-text" : 'non-show';
-          return html` <div class="tile">
+      ${accessToken &&
+      html`
+        <${Fragment}>
+          <${Header} class="${showHeader}" user="${user}" onLogout="${onLogout}"/>
+        </Fragment>`}
+    </div>
+    <div
+      id="images"
+      style="display: flex; overflow-x: scroll; flex-wrap: wrap;"
+    >
+      <button class="add-chart-btn" onclick="${addChartClick}">
+        <img src="../plus-line-icon.svg" alt="add" />
+      </button>
+      ${charts.map((image) => {
+        // src="${image.diagramUrl}"
+        const titleText = image.title ? "title-text" : "non-show";
+        return html` <div class="tile">
+          <img
+            style="display: none;"
+            class="tile-image"
+            src="${image.diagramUrl}"
+            alt="${image.title}"
+          />
+          <div class="load" style="display: flex">
+            <div class="spinner"></div>
+          </div>
+          <div
+            class="background"
+            onclick="${(e) => viewDiagramClick(image)}"
+            title="view"
+          ></div>
+
+          <div class="${titleText}">${image.title}</div>
+          <button
+            class="delete-btn"
+            onclick="${(e) => deleteDiagram(image)}"
+            type="submit"
+            title="delele"
+          >
+            <input type="hidden" name="issueKey" value="${issueKey}" />
+            <input type="hidden" name="diagramId" value="${image.id}" />
             <img
-              style="display: none;"
-              class="tile-image"
-              src="${image.diagramUrl}"
-              alt="${image.title}"
+              style="width: 20px; height: 20px;"
+              src="../close-line-icon.svg"
+              alt="close"
             />
-            <div class="load" style="display: flex">
-              <div class="spinner"></div>
-            </div>
-            <div
-              class="background"
-              onclick="${(e) => viewDiagramClick(image)}"
-              title="view"
-            ></div>
-            
-             <div class="${titleText}">${image.title}</div>
-            <button
-              class="delete-btn"
-              onclick="${(e) => deleteDiagram(image)}"
-              type="submit"
-              title="delele"
-            >
-              <input type="hidden" name="issueKey" value="${issueKey}" />
-              <input type="hidden" name="diagramId" value="${image.id}" />
-              <img
-                style="width: 20px; height: 20px;"
-                src="../close-line-icon.svg"
-                alt="close"
-              />
-            </button>
-            <button
-              class="edit-btn"
-              onclick="${(e) => editDiagramClick(image)}"
-              type="submit"
-              title="edit"
-            >
-              <img
-                style="width: 20px; height: 20px;"
-                src="../pencil-icon.svg"
-                alt="view"
-              />
-            </button>
-          </div>`;
-        })}
-      </div>
-    `;
+          </button>
+          <button
+            class="edit-btn"
+            onclick="${(e) => editDiagramClick(image)}"
+            type="submit"
+            title="edit"
+          >
+            <img
+              style="width: 20px; height: 20px;"
+              src="../pencil-icon.svg"
+              alt="view"
+            />
+          </button>
+        </div>`;
+      })}
+    </div>
+  `;
 }
 
 render(html` <${App} />`, document.getElementById("editor-content"));

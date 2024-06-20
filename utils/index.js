@@ -18,8 +18,6 @@ const fetchToken = async (httpClient, atlassianAccountId) => {
       function (err, _, body) {
         if (err) {
           log.error("Failed on reading user property 'token'", err);
-          log.error(err);
-          //console.error('Failed on reading user property "token"');
           reject(err);
           return;
         }
@@ -212,14 +210,9 @@ const deleteJiraIssueAttachment = async (
 
     httpClient.del(requestOpt, (err, res, body) => {
       if (err) {
-        log.error("delete chart error");
-        log.error(err);
+        log.error("delete chart error", err);
         return reject(err);
       }
-
-      log.info("Delete chart response");
-      log.info(body);
-      log.info(res);
 
       resolve(true);
     });
