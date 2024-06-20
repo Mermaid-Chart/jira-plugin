@@ -36,10 +36,11 @@ iframe {
   transform: translateY(85%);
   display: none;
   white-space: nowrap;
-  top: 0;
+  top: -10px;
   right: 0;
+  z-index: 20;
 }
-#header .settings:hover button.logout {
+#header:hover button.logout {
   display: block;
 }
 
