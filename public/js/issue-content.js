@@ -15,10 +15,8 @@ function App() {
     setUser(user);
   };
 
-  console.log("loginURL", loginURL);
-  console.log(charts);
-
   const onLogout = async () => {
+    showLoadingAnimation();
     await fetch("/logout", {
       method: "post",
       headers: {
@@ -27,6 +25,7 @@ function App() {
     });
     setAccessToken(undefined);
     setUser(null);
+    hideLoadingAnimation();
     window.location.reload();
   };
 
@@ -40,25 +39,18 @@ function App() {
     options += ",top=" + top;
     options += ",left=" + left;
 
-    console.log("loginURL: ", loginURL);
-    // log.info("loginURL: ", loginURL);
-
     const windowObjectReference = window.open(loginURL, "loginWindow", options);
     windowObjectReference.focus();
 
     const callback = async () => {
-      console.log("login callback");
-      // log.info("login callback");
       const res = await fetch(`/check_token?state=${loginState}`, {
         headers: {
           Authorization: `JWT ${JWTToken}`,
         },
       });
+
       if (res.ok) {
         const body = await res.json();
-        console.log("login token");
-        console.log(body);
-        // log.info("login token: ", body);
         onLogin(body.token, body.user);
       } else {
         timeout = setTimeout(callback, 500);
@@ -74,24 +66,16 @@ function App() {
   };
 
   const viewDiagramClick = (image) => {
-    //window.open(url, '_blank');
-
     AP.dialog.create({
       key: "dialog-module-view",
-      width: "1100px",
-      height: "500px",
+      width: "95%",
+      height: "95%",
       chrome: true,
       customData: {
         image,
         baseUrl: MC_BASE_URL,
         accessToken: accessToken,
       },
-      buttons: [
-        /*{
-            text: 'Close',
-            identifier: 'mc-close-button'
-          }*/
-      ],
     });
   };
 
@@ -103,8 +87,8 @@ function App() {
 
     AP.dialog.create({
       key: "dialog-module-edit",
-      width: "1100px",
-      height: "500px",
+      width: "95%",
+      height: "95%",
       chrome: true,
       customData: {
         image,
@@ -122,8 +106,8 @@ function App() {
 
     AP.dialog.create({
       key: "dialog-module-select",
-      width: "1100px",
-      height: "500px",
+      width: "95%",
+      height: "95%",
       chrome: true,
       customData: {
         baseUrl: MC_BASE_URL,
@@ -133,7 +117,17 @@ function App() {
     });
   };
 
-  function deleteDiagram(image) {
+  const showLoadingAnimation = () => {
+    let loading = document.querySelector("#loading-spinner");
+    loading.style.display = "flex";
+  };
+  const hideLoadingAnimation = () => {
+    let loading = document.querySelector("#loading-spinner");
+    loading.style.display = "none";
+  };
+
+  const deleteDiagram = (image) => {
+    showLoadingAnimation();
     fetch("/delete-chart", {
       method: "POST",
       headers: {
@@ -142,15 +136,12 @@ function App() {
       },
       body: JSON.stringify({ issueKey, documentID: image.documentID }),
     }).then(() => {
+      hideLoadingAnimation();
       location.reload();
     });
-  }
+  };
 
   window.AP.events.on("dialog.close", async (data) => {
-    console.log("dialog.close:");
-    console.log(data);
-    // log.info("dialog.close: ", data);
-
     if (data && data.chart) {
       data.chart.diagramCode = "";
       // data.chart.diagramImage = "";
@@ -160,8 +151,6 @@ function App() {
       );
 
       if (data.replace == false && existingChart > -1) {
-        //alert("This chart already added.");
-
         AP.dialog.create({
           key: "dialog-module-alert",
           chrome: true,
@@ -174,7 +163,7 @@ function App() {
         return;
       }
 
-      console.log(data);
+      showLoadingAnimation();
       fetch("/add-chart", {
         method: "POST",
         headers: {
@@ -187,9 +176,7 @@ function App() {
           replace: data.replace,
         }),
       }).then((result) => {
-        console.log("/add-chart result: ");
-        console.log(result);
-        // log.info("/add-chart: ", result);
+        hideLoadingAnimation();
         location.reload();
       });
     }
@@ -211,24 +198,12 @@ function App() {
       l.style.display = "none";
     });
   };
-  //   <img
-  //         src="data:image/x-png;base64, ${image.diagramImage}"
-  //         alt="${image.title}"
-  //     />
-
-  // return html` <div>
-  //       <p>Visualize your task with diagrams</p>
-  //     </div>
-  //     <button class="connect-btn" onclick="${(e) => connectToMermaidClick()}">
-  //       Connect
-  //     </button>`;
 
   const showHeader = accessToken ? "" : "non-show";
   console.log(accessToken);
   return html`
     <div class="header-block">
       <div class="subheader">
-        <p>Visualize your task with diagrams</p>
         ${!accessToken &&
         html`<button
           class="connect-btn"
@@ -236,12 +211,20 @@ function App() {
         >
           Connect
         </button>`}
+        ${accessToken &&
+        html`<button class="connect-btn" onclick="${(e) => onLogout()}">
+          Disconnect
+        </button>`}
       </div>
       ${accessToken &&
+      false &&
       html`
         <${Fragment}>
           <${Header} class="${showHeader}" user="${user}" onLogout="${onLogout}"/>
         </Fragment>`}
+      <div class="load" id="loading-spinner" style="display: none">
+        <div class="spinner"></div>
+      </div>
     </div>
     <div
       id="images"
@@ -274,13 +257,13 @@ function App() {
             class="delete-btn"
             onclick="${(e) => deleteDiagram(image)}"
             type="submit"
-            title="delele"
+            title="Delele chart from issue"
           >
             <input type="hidden" name="issueKey" value="${issueKey}" />
             <input type="hidden" name="diagramId" value="${image.id}" />
             <img
               style="width: 20px; height: 20px;"
-              src="../close-line-icon.svg"
+              src="../trash-icon.svg"
               alt="close"
             />
           </button>
@@ -288,7 +271,7 @@ function App() {
             class="edit-btn"
             onclick="${(e) => editDiagramClick(image)}"
             type="submit"
-            title="edit"
+            title="Edit chart"
           >
             <img
               style="width: 20px; height: 20px;"

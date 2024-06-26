@@ -12,7 +12,7 @@ export function Header({ user, onLogout }) {
       <div class="settings">
         <img src="/settings.svg" alt="Settings" />
         <button class="logout" onclick="${onLogout}">
-          Disconnect from MermaidChart
+          Disconnect from Mermaid Chart
         </button>
       </div>
     </div>

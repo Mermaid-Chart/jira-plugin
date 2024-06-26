@@ -41,7 +41,7 @@
         },
         "jiraNativeAppsEnabled": false,
         "name": {
-          "value": "MermaidChart"
+          "value": "Mermaid Chart"
         },
         "key": "jira-issue-content"
       }
@@ -53,7 +53,7 @@
           "height": "200px",
           "width": "300px",
           "header": {
-            "value": "MermaidChart"
+            "value": "Mermaid Chart"
           }
         },
         "key": "dialog-module-edit"
@@ -64,7 +64,7 @@
           "height": "500px",
           "width": "600px",
           "header": {
-            "value": "MermaidChart"
+            "value": "Mermaid Chart"
           }
         },
         "key": "dialog-module-select"
@@ -75,7 +75,7 @@
           "height": "500px",
           "width": "600px",
           "header": {
-            "value": "MermaidChart"
+            "value": "Mermaid Chart"
           }
         },
         "key": "dialog-module-view"
@@ -86,7 +86,7 @@
           "height": "200px",
           "width": "300px",
           "header": {
-            "value": "MermaidChart Alert"
+            "value": "Mermaid Chart Alert"
           }
         },
         "key": "dialog-module-alert"
