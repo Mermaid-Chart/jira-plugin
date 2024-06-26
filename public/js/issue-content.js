@@ -65,14 +65,14 @@ function App() {
     return false;
   };
 
-  const viewDiagramClick = (image) => {
+  const viewDiagramClick = (chart) => {
     AP.dialog.create({
       key: "dialog-module-view",
       width: "95%",
-      height: "95%",
+      height: "90%",
       chrome: true,
       customData: {
-        image,
+        image: chart,
         baseUrl: MC_BASE_URL,
         accessToken: accessToken,
       },
@@ -88,7 +88,7 @@ function App() {
     AP.dialog.create({
       key: "dialog-module-edit",
       width: "95%",
-      height: "95%",
+      height: "90%",
       chrome: true,
       customData: {
         image,
@@ -107,7 +107,7 @@ function App() {
     AP.dialog.create({
       key: "dialog-module-select",
       width: "95%",
-      height: "95%",
+      height: "90%",
       chrome: true,
       customData: {
         baseUrl: MC_BASE_URL,
@@ -126,15 +126,24 @@ function App() {
     loading.style.display = "none";
   };
 
-  const deleteDiagram = (image) => {
+  const deleteDiagram = (chart) => {
     showLoadingAnimation();
+
+    const chartIndex = charts.findIndex(
+      (e) => e.documentID === chart.documentID
+    );
+
+    if (chartIndex > -1) {
+      charts.splice(chartIndex, 1);
+    }
+
     fetch("/delete-chart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `JWT ${JWTToken}`,
       },
-      body: JSON.stringify({ issueKey, documentID: image.documentID }),
+      body: JSON.stringify({ issueKey, documentID: chart.documentID }),
     }).then(() => {
       hideLoadingAnimation();
       location.reload();
@@ -146,11 +155,11 @@ function App() {
       data.chart.diagramCode = "";
       // data.chart.diagramImage = "";
 
-      const existingChart = charts.findIndex(
+      const chartIndex = charts.findIndex(
         (e) => e.documentID === data.chart.documentID
       );
 
-      if (data.replace == false && existingChart > -1) {
+      if (data.replace == false && chartIndex > -1) {
         AP.dialog.create({
           key: "dialog-module-alert",
           chrome: true,
@@ -215,15 +224,9 @@ function App() {
         html`<button class="connect-btn" onclick="${(e) => onLogout()}">
           Disconnect
         </button>`}
-      </div>
-      ${accessToken &&
-      false &&
-      html`
-        <${Fragment}>
-          <${Header} class="${showHeader}" user="${user}" onLogout="${onLogout}"/>
-        </Fragment>`}
-      <div class="load" id="loading-spinner" style="display: none">
-        <div class="spinner"></div>
+        <div class="loading-spinner" id="loading-spinner" style="display: none">
+          <div class="spinner"></div>
+        </div>
       </div>
     </div>
     <div
