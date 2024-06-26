@@ -50,8 +50,8 @@
       {
         "url": "/editor",
         "options": {
-          "height": "95%",
-          "width": "75%",
+          "width": "95%",
+          "height": "75%",
           "header": {
             "value": "Mermaid Chart"
           }
@@ -61,8 +61,8 @@
       {
         "url": "/select",
         "options": {
-          "height": "95%",
-          "width": "75%",
+          "width": "95%",
+          "height": "75%",
           "header": {
             "value": "Mermaid Chart"
           }
@@ -72,8 +72,8 @@
       {
         "url": "/viewer",
         "options": {
-          "height": "95%",
-          "width": "75%",
+          "width": "95%",
+          "height": "75%",
           "header": {
             "value": "Mermaid Chart"
           }
