@@ -239,14 +239,12 @@ function App() {
         // src="${image.diagramUrl}"
         const titleText = image.title ? "title-text" : "non-show";
         return html` <div class="tile">
-          <object data="../no-image-placeholder.svg" type="image/png">
-            <img
-              style="display: none;"
-              class="tile-image"
-              src="${image.diagramUrl}"
-              alt="${image.title}"
-            />
-          </object>
+          <img
+            style="display: none;"
+            class="tile-image"
+            src="${image.diagramUrl}"
+            alt="${image.title}"
+          />
           <div class="load" style="display: flex">
             <div class="spinner"></div>
           </div>
