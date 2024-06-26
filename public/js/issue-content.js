@@ -69,7 +69,7 @@ function App() {
     AP.dialog.create({
       key: "dialog-module-view",
       width: "95%",
-      height: "90%",
+      height: "80%",
       chrome: true,
       customData: {
         image: chart,
@@ -88,7 +88,7 @@ function App() {
     AP.dialog.create({
       key: "dialog-module-edit",
       width: "95%",
-      height: "90%",
+      height: "80%",
       chrome: true,
       customData: {
         image,
@@ -107,7 +107,7 @@ function App() {
     AP.dialog.create({
       key: "dialog-module-select",
       width: "95%",
-      height: "90%",
+      height: "80%",
       chrome: true,
       customData: {
         baseUrl: MC_BASE_URL,
@@ -135,6 +135,7 @@ function App() {
 
     if (chartIndex > -1) {
       charts.splice(chartIndex, 1);
+      setCharts(charts);
     }
 
     fetch("/delete-chart", {
@@ -208,8 +209,6 @@ function App() {
     });
   };
 
-  const showHeader = accessToken ? "" : "non-show";
-  console.log(accessToken);
   return html`
     <div class="header-block">
       <div class="subheader">
