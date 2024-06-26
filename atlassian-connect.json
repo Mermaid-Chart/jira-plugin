@@ -50,8 +50,8 @@
       {
         "url": "/editor",
         "options": {
-          "height": "200px",
-          "width": "300px",
+          "height": "500px",
+          "width": "600px",
           "header": {
             "value": "Mermaid Chart"
           }
