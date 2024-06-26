@@ -47,10 +47,11 @@
 }
 .tile-image::before {
   content: " ";
-  display: block;
-  position: absolute;
+  /* display: block; */
+  /* position: absolute; */
   height: 150px;
   width: 150px;
+  background-size: 100% 100%;
   background-image: url(./../no-image-placeholder.png);
 }
 
