@@ -259,7 +259,7 @@ function App() {
             class="delete-btn"
             onclick="${(e) => deleteDiagram(image)}"
             type="submit"
-            title="Delele chart from issue"
+            title="Delete chart from issue"
           >
             <input type="hidden" name="issueKey" value="${issueKey}" />
             <input type="hidden" name="diagramId" value="${image.id}" />
