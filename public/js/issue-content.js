@@ -13,6 +13,7 @@ function App() {
   const onLogin = (token, user) => {
     setAccessToken(token);
     setUser(user);
+    window.location.reload();
   };
 
   const onLogout = async () => {
