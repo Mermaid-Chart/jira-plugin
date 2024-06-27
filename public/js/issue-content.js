@@ -269,7 +269,8 @@ function App() {
               alt="close"
             />
           </button>
-          <button
+          ${accessToken &&
+          html`<button
             class="edit-btn"
             onclick="${(e) => editDiagramClick(image)}"
             type="submit"
@@ -280,7 +281,7 @@ function App() {
               src="../pencil-icon.svg"
               alt="view"
             />
-          </button>
+          </button>`}
         </div>`;
       })}
     </div>
