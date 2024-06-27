@@ -1,7 +1,7 @@
 import { h, render, Fragment } from "https://esm.sh/preact";
 import { useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
-import { Header } from "./editor/header.js";
+// import { Header } from "./editor/header.js";
 const html = htm.bind(h);
 let timeout;
 
@@ -68,7 +68,7 @@ function App() {
   const viewDiagramClick = (chart) => {
     AP.dialog.create({
       key: "dialog-module-view",
-      width: "95%",
+      // width: "95%",
       // height: "70%",
       chrome: true,
       customData: {
@@ -87,7 +87,7 @@ function App() {
 
     AP.dialog.create({
       key: "dialog-module-edit",
-      width: "95%",
+      // width: "95%",
       // height: "70%",
       chrome: true,
       customData: {
@@ -106,7 +106,7 @@ function App() {
 
     AP.dialog.create({
       key: "dialog-module-select",
-      width: "95%",
+      // width: "95%",
       // height: "70%",
       chrome: true,
       customData: {
@@ -119,7 +119,7 @@ function App() {
 
   const showLoadingAnimation = () => {
     let loading = document.querySelector("#loading-spinner");
-    loading.style.display = "flex";
+    loading.style.display = "inline-block";
   };
   const hideLoadingAnimation = () => {
     let loading = document.querySelector("#loading-spinner");

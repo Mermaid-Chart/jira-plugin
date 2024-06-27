@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0px 20px 0px 0px;
 }
 .subheader {
   width: 300px;
@@ -47,8 +47,6 @@
 }
 .tile-image::before {
   content: " ";
-  /* display: block; */
-  /* position: absolute; */
   height: 150px;
   width: 150px;
   background-size: 100% 100%;
@@ -92,9 +90,19 @@
   align-items: center;
   justify-content: center;
   object-fit: contain;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
 }
+
+.loading-spinner .spinner {
+    margin: 1em auto;
+    width: 25px;
+    height: 25px;
+    border-radius: 20px;
+    border: solid 3px #ddd;
+    border-left: solid 3px #999;
+  }
+
 button {
   cursor: pointer;
   background: none;

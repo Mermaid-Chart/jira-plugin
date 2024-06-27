@@ -60,10 +60,6 @@ function App() {
     `/app/projects/${image.projectID}/diagrams/${image.documentID}/version/v.${image.major}.${image.minor}/edit`
   );
 
-  //const iframeURL = buildUrl(`/app/plugins/confluence/select`);
-  console.log("buildUrl:", iframeURL);
-  // log.info("buildUrl: ", iframeURL);\
-
   if (iframeURL) {
     return html` <iframe src="${iframeURL}" name="" /> `;
   }
