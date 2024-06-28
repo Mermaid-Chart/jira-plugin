@@ -24,6 +24,10 @@ function App() {
   //   alt="${title}"
   // /> `;
 
+  window.onload = function () {
+    document.body.style.margin = "0";
+  };
+
   if (!initialized) {
     return html`
       <div id="page-spinner">
