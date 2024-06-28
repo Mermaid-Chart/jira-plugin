@@ -201,5 +201,5 @@ button:hover img {
 .aui-dialog2.aui-layer {
   position: fixed;
   overflow: visible;
-  top: 120px
+  top: 120px !important;
 }
