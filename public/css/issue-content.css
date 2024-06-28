@@ -197,3 +197,9 @@ button:hover img {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
+
+.aui-dialog2.aui-layer {
+  position: fixed;
+  overflow: visible;
+  top: 120px
+}
