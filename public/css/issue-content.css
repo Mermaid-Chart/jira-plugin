@@ -95,13 +95,13 @@
 }
 
 .loading-spinner .spinner {
-    margin: 1em auto;
-    width: 25px;
-    height: 25px;
-    border-radius: 20px;
-    border: solid 3px #ddd;
-    border-left: solid 3px #999;
-  }
+  margin: 1em auto;
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  border: solid 3px #ddd;
+  border-left: solid 3px #999;
+}
 
 button {
   cursor: pointer;
@@ -196,10 +196,4 @@ button:hover img {
   animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-}
-
-.aui-dialog2.aui-layer {
-  position: fixed;
-  overflow: visible;
-  top: 120px !important;
 }
