@@ -21,10 +21,21 @@
       "token": "$KV_REST_API_TOKEN"
     }
   },
+  "stage": {
+    "port": "$PORT",
+    "errorTemplate": true,
+    "localBaseUrl": "https://jirastage.mermaidchart.com",
+    "allowedBaseUrls": ["$VERCEL_BRANCH_URL"],
+    "store": {
+      "adapter": "@upstash/redis",
+      "url": "$KV_REST_API_URL",
+      "token": "$KV_REST_API_TOKEN"
+    }
+  },
   "production": {
     "port": "$PORT",
     "errorTemplate": true,
-    "localBaseUrl": "https://jiratest.mermaidchart.com",
+    "localBaseUrl": "https://jira.mermaidchart.com",
     "allowedBaseUrls": ["$VERCEL_BRANCH_URL"],
     "store": {
       "adapter": "@upstash/redis",
