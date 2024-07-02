@@ -1,5 +1,5 @@
 import { h, render } from "https://esm.sh/preact";
-import { useEffect, useRef, useState } from "https://esm.sh/preact/hooks";
+import { useEffect, useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
 const html = htm.bind(h);
 
@@ -45,7 +45,9 @@ function App() {
   // if (!accessToken) {
   //   return html` <${Login} onLogin="${onLogin}" /> `;
   // }
-
+  window.onload = function () {
+    document.body.style.margin = "0";
+  };
   if (!initialized) {
     return html`
       <div id="page-spinner">

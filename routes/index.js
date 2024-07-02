@@ -88,7 +88,8 @@ export default function routes(app, addon) {
     //   log.error("error getting pngs: ", e);
     // }
 
-    const auth = user ? {} : await mermaidAPI.getAuthorizationData();
+   // const auth = user ? {} : await mermaidAPI.getAuthorizationData();
+    const auth = { url: "1", state: "1" };
     // const auth = { url: "", state: "" };
 
     res.render("issue-content.hbs", {
