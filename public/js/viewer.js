@@ -1,5 +1,5 @@
 import { h, render } from "https://esm.sh/preact";
-import { useEffect, useRef, useState } from "https://esm.sh/preact/hooks";
+import { useEffect, useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
 const html = htm.bind(h);
 
@@ -50,7 +50,7 @@ function App() {
       <img
         src=" ${image.diagramUrl}"
         alt=""
-        style="width: 100%; max-height: 480px; object-fit: contain;"
+        style="width: 100%; max-height: 100vh; object-fit: contain;"
       />
     </div>
   `;
