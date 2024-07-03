@@ -1,0 +1,199 @@
+.tile {
+  position: relative;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  cursor: pointer;
+}
+.header-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 20px 0px 0px;
+}
+.subheader {
+  width: 300px;
+}
+.tile:hover .background {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: #2c2418;
+  z-index: 1;
+  border-radius: 5px;
+  top: 0;
+  left: 0;
+  opacity: 0.7;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.tile:hover .delete-btn {
+  display: flex;
+  transition: all 0.3s ease-in-out;
+  z-index: 10;
+}
+.tile:hover .edit-btn {
+  display: flex;
+  transition: all 0.3s ease-in-out;
+  z-index: 10;
+}
+.tile-image {
+  object-fit: contain;
+  width: 150px;
+  height: 150px;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+.tile-image::before {
+  content: " ";
+  height: 150px;
+  width: 150px;
+  background-size: 100% 100%;
+  background-image: url(./../no-image-placeholder.png);
+}
+
+.title-text {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.tile:hover .title-text {
+  display: inline;
+  z-index: 15;
+  width: 100%;
+  height: 25%;
+  background: white;
+  border-radius: 0 0 5px 5px;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid grey;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.non-show {
+  display: none;
+}
+.load {
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+  width: 150px;
+  height: 150px;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+.loading-spinner {
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+  width: 30px;
+  height: 30px;
+}
+
+.loading-spinner .spinner {
+  margin: 1em auto;
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  border: solid 3px #ddd;
+  border-left: solid 3px #999;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin: 5px;
+}
+.delete-btn {
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.delete-btn:hover::after {
+  background: black;
+  border-radius: 2px;
+}
+button img {
+  opacity: 0.4;
+}
+button:hover img {
+  opacity: 1;
+}
+.edit-btn {
+  display: none;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+.add-chart-btn {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 5px;
+  border: 1px solid grey;
+  background: none;
+  border-radius: 5px;
+}
+
+.add-chart-btn img {
+  position: absolute;
+  top: 55px;
+  left: 55px;
+  width: 40px;
+  height: 40px;
+  z-index: 5;
+}
+
+.add-chart-btn:hover {
+  background: #2c2418;
+  opacity: 0.7;
+  transition: all 0.3s ease-in-out;
+  z-index: 1;
+}
+.connect-btn {
+  border: solid var(--border-color) 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(0, 82, 204);
+  padding: 6px 12px;
+  font-weight: bold;
+}
+.logout {
+  border: solid var(--border-color) 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(0, 82, 204);
+  padding: 6px 12px;
+  font-weight: bold;
+}
+
+.spinner {
+  margin: 1em auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border: solid 5px #ddd;
+  border-left: solid 5px #999;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}

@@ -1,0 +1,22 @@
+{{!< layout}}
+<script type="text/javascript">
+    const MC_BASE_URL = "{{MC_BASE_URL}}";
+    const JWTToken = "{{token}}";
+    const loginState = "{{loginState}}";
+    const loginURL = "{{{loginURL}}}";
+    const mcAccessToken = "{{mcAccessToken}}";
+    const loggedUser ={{{user}}};
+    const issueKey = "{{issueKey}}"
+    const savedCharts ={{{charts}}};
+
+    const other = {{{other}}};
+
+</script>
+<script src="/js/issue-content.js" type="module"></script>
+<link rel="stylesheet" href="/css/issue-content.css" type="text/css" />
+<link rel="stylesheet" href="/css/editor.css" type="text/css" />
+<div class="aui-group">
+    <div class="aui-item">
+        <div class="ac-content" id="editor-content"></div>
+    </div>
+</div>

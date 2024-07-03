@@ -1,0 +1,96 @@
+{
+  "key": "mermaid-chart-app-for-jira",
+  "name": "Mermaid Chart for Jira",
+  "description": "Official Mermaid Chart App for Jira",
+  "baseUrl": "https://jirastage.mermaidchart.com",
+  "vendor": {
+    "name": "Mermaid Chart Inc",
+    "url": "http://www.mermaidchart.com",
+    "_links": {
+      "learnMore": "https://www.mermaidchart.com/plugins"
+    }
+  },
+  "links": {
+    "self": "https://jira.mermaidchart.com",
+    "artifact": "https://jira.mermaidchart.com"
+  },
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/installed"
+  },
+  "scopes": ["READ", "WRITE", "DELETE", "ACT_AS_USER"],
+  "apiMigrations": {
+    "signed-install": true
+  },
+  "modules": {
+    "jiraIssueContents": [
+      {
+        "icon": {
+          "width": 80,
+          "height": 80,
+          "url": "/icon_80x80.png"
+        },
+        "target": {
+          "type": "web_panel",
+          "url": "/issue-content?issueKey={issue.key}"
+        },
+        "tooltip": {
+          "value": ""
+        },
+        "jiraNativeAppsEnabled": false,
+        "name": {
+          "value": "Mermaid Chart"
+        },
+        "key": "jira-issue-content"
+      }
+    ],
+    "dialogs": [
+      {
+        "url": "/editor",
+        "options": {
+          "width": "95%",
+          "height": "67%",
+          "header": {
+            "value": "Mermaid Chart"
+          }
+        },
+        "key": "dialog-module-edit"
+      },
+      {
+        "url": "/select",
+        "options": {
+          "width": "95%",
+          "height": "67%",
+          "header": {
+            "value": "Mermaid Chart"
+          }
+        },
+        "key": "dialog-module-select"
+      },
+      {
+        "url": "/viewer",
+        "options": {
+          "width": "95%",
+          "height": "67%",
+          "header": {
+            "value": "Mermaid Chart"
+          }
+        },
+        "key": "dialog-module-view"
+      },
+      {
+        "url": "/alert",
+        "options": {
+          "height": "200px",
+          "width": "300px",
+          "header": {
+            "value": "Mermaid Chart Alert"
+          }
+        },
+        "key": "dialog-module-alert"
+      }
+    ]
+  }
+}
