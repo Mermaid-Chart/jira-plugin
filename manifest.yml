@@ -1,5 +1,5 @@
 app:
-  id: ari:cloud:ecosystem::app/f8ad7d37-0f76-4aed-894e-14f1f5e0bf18
+  id: ari:cloud:ecosystem::app/9ee3fc12-438a-4c67-ae75-21de90a46fa2
   connect:
     key: mermaid-chart-app-for-jira
     remote: connect
