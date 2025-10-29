@@ -8,7 +8,7 @@ app:
     name: nodejs20.x
 remotes:
   - key: connect
-    baseUrl: https://jira-mermaid-chart-plugin-git-migrate-jira-conne-7a023b-mc-prod.vercel.app
+    baseUrl: https://jiratest.mermaidchart.com
 connectModules:
   jira:lifecycle:
     - key: lifecycle-events
