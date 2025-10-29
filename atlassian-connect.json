@@ -2,7 +2,7 @@
   "key": "mermaid-chart-app-for-jira",
   "name": "Mermaid Chart for Jira",
   "description": "Official Mermaid Chart App for Jira",
-  "baseUrl": "https://jiratest.mermaidchart.com",
+  "baseUrl": "https://jira-mermaid-chart-plugin-git-migrate-jira-conne-7a023b-mc-prod.vercel.app",
   "vendor": {
     "name": "Mermaid Chart Inc",
     "url": "http://www.mermaidchart.com",
