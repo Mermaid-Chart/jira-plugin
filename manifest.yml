@@ -1,0 +1,64 @@
+app:
+  id: ari:cloud:ecosystem::app/9ee3fc12-438a-4c67-ae75-21de90a46fa2
+  connect:
+    key: mermaid-chart-app-for-jira
+    remote: connect
+    authentication: jwt
+  runtime:
+    name: nodejs20.x
+remotes:
+  - key: connect
+    baseUrl: https://jiratest.mermaidchart.com
+connectModules:
+  jira:lifecycle:
+    - key: lifecycle-events
+      installed: /installed
+  jira:jiraIssueContents:
+    - icon:
+        width: 80
+        height: 80
+        url: /icon_80x80.png
+      target:
+        type: web_panel
+        url: /issue-content?issueKey={issue.key}
+      tooltip:
+        value: ''
+      jiraNativeAppsEnabled: false
+      name:
+        value: Mermaid Chart
+      key: jira-issue-content
+  jira:dialogs:
+    - url: /editor
+      options:
+        width: 95%
+        height: 67%
+        header:
+          value: Mermaid Chart
+      key: dialog-module-edit
+    - url: /select
+      options:
+        width: 95%
+        height: 67%
+        header:
+          value: Mermaid Chart
+      key: dialog-module-select
+    - url: /viewer
+      options:
+        width: 95%
+        height: 67%
+        header:
+          value: Mermaid Chart
+      key: dialog-module-view
+    - url: /alert
+      options:
+        height: 200px
+        width: 300px
+        header:
+          value: Mermaid Chart Alert
+      key: dialog-module-alert
+permissions:
+  scopes:
+    - read:connect-jira
+    - write:connect-jira
+    - delete:connect-jira
+    - act-as-user:connect-jira
