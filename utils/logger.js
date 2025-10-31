@@ -15,7 +15,8 @@ const winstonLogger = winston.createLogger({
     }),
   ],
 });
-
+console.log("The Token is:", process.env.MC_AXIOM_TOKEN);
+console.log("The Org ID is:", process.env.MC_AXIOM_ORG_ID);
 class Logger {
   info(message) {
     winstonLogger.info(message);
