@@ -10,8 +10,8 @@ const winstonLogger = winston.createLogger({
     // using environment variables like `AXIOM_DATASET` and `AXIOM_TOKEN`
     new AxiomTransport({
       dataset: "mc-jira-plugin",
-      token: process.env.MC_AXIOM_TOKEN,
-      orgId: process.env.MC_AXIOM_ORG_ID,
+      token: "xaat-96973040-e16f-44b4-b1e9-f2fba86a835b",
+      orgId: "tulaco-uwn4",
     }),
   ],
 });
