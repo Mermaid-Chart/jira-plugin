@@ -30,17 +30,6 @@ import { createRequire } from "node:module";
 
 // Routes live here; this is the C in MVC
 import routes from "../routes/index.js";
-
-// Environment Detection Logs
-console.log("=== ENVIRONMENT DETECTION LOGS ===");
-console.log("NODE_ENV:", process.env.NODE_ENV);
-console.log("VERCEL:", process.env.VERCEL);
-console.log("VERCEL_ENV:", process.env.VERCEL_ENV);
-console.log("VERCEL_REGION:", process.env.VERCEL_REGION);
-console.log("VERCEL_URL:", process.env.VERCEL_URL);
-console.log("Platform detected:", process.platform);
-console.log("Node version:", process.version);
-console.log("=== END ENVIRONMENT DETECTION ===");
 import { readFileSync } from "fs";
 
 // Use Vercel Serverless Redis connection
@@ -54,7 +43,6 @@ ace.store.register("@upstash/redis", function (logger, opts) {
 });
 
 console.log("CWD is ", process.cwd());
-
 
 console.log("config.json is at ", resolve("config.json"));
 console.log(
@@ -81,11 +69,6 @@ const app = express();
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
-console.log("=== APP INITIALIZATION ENVIRONMENT ===");
-console.log("Express app environment:", app.get("env"));
-console.log("App settings port detection:", app.get("port") || "not set");
-console.log("=== END APP INITIALIZATION ===");
-
 export const addon = ace(app, {
   config: {
     descriptorTransformer(self, config) {
@@ -99,19 +82,10 @@ export const addon = ace(app, {
 const port = addon.config.port();
 app.set("port", port);
 
-console.log("=== ADDON CONFIGURATION ENVIRONMENT ===");
-console.log("Configured port:", port);
-console.log("localBaseUrl is:", addon.config.localBaseUrl());
-console.log("Addon config keys:", Object.keys(addon.config.config || {}));
-console.log("=== END ADDON CONFIGURATION ===");
+console.log("localBaseUrl is ", addon.config.localBaseUrl());
 
 // Log requests, using an appropriate formatter by env
 export const devEnv = app.get("env") === "development";
-console.log("=== DEVELOPMENT ENVIRONMENT DETECTION ===");
-console.log("Development environment detected:", devEnv);
-console.log("App environment setting:", app.get("env"));
-console.log("Morgan formatter will use:", devEnv ? "dev" : "combined");
-console.log("=== END DEVELOPMENT DETECTION ===");
 app.use(morgan(devEnv ? "dev" : "combined"));
 
 // We don't want to log JWT tokens, for security reasons
