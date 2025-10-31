@@ -43,79 +43,6 @@ ace.store.register("@upstash/redis", function (logger, opts) {
 });
 
 console.log("CWD is ", process.cwd());
-console.log("NODE_ENV is ", process.env.NODE_ENV);
-console.log("VERCEL_ENV is ", process.env.VERCEL_ENV);
-
-// Determine the correct environment based on multiple factors
-function determineEnvironment() {
-  console.log('Environment variables:', {
-    NODE_ENV: process.env.NODE_ENV,
-    VERCEL_ENV: process.env.VERCEL_ENV,
-    APP_ENV: process.env.APP_ENV,
-    VERCEL_URL: process.env.VERCEL_URL,
-    VERCEL_BRANCH_URL: process.env.VERCEL_BRANCH_URL
-  });
-
-  // First check for explicit APP_ENV override
-  if (process.env.APP_ENV) {
-    console.log(`Using explicit APP_ENV: ${process.env.APP_ENV}`);
-    return process.env.APP_ENV;
-  }
-
-  // Check if we can detect stage environment by URL patterns
-  const url = process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL || '';
-  if (url.includes('jirastage') || url.includes('stage')) {
-    console.log(`Detected stage environment from URL: ${url}`);
-    return 'stage';
-  }
-
-  // Check if there's an explicit NODE_ENV set and it's not production
-  if (process.env.NODE_ENV && process.env.NODE_ENV !== 'production') {
-    console.log(`Using explicit NODE_ENV: ${process.env.NODE_ENV}`);
-    return process.env.NODE_ENV;
-  }
-
-  // For production NODE_ENV, we need to distinguish between stage and production
-  if (process.env.NODE_ENV === 'production') {
-    // Check VERCEL_ENV for additional context
-    if (process.env.VERCEL_ENV === 'production') {
-      // This could be either stage or production
-      // Check if there are any indicators for stage
-      if (process.env.VERCEL_BRANCH_URL && process.env.VERCEL_BRANCH_URL.includes('stage')) {
-        console.log('Detected stage environment from Vercel branch URL');
-        return 'stage';
-      }
-      console.log('Detected production environment');
-      return 'production';
-    } else if (process.env.VERCEL_ENV === 'preview') {
-      console.log('Detected preview environment');
-      return 'preview';
-    }
-  }
-
-  // Check VERCEL_ENV and map appropriately
-  if (process.env.VERCEL_ENV) {
-    const vercelEnv = process.env.VERCEL_ENV;
-    console.log(`VERCEL_ENV detected: ${vercelEnv}`);
-    
-    const envMapping = {
-      'development': 'development',
-      'preview': 'preview',
-      'production': 'production'
-    };
-    
-    return envMapping[vercelEnv] || vercelEnv;
-  }
-
-  // Default fallback
-  console.log('No environment detected, defaulting to development');
-  return 'development';
-}
-
-// Set the environment
-const detectedEnv = determineEnvironment();
-process.env.NODE_ENV = detectedEnv;
-console.log(`Final NODE_ENV set to: ${process.env.NODE_ENV}`);
 
 console.log("config.json is at ", resolve("config.json"));
 console.log(
@@ -144,23 +71,9 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 export const addon = ace(app, {
   config: {
-    descriptorTransformer(descriptor, config) {
-      console.log("Original descriptor baseUrl:", descriptor.baseUrl);
-      console.log("Config localBaseUrl:", config.localBaseUrl());
-      
-      // Ensure the descriptor uses the correct URL based on environment
-      const localBaseUrl = config.localBaseUrl();
-      descriptor.baseUrl = localBaseUrl;
-      
-      // Update links to match the environment
-      if (descriptor.links) {
-        descriptor.links.self = localBaseUrl;
-        descriptor.links.artifact = localBaseUrl;
-      }
-      
-      console.log("Transformed descriptor baseUrl:", descriptor.baseUrl);
-      console.log("Transformed descriptor:", JSON.stringify(descriptor, null, 2));
-      return descriptor;
+    descriptorTransformer(self, config) {
+      console.log("Transformed descriptor is ", self);
+      return self;
     },
   },
 });
@@ -169,10 +82,7 @@ export const addon = ace(app, {
 const port = addon.config.port();
 app.set("port", port);
 
-console.log("Current environment detected by Express:", app.get("env"));
-console.log("NODE_ENV environment variable:", process.env.NODE_ENV);
-console.log("Addon config localBaseUrl:", addon.config.localBaseUrl());
-console.log("Addon config object:", JSON.stringify(addon.config, null, 2));
+console.log("localBaseUrl is ", addon.config.localBaseUrl());
 
 // Log requests, using an appropriate formatter by env
 export const devEnv = app.get("env") === "development";
