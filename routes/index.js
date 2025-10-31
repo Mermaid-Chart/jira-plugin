@@ -13,8 +13,6 @@ import log from "../utils/logger.js";
 
 const MC_BASE_URL = process.env.MC_BASE_URL;
 const MC_CLIENT_ID = process.env.MC_CLIENT_ID;
-console.log("MC_BASE_URL:", MC_BASE_URL);
-console.log("MC_CLIENT_ID:", MC_CLIENT_ID);
 
 const diagramsPropertyName = "diagrams";
 //const diagramsPropertyName = "mermaid-chart-diagrams";
@@ -26,7 +24,6 @@ export default function routes(app, addon) {
     redirectURI: `${addon.config.localBaseUrl()}/callback`,
     addon,
   });
-  console.log("Mermaid redirectURI:", mermaidAPI.redirectURI);
 
     app.post('/installed', (req, res) => {
     try {
