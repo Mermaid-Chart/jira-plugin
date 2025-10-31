@@ -1,7 +1,6 @@
 import { h, render, Fragment } from "https://esm.sh/preact";
 import { useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
-// import { Header } from "./editor/header.js";
 const html = htm.bind(h);
 let timeout;
 
@@ -69,8 +68,6 @@ function App() {
   const viewDiagramClick = (chart) => {
     AP.dialog.create({
       key: "dialog-module-view",
-      // width: "95%",
-      // height: "70%",
       chrome: true,
       customData: {
         image: chart,
@@ -88,8 +85,6 @@ function App() {
 
     AP.dialog.create({
       key: "dialog-module-edit",
-      // width: "95%",
-      // height: "70%",
       chrome: true,
       customData: {
         image,
@@ -107,8 +102,6 @@ function App() {
 
     AP.dialog.create({
       key: "dialog-module-select",
-      // width: "95%",
-      // height: "70%",
       chrome: true,
       customData: {
         baseUrl: MC_BASE_URL,
