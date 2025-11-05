@@ -11,8 +11,9 @@ import {
 import { MermaidChart } from "../utils/MermaidChart.js";
 import log from "../utils/logger.js";
 
-const MC_BASE_URL = process.env.MC_BASE_URL;
-const MC_CLIENT_ID = process.env.MC_CLIENT_ID;
+const MC_BASE_URL = "http://localhost:5174";
+const MC_CLIENT_ID = "6643413f-36fe-41f5-83b6-18674ec599f0";
+
 
 const diagramsPropertyName = "diagrams";
 //const diagramsPropertyName = "mermaid-chart-diagrams";
@@ -25,7 +26,7 @@ export default function routes(app, addon) {
     addon,
   });
 
-    app.post('/installed', (req, res) => {
+  app.post('/installed', addon.authenticate(), (req, res) => {
     try {
       if (!addon.settings && !addon.store) {
         console.error('No store available - neither addon.settings nor addon.store exists');
@@ -96,6 +97,74 @@ export default function routes(app, addon) {
       console.error('Installation handler exception:', error);
       console.error('Exception stack:', error.stack);
       res.status(500).json({ error: 'Installation exception', details: error.message });
+    }
+  });
+
+  // Handle app uninstallation
+  app.post('/uninstalled', addon.authenticate(), (req, res) => {
+    try {
+      const clientKey = req.body.clientKey;
+      if (!clientKey) {
+        console.error('Missing clientKey in uninstallation payload');
+        return res.status(400).json({ error: 'Missing clientKey' });
+      }
+
+      console.log(`App uninstalled for client: ${clientKey}`);
+      
+      const store = addon.settings || addon.store;
+      if (store.delete) {
+        store.delete('clientInfo', clientKey)
+          .then(() => {
+            res.status(204).end();
+          })
+          .catch(storeError => {
+            console.error('Error removing installation data:', storeError);
+            res.status(500).json({ 
+              error: 'Failed to remove installation data', 
+              details: storeError.message 
+            });
+          });
+      } else {
+        console.log('Store has no delete method, skipping data cleanup');
+        res.status(204).end();
+      }
+    } catch (error) {
+      console.error('Uninstallation handler exception:', error);
+      res.status(500).json({ error: 'Uninstallation exception', details: error.message });
+    }
+  });
+
+  // Handle app enabled
+  app.post('/enabled', addon.authenticate(), (req, res) => {
+    try {
+      const clientKey = req.body.clientKey;
+      if (!clientKey) {
+        console.error('Missing clientKey in enabled payload');
+        return res.status(400).json({ error: 'Missing clientKey' });
+      }
+
+      console.log(`App enabled for client: ${clientKey}`);
+      res.status(204).end();
+    } catch (error) {
+      console.error('Enabled handler exception:', error);
+      res.status(500).json({ error: 'Enabled exception', details: error.message });
+    }
+  });
+
+  // Handle app disabled
+  app.post('/disabled', addon.authenticate(), (req, res) => {
+    try {
+      const clientKey = req.body.clientKey;
+      if (!clientKey) {
+        console.error('Missing clientKey in disabled payload');
+        return res.status(400).json({ error: 'Missing clientKey' });
+      }
+
+      console.log(`App disabled for client: ${clientKey}`);
+      res.status(204).end();
+    } catch (error) {
+      console.error('Disabled handler exception:', error);
+      res.status(500).json({ error: 'Disabled exception', details: error.message });
     }
   });
   
