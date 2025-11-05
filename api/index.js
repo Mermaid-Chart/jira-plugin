@@ -82,7 +82,6 @@ export const addon = ace(app, {
 const port = addon.config.port();
 app.set("port", port);
 
-console.log("localBaseUrl is ", addon.config.localBaseUrl());
 
 // Log requests, using an appropriate formatter by env
 export const devEnv = app.get("env") === "development";
