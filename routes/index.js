@@ -25,7 +25,7 @@ export default function routes(app, addon) {
     addon,
   });
 
-    app.post('/installed', (req, res) => {
+    app.post('/installed',addon.authenticateInstall(), (req, res) => {
     try {
       if (!addon.settings && !addon.store) {
         console.error('No store available - neither addon.settings nor addon.store exists');
