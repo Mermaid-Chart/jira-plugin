@@ -13,6 +13,9 @@ connectModules:
   jira:lifecycle:
     - key: lifecycle-events
       installed: /installed
+      uninstalled: /uninstalled
+      enabled: /enabled
+      disabled: /disabled
   jira:jiraIssueContents:
     - icon:
         width: 80

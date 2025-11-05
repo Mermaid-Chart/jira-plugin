@@ -18,7 +18,10 @@
     "type": "jwt"
   },
   "lifecycle": {
-    "installed": "/installed"
+    "installed": "/installed",
+    "uninstalled": "/uninstalled",
+    "enabled": "/enabled",
+    "disabled": "/disabled"
   },
   "scopes": ["READ", "WRITE", "DELETE", "ACT_AS_USER"],
   "apiMigrations": {
