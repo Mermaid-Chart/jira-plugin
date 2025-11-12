@@ -35,7 +35,7 @@
   "production": {
     "port": "$PORT",
     "errorTemplate": true,
-    "localBaseUrl": "https://jira.mermaidchart.com",
+    "localBaseUrl": "https://jiratest.mermaidchart.com",
     "allowedBaseUrls": ["$VERCEL_BRANCH_URL"],
     "store": {
       "adapter": "@upstash/redis",
