@@ -11,7 +11,7 @@ import {
 import { MermaidChart } from "../utils/MermaidChart.js";
 import log from "../utils/logger.js";
 
-const MC_BASE_URL = process.env.MC_BASE_URL;
+const MC_BASE_URL = "https://collab-git-confluence-ui-figma-mc-prod.vercel.app";
 const MC_CLIENT_ID = process.env.MC_CLIENT_ID;
 
 const diagramsPropertyName = "diagrams";
