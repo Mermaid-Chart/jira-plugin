@@ -2,8 +2,7 @@
   "key": "mermaid-chart-app-for-jira",
   "name": "Mermaid Chart for Jira",
   "description": "Official Mermaid Chart App for Jira",
-  "baseUrl": "https://jiratest.mermaid.ai",
-    "//baseUrl": "{{localBaseUrl}}",
+  "baseUrl": "https://jiratest.mermaidchart.com",
   "vendor": {
     "name": "Mermaid Chart Inc",
     "url": "http://www.mermaidchart.com",
