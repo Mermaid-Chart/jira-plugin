@@ -75,7 +75,7 @@ class MermaidChart {
     this.baseURL = baseURL;
   }
 
-  async getAuthorizationData({ state, scope } = {}) {
+  async getAuthorizationData({ state, scope , trackingParams} = {}) {
     if (!this.redirectURI) {
       throw new Error("redirectURI is not set");
     }
@@ -93,6 +93,9 @@ class MermaidChart {
       code_challenge: await getEncodedSHA256Hash(codeVerifier),
       state: stateID,
       scope: scope ?? "email",
+      utm_source: trackingParams?.utm_source || 'mermaid_chart_jira_plugin',
+      utm_medium: trackingParams?.utm_medium || 'jira',
+      utm_campaign: trackingParams?.utm_campaign || 'jira_plugin'
     };
 
     setTimeout(async () => {
