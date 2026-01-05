@@ -40,6 +40,9 @@ function App() {
 
           break;
       }
+        if (e.data.type === "mermaid-chart-jira-back" && action === "navigateBack") {
+        AP.dialog.close();
+      }
     };
   }, []);
   // if (!accessToken) {

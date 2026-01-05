@@ -105,7 +105,7 @@ function App() {
 
     AP.dialog.create({
       key: "dialog-module-select",
-      chrome: true,
+      chrome: false,
       customData: {
         baseUrl: MC_BASE_URL,
         accessToken: accessToken,
