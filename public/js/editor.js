@@ -41,6 +41,9 @@ function App() {
           AP.dialog.close({ chart: e.data.data, replace: true });
           break;
       }
+      if (e.data.type === "mermaid-chart-jira-back" && action === "navigateBack") {
+        AP.dialog.close();
+      }
     };
   }, []);
 
@@ -61,7 +64,7 @@ function App() {
   };
 
   const iframeURL = buildUrl(
-    `/app/projects/${image.projectID}/diagrams/${image.documentID}/version/v.${image.major}.${image.minor}/edit`
+      `/app/projects/${image.projectID}/diagrams/${image.documentID}/version/v${image.major}.${image.minor}/edit?pluginSource=jira`
   );
 
   if (iframeURL) {
