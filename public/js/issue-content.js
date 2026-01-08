@@ -71,7 +71,7 @@ function App() {
   const viewDiagramClick = (chart) => {
     AP.dialog.create({
       key: "dialog-module-view",
-      chrome: false,
+      chrome: true,
       customData: {
         image: chart,
         baseUrl: MC_BASE_URL,
@@ -88,7 +88,7 @@ function App() {
     analytics.trackPluginDiagramEdit();
     AP.dialog.create({
       key: "dialog-module-edit",
-      chrome: false,
+      chrome: true,
       customData: {
         image,
         baseUrl: MC_BASE_URL,
@@ -105,7 +105,7 @@ function App() {
 
     AP.dialog.create({
       key: "dialog-module-select",
-      chrome: false,
+      chrome: true,
       customData: {
         baseUrl: MC_BASE_URL,
         accessToken: accessToken,
