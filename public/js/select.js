@@ -40,6 +40,9 @@ function App() {
 
           break;
       }
+      if (e.data.type === "mermaid-chart-jira-back" && action === "navigateBack") {
+        AP.dialog.close();
+      }
     };
   }, []);
   // if (!accessToken) {
@@ -64,7 +67,7 @@ function App() {
   //   `/app/projects/${document.projectID}/diagrams/${document.documentID}/version/v.${document.major}.${document.minor}/edit`
   // );
 
-  const iframeURL = buildUrl(`/app/plugins/confluence/select`);
+  const iframeURL = buildUrl(`/app/plugins/confluence/select?pluginSource=jira`);
   console.log("buildUrl:", iframeURL);
   // log.info("buildUrl: ", iframeURL);
 
