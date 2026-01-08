@@ -2,7 +2,8 @@
   "key": "mermaid-chart-app-for-jira",
   "name": "Mermaid Chart for Jira",
   "description": "Official Mermaid Chart App for Jira",
-  "baseUrl": "https://jiratest.mermaidchart.com",
+  "//baseUrl": "{{localBaseUrl}}",
+  "baseUrl": "https://jira-mermaid-chart-plugin-git-mc-4101-jira-plugi-26fd97-mc-prod.vercel.app",
   "vendor": {
     "name": "Mermaid Chart Inc",
     "url": "http://www.mermaidchart.com",
@@ -52,7 +53,6 @@
         "options": {
           "width": "100%",
           "height": "100%",
-          "chrome": false,
           "header": {
             "value": "Mermaid Chart"
           }
@@ -64,7 +64,6 @@
         "options": {
           "width": "100%",
           "height": "100%",
-          "chrome": false,
           "header": {
             "value": "Mermaid Chart"
           }
@@ -76,7 +75,7 @@
         "options": {
           "width": "100%",
           "height": "100%",
-          "chrome": false,
+
           "header": {
             "value": "Mermaid Chart"
           }
@@ -88,7 +87,6 @@
         "options": {
           "height": "200px",
           "width": "300px",
-          "chrome": false,
           "header": {
             "value": "Mermaid Chart Alert"
           }
