@@ -187,7 +187,7 @@ function App() {
   });
 
   window.AP.events.on("dialog.submit", async (data) => {
-    console.log("dialog.submit", data);
+    console.log("dialog.submits", data)
     // log.info("dialog.submit: ", data);
   });
 
