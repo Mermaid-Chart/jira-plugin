@@ -1,6 +1,8 @@
 import { h, render, Fragment } from "https://esm.sh/preact";
 import { useState } from "https://esm.sh/preact/hooks";
 import htm from "https://esm.sh/htm";
+import analytics from "./analytics.js";
+
 const html = htm.bind(h);
 let timeout;
 
@@ -25,6 +27,7 @@ function App() {
     });
     setAccessToken(undefined);
     setUser(null);
+    analytics.trackLogout();
     hideLoadingAnimation();
     window.location.reload();
   };
@@ -41,6 +44,7 @@ function App() {
 
     const windowObjectReference = window.open(loginURL, "loginWindow", options);
     windowObjectReference.focus();
+     analytics.trackConnectToMermaidChart();
 
     const callback = async () => {
       const res = await fetch(`/check_token?state=${loginState}`, {
@@ -82,7 +86,7 @@ function App() {
       connectToMermaidClick();
       return;
     }
-
+   analytics.trackPluginDiagramEdit();
     AP.dialog.create({
       key: "dialog-module-edit",
       chrome: false,
