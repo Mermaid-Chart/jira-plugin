@@ -30,22 +30,22 @@ connectModules:
   jira:dialogs:
     - url: /editor
       options:
-        width: 95%
-        height: 67%
+        width: 100%
+        height: 100%
         header:
           value: Mermaid Chart
       key: dialog-module-edit
     - url: /select
       options:
-        width: 95%
-        height: 67%
+        width: 100%
+        height: 100%
         header:
           value: Mermaid Chart
       key: dialog-module-select
     - url: /viewer
       options:
-        width: 95%
-        height: 67%
+        width: 100%
+        height: 100%
         header:
           value: Mermaid Chart
       key: dialog-module-view

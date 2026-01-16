@@ -2,7 +2,7 @@
   "development": {
     "port": 3000,
     "errorTemplate": true,
-    "localBaseUrl": "https://jiratest.mermaidchart.com",
+    "localBaseUrl": "https://jira.mermaidchart.com",
     "store": {
       "adapter": "sequelize",
       "dialect": "sqlite3",
@@ -13,7 +13,7 @@
   "preview": {
     "port": "$PORT",
     "errorTemplate": true,
-    "localBaseUrl": "https://jiratest.mermaidchart.com",
+    "localBaseUrl": "https://jira.mermaidchart.com",
     "allowedBaseUrls": ["$VERCEL_BRANCH_URL"],
     "store": {
       "adapter": "@upstash/redis",
@@ -24,7 +24,7 @@
   "stage": {
     "port": "$PORT",
     "errorTemplate": true,
-    "localBaseUrl": "https://jirastage.mermaidchart.com",
+    "localBaseUrl": "https://jira.mermaidchart.com",
     "allowedBaseUrls": ["$VERCEL_BRANCH_URL"],
     "store": {
       "adapter": "@upstash/redis",
