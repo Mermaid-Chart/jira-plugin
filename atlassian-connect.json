@@ -2,7 +2,7 @@
   "key": "mermaid-chart-app-for-jira",
   "name": "Mermaid Chart for Jira",
   "description": "Official Mermaid Chart App for Jira",
-  "baseUrl": "https://jirastage.mermaidchart.com",
+  "baseUrl": "https://jiratest.mermaidchart.com",
   "vendor": {
     "name": "Mermaid Chart Inc",
     "url": "http://www.mermaidchart.com",
@@ -50,8 +50,8 @@
       {
         "url": "/editor",
         "options": {
-          "width": "95%",
-          "height": "67%",
+          "width": "100%",
+          "height": "100%",
           "header": {
             "value": "Mermaid Chart"
           }
@@ -61,8 +61,8 @@
       {
         "url": "/select",
         "options": {
-          "width": "95%",
-          "height": "67%",
+          "width": "100%",
+          "height": "100%",
           "header": {
             "value": "Mermaid Chart"
           }
@@ -72,8 +72,8 @@
       {
         "url": "/viewer",
         "options": {
-          "width": "95%",
-          "height": "67%",
+          "width": "100%",
+          "height": "100%",
           "header": {
             "value": "Mermaid Chart"
           }
