@@ -8,7 +8,7 @@ app:
     name: nodejs20.x
 remotes:
   - key: connect
-    baseUrl: https://jiratest.mermaidchart.com
+    baseUrl: https://jirastage.mermaidchart.com
 connectModules:
   jira:lifecycle:
     - key: lifecycle-events
