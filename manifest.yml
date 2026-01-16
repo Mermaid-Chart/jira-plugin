@@ -1,5 +1,5 @@
 app:
-  id: ari:cloud:ecosystem::app/561b4863-9a48-478b-8f8d-2b065b651112
+  id: ari:cloud:ecosystem::app/b4c24b0d-2782-4ef2-8f9c-60fae57db5b3
   connect:
     key: mermaid-chart-app-for-jira
     remote: connect
@@ -8,7 +8,7 @@ app:
     name: nodejs20.x
 remotes:
   - key: connect
-    baseUrl: https://jirastage.mermaidchart.com
+    baseUrl: https://jira.mermaidchart.com
 connectModules:
   jira:lifecycle:
     - key: lifecycle-events
@@ -30,22 +30,22 @@ connectModules:
   jira:dialogs:
     - url: /editor
       options:
-        width: 95%
-        height: 67%
+        width: 100%
+        height: 100%
         header:
           value: Mermaid Chart
       key: dialog-module-edit
     - url: /select
       options:
-        width: 95%
-        height: 67%
+        width: 100%
+        height: 100%
         header:
           value: Mermaid Chart
       key: dialog-module-select
     - url: /viewer
       options:
-        width: 95%
-        height: 67%
+        width: 100%
+        height: 100%
         header:
           value: Mermaid Chart
       key: dialog-module-view
