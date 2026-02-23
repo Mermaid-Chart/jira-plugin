@@ -408,6 +408,11 @@ body {
   text-decoration: underline;
 }
 
+.button-frame.delete-only {
+  width: 32px;
+  justify-content: flex-end;
+}
+
 /* General button reset */
 button {
   cursor: pointer;

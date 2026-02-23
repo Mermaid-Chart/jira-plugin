@@ -21,7 +21,7 @@ function App() {
   };
 
   const onLogout = async () => {
-    showLoadingAnimation();
+    showLoadingAnimation("Disconnecting...");
     await fetch("/logout", {
       method: "post",
       headers: {
@@ -283,15 +283,16 @@ function App() {
             </div>
             
             <!-- Button frame container -->
-            <div class="button-frame">
-            <button
+            <div class="button-frame ${!accessToken ? 'delete-only' : ''}">
+            ${accessToken &&
+            html`<button
               class="edit-overlay"
               onclick="${(e) => editDiagramClick(image, e)}"
               title="Edit diagram"
             >
               <!-- <img src="../pencil-icon.svg" alt="Edit" /> -->
               Edit
-            </button>
+            </button>`}
             <button
               class="delete-overlay"
               onclick="${(e) => deleteDiagram(image, e)}"
