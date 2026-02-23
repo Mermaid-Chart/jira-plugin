@@ -12,7 +12,23 @@ html, body {
 }
 
 body {
-   margin: 0px !important
+   margin: 0px !important;
+   background-color: white !important;
+}
+
+/* Override AUI framework backgrounds */
+.aui-page-hybrid,
+.aui-page,
+#content,
+.ac-content {
+    background-color: white !important;
+}
+
+/* Force white backgrounds on all diagram elements */
+.diagram-card .card-content,
+.load,
+.diagram-placeholder {
+    background-color: white !important;
 }
 
 *,
