@@ -10,6 +10,9 @@ function App() {
   const [accessToken, setAccessToken] = useState(mcAccessToken);
   const [user, setUser] = useState(loggedUser);
   const [charts, setCharts] = useState(savedCharts);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [loadingText, setLoadingText] = useState("Inserting Diagram...");
 
   const onLogin = (token, user) => {
     setAccessToken(token);
@@ -81,12 +84,14 @@ function App() {
     });
   };
 
-  const editDiagramClick = (image) => {
+  const editDiagramClick = (image, e) => {
+    if (e) e.stopPropagation(); // Prevent card click
     if (!accessToken) {
       connectToMermaidClick();
       return;
     }
    analytics.trackPluginDiagramEdit();
+   console.log("editDiagramClick", image);
     AP.dialog.create({
       key: "dialog-module-edit",
       chrome: false,
@@ -97,6 +102,8 @@ function App() {
       },
     });
   };
+
+
 
   const addChartClick = () => {
     if (!accessToken) {
@@ -115,17 +122,28 @@ function App() {
     });
   };
 
-  const showLoadingAnimation = () => {
-    let loading = document.querySelector("#loading-spinner");
-    loading.style.display = "inline-block";
+  const showLoadingAnimation = (text = "Inserting Diagram...") => {
+    setLoadingText(text);
+    setIsLoading(true);
+    setIsSuccess(false);
   };
   const hideLoadingAnimation = () => {
-    let loading = document.querySelector("#loading-spinner");
-    loading.style.display = "none";
+    setIsLoading(false);
+    setIsSuccess(false);
+  };
+  const showSuccessAndRefresh = (successText = "Operation Completed Successfully!") => {
+    setLoadingText(successText);
+    setIsLoading(false);
+    setIsSuccess(true);
+    // Show success message for 1.5 seconds before refreshing
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
   };
 
-  const deleteDiagram = (chart) => {
-    showLoadingAnimation();
+  const deleteDiagram = (chart, e) => {
+    if (e) e.stopPropagation(); // Prevent card click
+    showLoadingAnimation("Deleting Diagram...");
 
     const chartIndex = charts.findIndex(
       (e) => e.documentID === chart.documentID
@@ -144,8 +162,7 @@ function App() {
       },
       body: JSON.stringify({ issueKey, documentID: chart.documentID }),
     }).then(() => {
-      hideLoadingAnimation();
-      location.reload();
+      showSuccessAndRefresh("Diagram Deleted Successfully!");
     });
   };
 
@@ -184,8 +201,7 @@ function App() {
           replace: data.replace,
         }),
       }).then((result) => {
-        hideLoadingAnimation();
-        location.reload();
+        showSuccessAndRefresh("Diagram Inserted Successfully!");
       });
     }
   });
@@ -200,7 +216,7 @@ function App() {
     let load = document.querySelectorAll(".load");
 
     img.forEach((i) => {
-      i.style.display = "flex";
+      i.style.display = "block";
     });
     load.forEach((l) => {
       l.style.display = "none";
@@ -209,77 +225,82 @@ function App() {
 
   return html`
     <div class="header-block">
-      <div class="subheader">
+      <div class="header-left">
+        ${accessToken &&
+        html`<button class="add-diagram-btn" onclick="${addChartClick}">
+          Add New Diagram
+        </button>`}
         ${!accessToken &&
         html`<button
           class="connect-btn"
           onclick="${(e) => connectToMermaidClick()}"
         >
-          Connect
+          Connect to Mermaid
         </button>`}
+      </div>
+      <div class="header-right">
         ${accessToken &&
-        html`<button class="connect-btn" onclick="${(e) => onLogout()}">
-          Disconnect
+        html`<button class="disconnect-btn" onclick="${(e) => onLogout()}">
+          Disconnect Mermaid
         </button>`}
-        <div class="loading-spinner" id="loading-spinner" style="display: none">
-          <div class="spinner"></div>
-        </div>
       </div>
     </div>
-    <div
-      id="images"
-      style="display: flex; overflow-x: scroll; flex-wrap: wrap;"
-    >
-      <button class="add-chart-btn" onclick="${addChartClick}">
-        <img src="../plus-line-icon.svg" alt="add" />
-      </button>
-      ${charts.map((image) => {
-        // src="${image.diagramUrl}"
-        const titleText = image.title ? "title-text" : "non-show";
-        return html` <div class="tile">
-          <img
-            style="display: none;"
-            class="tile-image"
-            src="${image.diagramUrl}"
-            alt="${image.title}"
-          />
-          <div class="load" style="display: flex">
-            <div class="spinner"></div>
-          </div>
-          <div
-            class="background"
-            onclick="${(e) => viewDiagramClick(image)}"
-            title="view"
-          ></div>
+    <div class="diagrams-grid">
+      <!-- Loading or Success overlay for diagram operations -->
+      ${(isLoading || isSuccess) &&
+      html`<div class="loading-overlay">
+        <div class="loading-card">
+          ${isLoading && html`<div class="spinner"></div>`}
+          ${isSuccess && html`<div class="success-icon">✓</div>`}
+          <div class="loading-text">${loadingText}</div>
+        </div>
+      </div>`}
 
-          <div class="${titleText}">${image.title}</div>
-          <button
-            class="delete-btn"
-            onclick="${(e) => deleteDiagram(image)}"
-            type="submit"
-            title="Delete chart from issue"
-          >
-            <input type="hidden" name="issueKey" value="${issueKey}" />
-            <input type="hidden" name="diagramId" value="${image.id}" />
+      <!-- No diagrams state when connected to Mermaid but no charts exist -->
+      ${accessToken && charts.length === 0 && !isLoading && !isSuccess &&
+      html`<div class="no-diagrams-container">
+        <h3 class="no-diagrams-title">No diagrams yet</h3>
+        <p class="no-diagrams-description">
+          Connected to Mermaid, but no diagrams yet.<br/>
+          Add a <button class="new-diagram-link" onclick="${addChartClick}">New diagram</button> to get started.
+        </p>
+      </div>`}
+      
+      ${charts.map((image) => {
+        return html` <div class="diagram-card">
+          <div class="card-content" onclick="${(e) => viewDiagramClick(image)}">
             <img
-              style="width: 20px; height: 20px;"
-              src="../trash-icon.svg"
-              alt="close"
+              style="display: none;"
+              class="tile-image"
+              src="${image.diagramUrl}"
+              alt="${image.title || 'Diagram'}"
             />
-          </button>
-          ${accessToken &&
-          html`<button
-            class="edit-btn"
-            onclick="${(e) => editDiagramClick(image)}"
-            type="submit"
-            title="Edit chart"
-          >
-            <img
-              style="width: 20px; height: 20px;"
-              src="../pencil-icon.svg"
-              alt="view"
-            />
-          </button>`}
+            <div class="load" style="display: flex">
+              <div class="spinner"></div>
+            </div>
+            <div class="diagram-placeholder" style="display: flex">
+              <img src="../no-image-placeholder.png" alt="Loading diagram" />
+            </div>
+            
+            <!-- Button frame container -->
+            <div class="button-frame">
+            <button
+              class="edit-overlay"
+              onclick="${(e) => editDiagramClick(image, e)}"
+              title="Edit diagram"
+            >
+              <!-- <img src="../pencil-icon.svg" alt="Edit" /> -->
+              Edit
+            </button>
+            <button
+              class="delete-overlay"
+              onclick="${(e) => deleteDiagram(image, e)}"
+              title="Delete diagram"
+            >
+              <img src="../trash-icon.svg" alt="Delete" />
+            </button>
+            </div>
+          </div>
         </div>`;
       })}
     </div>

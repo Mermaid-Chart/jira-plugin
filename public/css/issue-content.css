@@ -1,199 +1,418 @@
-.tile {
-  position: relative;
-  margin: 5px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  cursor: pointer;
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300..1000&display=swap');
+/* Updated header styling */
+body {
+    font-family: "Recursive", sans-serif;
 }
 .header-block {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  padding: 0px 20px 0px 0px;
-}
-.subheader {
-  width: 300px;
-}
-.tile:hover .background {
-  position: absolute;
-  width: 150px;
-  height: 150px;
-  background: #2c2418;
-  z-index: 1;
-  border-radius: 5px;
-  top: 0;
-  left: 0;
-  opacity: 0.7;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-}
-.tile:hover .delete-btn {
-  display: flex;
-  transition: all 0.3s ease-in-out;
-  z-index: 10;
-}
-.tile:hover .edit-btn {
-  display: flex;
-  transition: all 0.3s ease-in-out;
-  z-index: 10;
-}
-.tile-image {
-  object-fit: contain;
-  width: 150px;
-  height: 150px;
-  border: 1px solid grey;
-  border-radius: 5px;
-}
-.tile-image::before {
-  content: " ";
-  height: 150px;
-  width: 150px;
-  background-size: 100% 100%;
-  background-image: url(./../no-image-placeholder.png);
-}
-
-.title-text {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.tile:hover .title-text {
-  display: inline;
-  z-index: 15;
-  width: 100%;
-  height: 25%;
-  background: white;
-  border-radius: 0 0 5px 5px;
-  box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
-  border: 1px solid grey;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.non-show {
-  display: none;
-}
-.load {
   align-items: center;
-  justify-content: center;
-  object-fit: contain;
-  width: 150px;
-  height: 150px;
-  border: 1px solid grey;
-  border-radius: 5px;
+  padding: 20px;
+  border-bottom: 1px solid #e1e5e9;
+  margin-bottom: 0;
 }
-.loading-spinner {
+
+.header-left {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  object-fit: contain;
-  width: 30px;
-  height: 30px;
 }
 
-.loading-spinner .spinner {
-  margin: 1em auto;
-  width: 25px;
-  height: 25px;
-  border-radius: 20px;
-  border: solid 3px #ddd;
-  border-left: solid 3px #999;
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-button {
-  cursor: pointer;
-  background: none;
-  border: none;
-  margin: 5px;
-}
-.delete-btn {
-  display: none;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
-.delete-btn:hover::after {
-  background: black;
-  border-radius: 2px;
-}
-button img {
-  opacity: 0.4;
-}
-button:hover img {
-  opacity: 1;
-}
-.edit-btn {
-  display: none;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-}
-.add-chart-btn {
+/* Diagrams grid container */
+.diagrams-grid {
   position: relative;
-  width: 150px;
-  height: 150px;
-  margin: 5px;
-  border: 1px solid grey;
-  background: none;
-  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 207px);
+  gap: 20px;
+  padding: 20px;
+  justify-content: start;
+  min-height: 400px; /* Ensure enough height for loading overlay even when no diagrams */
 }
 
-.add-chart-btn img {
+/* Individual diagram card - Figma specs */
+.diagram-card {
+  width: 207px;
+  height: 207px;
+  background: white;
+  border: 2px solid #BEDDE3;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.diagram-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Card content area */
+.card-content {
+  position: relative;
+  padding: 0;
+  height: 207px; /* Full card height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: white;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Button container frame - Figma specs */
+.button-frame {
   position: absolute;
-  top: 55px;
-  left: 55px;
-  width: 40px;
-  height: 40px;
+  bottom: 8px;
+  right: 8px;
+  width: 92px;
+  height: 32px;
+  display: none;
+  gap: 8px;
+  align-items: center;
   z-index: 5;
 }
 
-.add-chart-btn:hover {
-  background: #2c2418;
-  opacity: 0.7;
-  transition: all 0.3s ease-in-out;
-  z-index: 1;
-}
-.connect-btn {
-  border: solid var(--border-color) 1px;
-  border-radius: 4px;
-  cursor: pointer;
-  color: white;
-  background-color: rgb(0, 82, 204);
-  padding: 6px 12px;
-  font-weight: bold;
-}
-.logout {
-  border: solid var(--border-color) 1px;
-  border-radius: 4px;
-  cursor: pointer;
-  color: white;
-  background-color: rgb(0, 82, 204);
-  padding: 6px 12px;
-  font-weight: bold;
+/* Show button frame on card hover */
+.diagram-card:hover .button-frame {
+  display: flex;
 }
 
-.spinner {
-  margin: 1em auto;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  border: solid 5px #ddd;
-  border-left: solid 5px #999;
+/* Edit button - Figma specs */
+.edit-overlay {
+  width: 52px;
+  height: 32px;
+  border-radius: 8px;
+  padding: 3px 12px 5px 12px;
+  gap: 4px;
+  background: #2B2542;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
 }
+
+.edit-overlay:hover {
+  background: #1e1a35;
+}
+
+.edit-overlay img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
+
+/* Delete button - Figma specs */
+.delete-overlay {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #BEDDE3;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-overlay:hover {
+  background: #a8d0d7;
+}
+
+.delete-overlay img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+  filter: brightness(0) saturate(100%);
+}
+/* Diagram image styling */
+.tile-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: none;
+  z-index: 2;
+}
+
+/* Placeholder styling */
+.diagram-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  z-index: 1;
+}
+
+.diagram-placeholder img {
+  width: 60px;
+  height: 60px;
+  opacity: 0.3;
+}
+
+/* Loading spinner in cards */
+.load {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+
+
+/* Loading spinner styling */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.loading-spinner .spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #0052cc;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Header button styling */
+.add-diagram-btn {
+  width: 162px;
+  height: 40px;
+  background: #2B2542;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.add-diagram-btn:hover {
+  background: #1f1d36;
+}
+
+.connect-btn {
+  width: 180px;
+  height: 40px;
+  background: #2B2542;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.connect-btn:hover {
+  background: #1f1d36;
+}
+
+.disconnect-btn {
+  width: 184px;
+  height: 40px;
+  background: #F1F8FA;
+  color: #2B2542;
+  border: 1px solid #BEDDE3;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.disconnect-btn:hover {
+  background: #e6f3f7;
+  color: #1f1d36;
+}
+
+
+
+
+
+/* Spinner animation for loading states */
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #0052cc;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
 @keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading overlay for diagram insertion */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: 16px;
+}
+
+.loading-card {
+  background: white;
+  border-radius: 16px;
+  border: 2px solid #BEDDE3;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
+  min-width: 200px;
+}
+
+.loading-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2B2542;
+  text-align: center;
+}
+
+.success-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #00B050;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
   0% {
-    transform: rotate(0);
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
+    opacity: 1;
   }
 }
-.spinner {
-  animation-name: spin;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+
+/* Import Recursive font */
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300;400;500;600;700&display=swap');
+
+/* No diagrams state styling */
+.no-diagrams-container {
+  grid-column: 1 / -1; /* Span full width of the grid container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  min-height: 300px;
+  width: 100%;
+}
+
+.no-diagrams-title {
+  font-family: 'Recursive', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2B2542;
+  margin: 0 0 12px 0;
+  opacity: 1;
+}
+
+.no-diagrams-description {
+  font-family: 'Recursive', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #5F5D7A;
+  margin: 0;
+  text-align: center;
+}
+
+.no-diagrams-description .new-diagram-link {
+  font-family: 'Recursive', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #5F5D7A;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.no-diagrams-description .new-diagram-link:hover {
+  color: #4a4b5e;
+  text-decoration: underline;
+}
+
+/* General button reset */
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
 }
