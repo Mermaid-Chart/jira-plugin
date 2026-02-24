@@ -1,0 +1,57 @@
+/* Fix for diagram visibility and layout issues */
+
+/* Ensure images display properly when loaded */
+.tile-image {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  z-index: 3 !important;
+  background: white;
+}
+
+/* Force display when set to block */
+.tile-image[style*="display: block"] {
+  display: block !important;
+}
+
+/* Ensure loading states hide properly */
+.load {
+  z-index: 1 !important;
+  background: white !important;
+}
+
+.diagram-placeholder {
+  z-index: 2 !important;
+  background: white !important;
+}
+
+/* Hide elements when display is set to none */
+.load[style*="display: none"],
+.diagram-placeholder[style*="display: none"] {
+  display: none !important;
+}
+
+/* Better card content background */
+.card-content {
+  background: white !important;
+}
+
+/* Improve grid spacing */
+.diagrams-grid {
+  gap: 20px !important;
+  padding: 20px !important;
+}
+
+/* Ensure button frame is above everything */
+.button-frame {
+  z-index: 10 !important;
+}
+
+/* Remove hover overlay to prevent grey background on hover */
+.diagram-card:hover .card-content::before {
+  display: none !important;
+}
