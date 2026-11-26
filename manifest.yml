@@ -3,62 +3,63 @@ app:
   connect:
     key: mermaid-chart-app-for-jira
     remote: connect
-    authentication: jwt
   runtime:
-    name: nodejs20.x
+    name: nodejs24.x
 remotes:
   - key: connect
     baseUrl: https://jira.mermaidchart.com
-connectModules:
-  jira:lifecycle:
-    - key: lifecycle-events
-      installed: /installed
-  jira:jiraIssueContents:
-    - icon:
-        width: 80
-        height: 80
-        url: /icon_80x80.png
-      target:
-        type: web_panel
-        url: /issue-content?issueKey={issue.key}
-      tooltip:
-        value: ''
-      jiraNativeAppsEnabled: false
-      name:
-        value: Mermaid Chart
-      key: jira-issue-content
-  jira:dialogs:
-    - url: /editor
-      options:
-        width: 100%
-        height: 100%
-        header:
-          value: Mermaid Chart
-      key: dialog-module-edit
-    - url: /select
-      options:
-        width: 100%
-        height: 100%
-        header:
-          value: Mermaid Chart
-      key: dialog-module-select
-    - url: /viewer
-      options:
-        width: 100%
-        height: 100%
-        header:
-          value: Mermaid Chart
-      key: dialog-module-view
-    - url: /alert
-      options:
-        height: 200px
-        width: 300px
-        header:
-          value: Mermaid Chart Alert
-      key: dialog-module-alert
+    operations:
+      - compute
+      - fetch
+    auth:
+      appUserToken:
+        enabled: true
+modules:
+  jira:issuePanel:
+    - key: jira-issue-content
+      resource: panel
+      resolver:
+        function: resolver
+      title: Mermaid Chart
+      icon: resource:panel;icon_80x80.png
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: panel
+    path: static/panel
+  - key: dialog
+    path: static/dialog
 permissions:
   scopes:
-    - read:connect-jira
-    - write:connect-jira
-    - delete:connect-jira
-    - act-as-user:connect-jira
+    - read:app-user-token
+    # Issue property "diagrams", attachment content (thumbnails).
+    - read:jira-work
+    # Issue property "diagrams", user property "token", add and delete attachments.
+    - write:jira-work
+    # User property "token".
+    - read:jira-user
+  content:
+    styles:
+      - unsafe-inline
+  external:
+    # mermaidchart.com page routes (including /oauth/frame) 301 to mermaid.ai, and the
+    # browser checks the redirect target too, so both domains must be listed.
+    frames:
+      - https://mermaidchart.com
+      - https://*.mermaidchart.com
+      - https://mermaid.ai
+      - https://*.mermaid.ai
+    fetch:
+      backend:
+        - remote: connect
+      client:
+        - https://mermaidchart.com
+        - https://*.mermaidchart.com
+        - https://mermaid.ai
+        - https://*.mermaid.ai
+    # public/css/issue-content.css loads the Recursive font, as the Connect panel did.
+    styles:
+      - https://fonts.googleapis.com
+    fonts:
+      - https://fonts.gstatic.com
