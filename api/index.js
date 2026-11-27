@@ -14,7 +14,7 @@ import forgeRoutes from '../routes/forge.js';
 
 const MC_BASE_URL = process.env.MC_BASE_URL || 'https://test.mermaid.ai';
 // Mermaid Chart redirects here after sign-in; must be one of the Jira client's redirect URIs in collab.
-const LOCAL_BASE_URL = process.env.LOCAL_BASE_URL || 'https://jira-mermaid-chart-plugin-6glzo6xel-mc-prod.vercel.app';
+const LOCAL_BASE_URL = process.env.LOCAL_BASE_URL || 'https://jira-mermaid-chart-plugin-git-plug-162-jira-move-0c9df4-mc-prod.vercel.app';
 const PORT = process.env.PORT || 3000;
 
 const app = express();

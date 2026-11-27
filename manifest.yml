@@ -7,7 +7,7 @@ app:
     name: nodejs24.x
 remotes:
   - key: connect
-    baseUrl: https://jira-mermaid-chart-plugin-6glzo6xel-mc-prod.vercel.app
+    baseUrl: https://jira-mermaid-chart-plugin-git-plug-162-jira-move-0c9df4-mc-prod.vercel.app
     operations:
       - compute
       - fetch
