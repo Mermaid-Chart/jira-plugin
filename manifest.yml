@@ -50,6 +50,7 @@ permissions:
       - https://*.mermaidchart.com
       - https://mermaid.ai
       - https://*.mermaid.ai
+      - https://collab-git-temp-confluence-testing-mc-prod.vercel.app
     fetch:
       backend:
         - remote: connect
@@ -58,6 +59,7 @@ permissions:
         - https://*.mermaidchart.com
         - https://mermaid.ai
         - https://*.mermaid.ai
+        - https://collab-git-temp-confluence-testing-mc-prod.vercel.app
     # public/css/issue-content.css loads the Recursive font, as the Connect panel did.
     styles:
       - https://fonts.googleapis.com
