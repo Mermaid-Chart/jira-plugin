@@ -1,18 +1,11 @@
 #!/usr/bin/env node
 
-import http from "node:http";
-import app, { devEnv, addon } from "../api/index.js";
-import log from "../utils/logger.js";
+import http from 'node:http';
+import app from '../api/index.js';
+import log from '../utils/logger.js';
 
-// Boot the HTTP server
+// Local server. On Vercel, api/index.js is used directly.
 const server = http.createServer(app);
-server.listen(app.get("port"), () => {
-  //console.log("App server running at http://" + server.address().address + ":" + server.address().port);
-  log.info(
-    `App server running at http://${server.address().address}:${
-      server.address().port
-    }`
-  );
-  // Enables auto registration/de-registration of app into a host in dev mode
-  if (devEnv) addon.register();
+server.listen(app.get('port'), () => {
+  log.info(`App server running at http://${server.address().address}:${server.address().port}`);
 });

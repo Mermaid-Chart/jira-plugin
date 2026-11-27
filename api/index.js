@@ -1,158 +1,74 @@
-// Entry point for the app
-// Express is the underlying that atlassian-connect-express uses:
-// https://expressjs.com
-import express from "express";
+// Entry point for the Vercel server, which Forge calls as the `connect` remote (see manifest.yml).
+import express from 'express';
+import compression from 'compression';
+import errorHandler from 'errorhandler';
+import morgan from 'morgan';
+import path from 'path';
+import helmet from 'helmet';
+import nocache from 'nocache';
 
-// https://expressjs.com/en/guide/using-middleware.html
-import bodyParser from "body-parser";
-import compression from "compression";
-import cookieParser from "cookie-parser";
-import errorHandler from "errorhandler";
-import morgan from "morgan";
+import { MermaidChart } from '../utils/MermaidChart.js';
+import { createRedisStore } from '../utils/redisStore.js';
+import log from '../utils/logger.js';
+import forgeRoutes from '../routes/forge.js';
 
-// atlassian-connect-express also provides a middleware
-import ace from "atlassian-connect-express";
+const MC_BASE_URL = process.env.MC_BASE_URL || 'https://test.mermaid.ai';
+// Mermaid Chart redirects here after sign-in; must be one of the Jira client's redirect URIs in collab.
+const LOCAL_BASE_URL = process.env.LOCAL_BASE_URL || 'https://jira-mermaid-chart-plugin-6glzo6xel-mc-prod.vercel.app';
+const PORT = process.env.PORT || 3000;
 
-// Use Handlebars as view engine:
-// https://npmjs.org/package/express-hbs
-// http://handlebarsjs.com
-import hbs from "express-hbs";
-
-// We also need a few stock Node modules
-import path from "path";
-import os from "os";
-import helmet from "helmet";
-import nocache from "nocache";
-import { fileURLToPath } from "url";
-import { dirname, resolve } from "path";
-import { createRequire } from "node:module";
-//import logger from "../utils/logger.js";
-
-// Routes live here; this is the C in MVC
-import routes from "../routes/index.js";
-import { readFileSync } from "fs";
-
-// Use Vercel Serverless Redis connection
-import { ServerlessRedisAdapter } from "../serverless-redis.js";
-
-ace.store.register("@upstash/redis", function (logger, opts) {
-  if (arguments.length === 0) {
-    return ServerlessRedisAdapter;
-  }
-  return new ServerlessRedisAdapter(logger, opts);
-});
-
-console.log("CWD is ", process.cwd());
-
-console.log("config.json is at ", resolve("config.json"));
-console.log(
-  "config.json is at ",
-  createRequire(import.meta.url).resolve("../config.json")
-);
-console.log(
-  "config.json contents are ",
-  readFileSync("config.json", { encoding: "utf8" })
-);
-
-console.log("atlassian-connect.json is at ", resolve("atlassian-connect.json"));
-console.log(
-  "atlassian-connect.json is at ",
-  createRequire(import.meta.url).resolve("../atlassian-connect.json")
-);
-console.log(
-  "atlassian-connect.json contents are ",
-  readFileSync("atlassian-connect.json", { encoding: "utf8" })
-);
-
-// Bootstrap Express and atlassian-connect-express
 const app = express();
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.set('port', PORT);
 
-export const addon = ace(app, {
-  config: {
-    descriptorTransformer(self, config) {
-      console.log("Transformed descriptor is ", self);
-      return self;
-    },
-  },
-});
+export const devEnv = app.get('env') === 'development';
+app.use(morgan(devEnv ? 'dev' : 'combined'));
 
-// See config.json
-const port = addon.config.port();
-app.set("port", port);
+// Atlassian security requirements: HSTS for at least a year, origin-only referrer.
+app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: false }));
+app.use(helmet.referrerPolicy({ policy: ['origin'] }));
 
-
-// Log requests, using an appropriate formatter by env
-export const devEnv = app.get("env") === "development";
-app.use(morgan(devEnv ? "dev" : "combined"));
-
-// We don't want to log JWT tokens, for security reasons
-morgan.token("url", redactJwtTokens);
-
-// Configure Handlebars
-// Testing of what runs in vercel
-const viewsDir = path.join(process.cwd(), "views");
-const handlebarsEngine = hbs.express4({ partialsDir: viewsDir });
-app.engine("hbs", handlebarsEngine);
-app.set("view engine", "hbs");
-app.set("views", viewsDir);
-
-// Atlassian security policy requirements
-// http://go.atlassian.com/security-requirements-for-cloud-apps
-// HSTS must be enabled with a minimum age of at least one year
-app.use(
-  helmet.hsts({
-    maxAge: 31536000,
-    includeSubDomains: false,
-  })
-);
-app.use(
-  helmet.referrerPolicy({
-    policy: ["origin"],
-  })
-);
-
-// Include request parsers
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-// Gzip responses when appropriate
+// add-chart carries the diagram PNG as base64. Vercel caps request bodies at about 4.5 MB.
+app.use(express.json({ limit: '5mb' }));
 app.use(compression());
-
-// Include atlassian-connect-express middleware
-app.use(addon.middleware());
-
-// Mount the static files directory
-const staticDir = path.join(process.cwd(), "public");
-app.use(express.static(staticDir));
-
-// Add an hbs helper to fingerprint static resource urls
-hbs.registerHelper("furl", function (url) {
-  return app.locals.furl(url);
-});
-
-// Atlassian security policy requirements
-// http://go.atlassian.com/security-requirements-for-cloud-apps
 app.use(nocache());
 
-// Show nicer errors in dev mode
-if (devEnv) app.use(errorHandler());
+// plugin.js and icons stay available at their old URLs.
+app.use(express.static(path.join(process.cwd(), 'public')));
 
-// Wire up routes
-routes(app, addon);
+if (devEnv) {
+  app.use(errorHandler());
+}
+
+const mermaidAPI = new MermaidChart({
+  baseURL: MC_BASE_URL,
+  clientID: process.env.MC_CLIENT_ID || '6643413f-36fe-41f5-83b6-18674ec599f0',
+  redirectURI: `${LOCAL_BASE_URL}/callback`,
+  store: createRedisStore(),
+});
+
+forgeRoutes(app, { mermaidAPI, mcBaseUrl: MC_BASE_URL, log });
+
+const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => `&#${ch.charCodeAt(0)};`);
+
+const page = (content) =>
+  `<!doctype html><html><body style="display:flex;height:100%;align-items:center;justify-content:center;font-size:24px;font-family:sans-serif">${content}</body></html>`;
+
+// Mermaid Chart sign-in redirect. The tab was opened with router.open; the panel polls /forge/check_token.
+app.get('/callback', async (req, res) => {
+  try {
+    await mermaidAPI.handleAuthorizationResponse(req.query);
+  } catch (e) {
+    res
+      .status(400)
+      .type('html')
+      .send(page(`Authentication failed.<br/>${escapeHtml(e.message)}<br/>Please try again later`));
+    return;
+  }
+  res.type('html').send(page('Redirecting...<script>window.close();</script>'));
+});
+
+app.get('/', (_req, res) => {
+  res.json({ ok: true, app: 'mermaid-chart-for-jira' });
+});
 
 export default app;
-
-function redactJwtTokens(req) {
-  const url = req.originalUrl || req.url || "";
-  const params = new URLSearchParams(url);
-  let redacted = url;
-  params.forEach((value, key) => {
-    if (key.toLowerCase() === "jwt") {
-      redacted = redacted.replace(value, "redacted");
-    }
-  });
-  return redacted;
-}
