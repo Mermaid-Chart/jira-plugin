@@ -1,7 +1,7 @@
 import * as jose from 'jose';
 
 // Must match app.id in manifest.yml (utils/forgeAuth.test.js checks this).
-export const APP_ID = 'ari:cloud:ecosystem::app/b4c24b0d-2782-4ef2-8f9c-60fae57db5b3';
+export const APP_ID = 'ari:cloud:ecosystem::app/57437790-ad4b-4751-86d4-6a15f2d7355c';
 const JWKS_URL = 'https://forge.cdn.prod.atlassian-dev.net/.well-known/jwks.json';
 
 /**

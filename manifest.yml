@@ -1,5 +1,5 @@
 app:
-  id: ari:cloud:ecosystem::app/b4c24b0d-2782-4ef2-8f9c-60fae57db5b3
+  id: ari:cloud:ecosystem::app/57437790-ad4b-4751-86d4-6a15f2d7355c
   connect:
     key: mermaid-chart-app-for-jira
     remote: connect
@@ -7,7 +7,7 @@ app:
     name: nodejs24.x
 remotes:
   - key: connect
-    baseUrl: https://jira.mermaidchart.com
+    baseUrl: https://jira-mermaid-chart-plugin-6glzo6xel-mc-prod.vercel.app
     operations:
       - compute
       - fetch
